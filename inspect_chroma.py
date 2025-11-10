@@ -50,22 +50,95 @@ print(col.count())                 # collection 中的紀錄數
 #     )
 #     print_batch(batch, start_idx=offset)
 
-# 指定你想看的來源檔名（完全比對）
-print("\n=== 指定你想看的來源檔名（完全比對) ===")
-SRC = "data/大學部修業規定.pdf"
+# inspect_chroma.py（替換底部查詢那段）
 
-pdf_all = col.get(
-    where={"source": {"$eq": SRC}},            # metadata 等值篩選
-    include=["documents", "metadatas"],
-    limit=10_000                                # 夠大即可，或改用分頁 while 取完
+print("\n=== 指定你想看的來源檔名（不直接取全文） ===")
+SRC = "data/department_members.json"   # 你要看的來源檔
+FILTER_CONTENT_TYPE = None              # 例如 "news"；不過濾請設 None
+
+# 1) 先拿 ids + metadatas（不抓 documents）
+where = {"source": {"$eq": SRC}}
+if FILTER_CONTENT_TYPE:
+    where = {"$and": [where, {"content_type": {"$eq": FILTER_CONTENT_TYPE}}]}
+
+res = col.get(
+    where=where,
+    include=["metadatas"],
+    limit=10_000
 )
 
-pprint({k: pdf_all[k] for k in ["ids", "metadatas", "documents"]})
+ids = res.get("ids", [])
+metas = res.get("metadatas", [])
+print(f"符合來源「{SRC}」的切塊數：{len(ids)}")
 
-# 依 metadata.page 排序後輸出前幾段
-rows = sorted(zip(pdf_all["documents"], pdf_all["metadatas"]),
-              key=lambda x: x[1].get("page", 0))
-print(f"找到 {len(rows)} 個切塊，前兩段內容：\n")
-for i, (doc, md) in enumerate(rows[:2], 1):
-    print(f"[p{i}] {doc[:1000]}\n")
-    # print(f"[p{md.get('page_label', md.get('page', 0)+1)}] {doc[:1000]}\n")
+# 顯示該來源的 content_type 分布，方便檢查
+from collections import Counter
+print("content_type 分布：", dict(Counter((md or {}).get("content_type", "unknown") for md in metas)))
+
+# 2) 依 metadata 做更合理排序：
+#    - 有 page（PDF）：依 page, chunk
+#    - news：依 published_at_ts 由新到舊，再依 article_id, chunk
+#    - CSV/一般列：依 idx, chunk
+#    - 其他：最後
+def sort_key(item):
+    _id, md = item
+    md = md or {}
+    page = md.get("page")
+    if page is not None:
+        return (0, int(page), int(md.get("chunk", 0)))
+    if md.get("content_type") == "news":
+        ts = int(md.get("published_at_ts") or 0)
+        return (1, -ts, str(md.get("article_id", "")), int(md.get("chunk", 0)))
+    if md.get("idx") is not None:
+        return (2, int(md.get("idx")), int(md.get("chunk", 0)))
+    return (3, 0, int(md.get("chunk", 0)))
+
+rows = sorted(zip(ids, metas), key=sort_key)
+
+# 3) 只挑前 K 筆再去取 documents 預覽
+K = 5           # 想要預覽幾筆
+PREVIEW = 180   # 每筆預覽字數
+pick_ids = [rid for rid, _ in rows[:K]]
+
+if pick_ids:
+    subset = col.get(
+        ids=pick_ids,
+        include=["documents", "metadatas"]   # 這裡再抓少量全文
+    )
+    print(f"\n=== 前 {len(pick_ids)} 筆預覽（每段前 {PREVIEW} 字）===\n")
+
+    LABEL_W = 10  # 欄位名稱的寬度（可自行調整 8~14 之間看起來最整齊）
+    def print_kv(label, value):
+        if value is None or value == "":
+            return
+        print(f"{label:<{LABEL_W}}: {value}")
+
+    for i, (rid, doc, md) in enumerate(zip(subset["ids"], subset["documents"], subset["metadatas"]), 1):
+        md = md or {}
+        txt   = (doc or "").replace("\n", " ").strip()
+        ctype = md.get("content_type", md.get("type", "unknown"))
+        ftype = md.get("file_type", "—")
+        src   = md.get("source", "—")
+        page  = md.get("page")
+        idx   = md.get("idx")
+        chunk = md.get("chunk")
+        title = md.get("title")
+        pub   = md.get("published_at")
+
+        # 預覽（單行截斷）
+        preview = txt[:PREVIEW] + ("…" if len(txt) > PREVIEW else "")
+
+        print(f"#{i:02d}")
+        print_kv("ID", rid)
+        print_kv("Type", f"{ctype}|{ftype}")
+        print_kv("Source", src)
+        print_kv("Title", title)
+        print_kv("Date", pub)
+        print_kv("Page", page)
+        print_kv("Idx", idx)
+        print_kv("Chunk", chunk)
+        print_kv("Chars", len(txt))
+        print_kv("Preview", preview)
+        print("-" * 80)
+else:
+    print("沒有符合條件的切塊。")
