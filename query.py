@@ -2,6 +2,10 @@
 from typing import Set
 import os
 
+# 強制使用 safetensors 格式以避免 PyTorch 2.5.1 的安全限制
+os.environ["TRANSFORMERS_PREFER_SAFETENSORS"] = "1"
+os.environ["SENTENCE_TRANSFORMERS_USE_SAFETENSORS"] = "1"
+
 from operator import itemgetter
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
@@ -69,7 +73,7 @@ def make_scored_retriever(vdb, k: int = 10):
 def build_chain():
     # 1) LLM
     llm = ChatOllama(
-        model="cwchang/llama-3-taiwan-8b-instruct:latest",
+        model="qwen3:8b",
         temperature=0,
     ).with_config({
         "run_name": "Ollama-LLM",
@@ -81,7 +85,7 @@ def build_chain():
     prompt = ChatPromptTemplate.from_messages([
         ("system",
          "你是大同大學資工系問答機器人。你會得到跟問題相關的文件，你只依據提供的文件內容回答問題，"
-         "若無法從文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
+         "若無法從文件中找到答案，請清楚說明。always以繁體中文作答。\n\n"
          "{context}"),
         ("human", "{input}")
     ]).with_config({
@@ -95,9 +99,9 @@ def build_chain():
         "tags": ["chain", "stuff"],
     })
 
-    # 4) 向量庫 & 檢索器（含分數）
+    # 4) 向量庫 & 檢索器(含分數)
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_name="BAAI/bge-m3",
         model_kwargs={"device": "cuda"},
     )
     vectordb = Chroma(

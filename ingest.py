@@ -7,6 +7,10 @@ import hashlib
 from pathlib import Path
 from typing import List, Dict, Any
 
+# 強制使用 safetensors 格式以避免 PyTorch 2.5.1 的安全限制
+os.environ["TRANSFORMERS_PREFER_SAFETENSORS"] = "1"
+os.environ["SENTENCE_TRANSFORMERS_USE_SAFETENSORS"] = "1"
+
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
 from langchain_community.document_loaders import CSVLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -279,9 +283,9 @@ def main():
     type_count = Counter(d.metadata.get("type", "unknown") for d in final_docs)
     print("▶ 類型統計：", dict(type_count))
 
-    print("▶ 準備嵌入模型（多語）…")
+    print("▶ 準備嵌入模型(多語)…")
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_name="BAAI/bge-m3",
         model_kwargs={"device": "cuda"},
     )
 
