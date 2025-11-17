@@ -96,7 +96,7 @@ def sort_key(item):
 rows = sorted(zip(ids, metas), key=sort_key)
 
 # 3) 只挑前 K 筆再去取 documents 預覽
-K = 5           # 想要預覽幾筆
+K = 30           # 想要預覽幾筆
 PREVIEW = 180   # 每筆預覽字數
 pick_ids = [rid for rid, _ in rows[:K]]
 

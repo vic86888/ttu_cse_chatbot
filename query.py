@@ -2,9 +2,8 @@
 from typing import Set
 import os
 
-# 強制使用 safetensors 格式以避免 PyTorch 2.5.1 的安全限制
-os.environ["TRANSFORMERS_PREFER_SAFETENSORS"] = "1"
-os.environ["SENTENCE_TRANSFORMERS_USE_SAFETENSORS"] = "1"
+from datetime import datetime
+from zoneinfo import ZoneInfo  # 新增這行
 
 from operator import itemgetter
 from langchain_ollama import ChatOllama
@@ -16,11 +15,44 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables import RunnableLambda
 from langchain_core.documents import Document
 from langsmith import traceable
+from sentence_transformers import CrossEncoder
 
 DB_DIR = "storage/chroma"
 COLL_NAME = "campus_rag"
 
+EVENT_KEYWORDS = [
+    "新聞", "消息", "news", "最新",
+    "最近", "活動", "說明會", "講座", "論壇", "營隊", "徵才"
+]
+
+from langchain_core.documents import Document
+
+def rerank_docs(query: str, docs: list[Document], top_n: int) -> list[Document]:
+    """用 cross-encoder 對候選文件重新排序，只保留前 top_n。"""
+    if not docs:
+        return []
+
+    pairs = [[query, d.page_content] for d in docs]
+    scores = reranker.predict(pairs)  # 長度 = len(docs) 的 numpy array
+
+    scored = sorted(
+        zip(docs, scores),
+        key=lambda x: float(x[1]),
+        reverse=True,
+    )
+
+    out: list[Document] = []
+    for doc, s in scored[:top_n]:
+        md = dict(doc.metadata) if doc.metadata else {}
+        md["rerank_score"] = float(s)  # 之後 debug 好看一點
+        out.append(Document(page_content=doc.page_content, metadata=md))
+
+    return out
+
 def make_scored_retriever(vdb, k: int = 10):
+    # 先抓比較多，再給 reranker 挑前 k
+    k_retrieve = max(k * 4, 20)
+
     def _retrieve(query: str):
         def as_docs(pairs):
             out = []
@@ -30,20 +62,20 @@ def make_scored_retriever(vdb, k: int = 10):
                 out.append(Document(page_content=doc.page_content, metadata=md))
             return out
 
-        # 判斷是否像在問「新聞/最新消息」
         q = (query or "").lower()
-        prefer_news = any(kw in q for kw in ["新聞", "消息", "news", "最新"])
+        prefer_news = any(kw in q for kw in EVENT_KEYWORDS)
 
         docs: list[Document] = []
         if prefer_news:
-            # LangChain Chroma 支援 filter=dict → 對應 Chroma where
             news_pairs = vdb.similarity_search_with_relevance_scores(
-                query, k=k, filter={"content_type": "news"}
+                query, k=k_retrieve, filter={"content_type": "news"}
             )
             docs.extend(as_docs(news_pairs))
 
-            if len(docs) < k:
-                more_pairs = vdb.similarity_search_with_relevance_scores(query, k=k)
+            if len(docs) < k_retrieve:
+                more_pairs = vdb.similarity_search_with_relevance_scores(
+                    query, k=k_retrieve
+                )
                 docs.extend(as_docs(more_pairs))
 
             # 去重（source+article_id 或 source+idx）
@@ -51,29 +83,40 @@ def make_scored_retriever(vdb, k: int = 10):
             uniq = []
             for d in docs:
                 md = d.metadata or {}
-                key = ("article", md.get("source"), md.get("article_id")) if md.get("article_id") \
+                key = (
+                    ("article", md.get("source"), md.get("article_id"))
+                    if md.get("article_id")
                     else ("row", md.get("source"), md.get("idx"))
-                if key in seen: 
+                )
+                if key in seen:
                     continue
                 seen.add(key)
                 uniq.append(d)
-            docs = uniq[:k]
+            docs = uniq
         else:
-            pairs = vdb.similarity_search_with_relevance_scores(query, k=k)
+            pairs = vdb.similarity_search_with_relevance_scores(
+                query, k=k_retrieve
+            )
             docs = as_docs(pairs)
 
+        # ⭐ 最關鍵：用 cross-encoder 重新排序，只保留前 k 個
+        docs = rerank_docs(query, docs, top_n=k)
         return docs
 
     return RunnableLambda(_retrieve).with_config({
-        "run_name": "ChromaRetriever(scored)",
-        "tags": ["retriever", "chroma", "with-scores"],
+        "run_name": "ChromaRetriever+Reranker",
+        "tags": ["retriever", "chroma", "with-scores", "rerank"],
         "metadata": {"k": k}
     })
+
+RERANK_MODEL_NAME = "BAAI/bge-reranker-base"
+reranker = CrossEncoder(RERANK_MODEL_NAME, device="cpu")
 
 def build_chain():
     # 1) LLM
     llm = ChatOllama(
-        model="qwen3:8b",
+#        model="cwchang/llama-3-taiwan-8b-instruct:latest",
+        model="qwen3:latest",
         temperature=0,
     ).with_config({
         "run_name": "Ollama-LLM",
@@ -82,16 +125,18 @@ def build_chain():
     })
 
     # 2) 提示詞
+    from langchain_core.prompts import ChatPromptTemplate
+
     prompt = ChatPromptTemplate.from_messages([
         ("system",
-         "你是大同大學資工系問答機器人。你會得到跟問題相關的文件，你只依據提供的文件內容回答問題，"
-         "若無法從文件中找到答案，請清楚說明。always以繁體中文作答。\n\n"
-         "{context}"),
+        "你是大同大學資工系問答機器人。\n"
+        "今天日期是：{today}，現在時間是：{now_time}（台北時間）。\n"
+        "學年等於民國紀年，114學年就是2025年"
+        "你會得到跟問題相關的文件，你只依據提供的文件內容回答問題，"
+        "若無法從文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
+        "{context}"),
         ("human", "{input}")
-    ]).with_config({
-        "run_name": "StuffPrompt",
-        "tags": ["prompt", "stuff"],
-    })
+    ])
 
     # 3) stuff chain
     doc_chain = create_stuff_documents_chain(llm=llm, prompt=prompt).with_config({
@@ -102,7 +147,9 @@ def build_chain():
     # 4) 向量庫 & 檢索器(含分數)
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-m3",
+        # model_kwargs={"device": "cpu"},
         model_kwargs={"device": "cuda"},
+        encode_kwargs={"normalize_embeddings": True},  # 🔴 很推薦加
     )
     vectordb = Chroma(
         collection_name=COLL_NAME,
@@ -111,7 +158,7 @@ def build_chain():
     )
 
     # ✨ 關鍵：建立 scored_retriever，然後用 itemgetter 抽出 input 字串再餵檢索器
-    scored_retriever = make_scored_retriever(vectordb, k=20)
+    scored_retriever = make_scored_retriever(vectordb, k=10) #　k=5　課本內容太多
     retriever_runnable = itemgetter("input") | scored_retriever  # dict -> str -> [Document]
 
     # 5) RAG 鏈（retriever + combine_docs）
@@ -119,7 +166,31 @@ def build_chain():
         "run_name": "CampusRAG",
         "tags": ["campus-rag", "cli"],
     })
-    return rag_chain
+
+    # ➕ 包一層：自動加上 today
+    def inject_today(inputs: dict) -> dict:
+        """在每次呼叫時，動態注入今天日期字串。"""
+        # 明確使用台北時間，而不是系統預設時區
+        now = datetime.now(ZoneInfo("Asia/Taipei"))
+        today_str = now.strftime("%Y-%m-%d")          # 例如：2025-11-17
+        # 如果你想要民國格式，可以再多一個：
+        roc_year = now.year - 1911
+        today_roc = f"{roc_year}年{now.month}月{now.day}日"
+
+        # 可以選擇用哪一個給 LLM，看你偏好：
+        # HH:MM:SS（24 小時制）
+        now_time = now.strftime("%H:%M:%S")  # 例如 "14:03:27"
+
+        return {
+            **inputs,
+            "today": today_roc,
+            "now_time": now_time,
+        }
+        # return {**inputs, "today": today_str} # 今天日期是：(民國)114年11月17日
+
+    full_chain = RunnableLambda(inject_today) | rag_chain
+
+    return full_chain
 
 def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
     seen = set()
@@ -151,12 +222,10 @@ def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
 
         display_idx = len(rows) + 1
 
-        raw = md.get("relevance")
-        try:
-            score = float(raw) if raw is not None else None
-        except Exception:
-            score = None
-        score_str = f"{score:.3f}" if score is not None else "—"
+        rel = md.get("relevance")
+        rr  = md.get("rerank_score")
+        rel_str = f"{float(rel):.3f}" if rel is not None else "—"
+        rr_str  = f"{float(rr):.3f}" if rr is not None else "—"
 
         text = (d.page_content or "").replace("\n", " ").strip()
         snippet = (text[:max_chars] + "…") if len(text) > max_chars else text
@@ -170,7 +239,10 @@ def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
             extra = f"（chunk {chunk}）"
 
         header = f"{display_idx}. [{ctype}] {src}{extra}"
-        rows.append(f"{header}\n   └ 分數：{score_str}｜片段：{snippet}")
+        rows.append(
+            f"{header}\n"
+            f"   └ 向量分數：{rel_str}｜rerank 分數：{rr_str}｜片段：{snippet}"
+        )
 
     return "\n".join(rows)
 
@@ -185,6 +257,7 @@ if __name__ == "__main__":
     try:
         while True:
             q = input("> ")
+            # q += time()
             res = ask(chain, q)
             print("\n🧠 答案：\n", res["answer"], "\n", sep="")
             print("📚 來源、分數與片段：")
