@@ -23,9 +23,10 @@ COLL_NAME = "campus_rag"
 # =========================
 def detect_schema(obj: Any) -> str:
     """
-    回傳 "people" / "news" / "unknown"
+    回傳 "people" / "news" / "school" / "unknown"
     - people: 有「人物」「電話」「信箱」等鍵
     - news:   有 "url","title","published_at","content"
+    - school: 有「名稱」「英文名稱」「校訓」等鍵（例如 about_schoo.json）
     """
     sample = None
     if isinstance(obj, list) and obj:
@@ -36,40 +37,500 @@ def detect_schema(obj: Any) -> str:
         return "unknown"
 
     keys = set(sample.keys())
+    # 老師名錄
     if {"人物", "電話", "信箱"} & keys:
         return "people"
+    # 系網新聞
     if {"url", "title", "published_at", "content"} <= keys:
         return "news"
+    # 學校基本資料（about_schoo.json）
+    if {"名稱", "英文名稱", "校訓"} <= keys:
+        return "school"
+    if "類別" in keys and ("內容" in keys or "說明" in keys):
+        return "academic_rules"
+    if ("辦理項目" in keys and "承辦人" in keys) or ("學系" in keys and "聯絡人員" in keys):
+        return "contacts"
+    if {"學年學期", "課號", "課程名稱", "教師"} <= keys:
+        return "course_history"
+    if {"選別", "學年學期", "課程名稱"} <= keys and not ({"課號", "教師"} & keys):
+        return "course_overview"
     return "unknown"
 
+# =========================
+# course_overview.json（課程總覽） adapter
+# =========================
+
+def course_overview_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+
+    def parse_year_term(s: str) -> tuple[int | None, str]:
+        """簡單把 '113上' 拆成 (113, '上')，失敗就 (None, '')。"""
+        s = (s or "").strip()
+        if not s:
+            return None, ""
+        year = None
+        for i, ch in enumerate(s):
+            if not ch.isdigit():
+                try:
+                    year = int(s[:i])
+                except Exception:
+                    year = None
+                term = s[i:]
+                return year, term
+        try:
+            return int(s), ""
+        except Exception:
+            return None, ""
+
+    for i, rec in enumerate(data, 1):
+        year_term_raw = str(rec.get("學年學期", "")).strip()
+        year, term = parse_year_term(year_term_raw)
+
+        select_type = str(rec.get("選別", "")).strip()   # 必修 / 選修
+
+        names = rec.get("課程名稱") or []
+        if not isinstance(names, list):
+            names = [names]
+        # 清掉空字串，全部轉成 str
+        names = [str(n).strip() for n in names if str(n).strip()]
+        course_count = len(names)
+        courses_str = "、".join(names)
+
+        # 給 LLM 的文字內容
+        lines = [
+            f"學年學期：{year_term_raw}",
+            f"選別：{select_type}",
+            "課程名稱列表：",
+        ]
+        lines.extend([f"- {n}" for n in names])
+        text = "\n".join(lines)
+
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "course_overview",        # 給統計/除錯用
+            "content_type": "course_overview",# 之後 filter 用這個
+
+            "year_term": year_term_raw,
+            "year": year,                     # int 或 None
+            "term": term,                     # "上" / "下" / ""
+
+            "select_type": select_type,       # 必修 / 選修
+            "course_count": course_count,     # int
+            "courses": courses_str,           # ✅ 字串，不是 list
+
+            "idx": i,
+            "needs_split": False,             # 不再切塊
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+
+# =========================
+# course_history.json（歷年課程資料） adapter
+# =========================
+
+def course_records_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+
+    def parse_year_term(s: str) -> tuple[int | None, str]:
+        # e.g. "113上" / "113下"
+        s = (s or "").strip()
+        if not s:
+            return None, ""
+        year = None
+        for i, ch in enumerate(s):
+            if not ch.isdigit():
+                try:
+                    year = int(s[:i])
+                except Exception:
+                    year = None
+                term = s[i:]
+                return year, term
+        try:
+            return int(s), ""
+        except Exception:
+            return None, ""
+
+    for i, rec in enumerate(data, 1):
+        yt = rec.get("學年學期", "")
+        year, term = parse_year_term(yt)
+
+        code = rec.get("課號", "") or ""
+        name = rec.get("課程名稱", "") or ""
+        teacher = rec.get("教師", "") or ""
+        category = rec.get("選別", "") or ""
+        dept = rec.get("所屬系所", "") or ""
+
+        credit_raw = rec.get("學分", None)
+        try:
+            credits = float(credit_raw) if credit_raw not in (None, "", " ") else None
+        except Exception:
+            credits = None
+
+        # 給 LLM 的文字
+        lines = [
+            f"學年學期：{yt}",
+            f"課號：{code}",
+            f"課程名稱：{name}",
+            f"教師：{teacher}",
+            f"選別：{category}",
+            f"學分：{credits if credits is not None else ''}",
+            f"所屬系所：{dept}",
+        ]
+        text = "\n".join(lines)
+
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "course_history",      # 統計用
+            "content_type": "course",      # 之後 filter 用這個
+
+            "year_term": yt,
+            "year": year,                  # int or None
+            "term": term,                  # "上" / "下" / ""
+
+            "course_code": code,
+            "course_name": name,
+            "teacher": teacher,
+            "category": category,          # "必修" / "選修"
+            "required": (category == "必修"),
+            "credits": credits,            # float or None
+            "department": dept,
+
+            "idx": i,
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+
+# =========================
+# contact.json（聯絡資訊） adapter
+# =========================
+def contact_records_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+
+    for i, rec in enumerate(data, 1):
+        if "辦理項目" in rec:  # 行政/招生類
+            role = "service"
+            item = rec.get("辦理項目", "").strip()
+            person = rec.get("承辦人", "").strip()
+            ext = rec.get("分機", "").strip()
+
+            lines = [
+                f"辦理項目：{item}",
+                f"承辦人：{person}",
+                f"聯絡電話：{ext}",
+            ]
+        elif "學系" in rec:   # 各學系聯絡人
+            role = "department"
+            dept = rec.get("學系", "").strip()
+            person = rec.get("聯絡人員", "").strip()
+            ext = rec.get("分機", "").strip()
+
+            lines = [
+                f"學系：{dept}",
+                f"聯絡人員：{person}",
+                f"聯絡電話：{ext}",
+            ]
+        else:
+            # 保險：不符合預期欄位就 flatten 一下
+            role = "unknown"
+            lines = [f"{k}：{v}" for k, v in rec.items()]
+
+        text = "\n".join(lines)
+
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "contact",           # 給你統計用
+            "content_type": "contact",   # 之後 filter 用這個
+            "role": role,                # "service" or "department"
+            "item": rec.get("辦理項目") or "",
+            "department": rec.get("學系") or "",
+            "person": rec.get("承辦人") or rec.get("聯絡人員") or "",
+            "phone": rec.get("分機") or "",
+            "idx": i,
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+
+# =========================
+# academic_requirements.json（學則/畢業規定） adapter
+# =========================
+def academic_records_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+
+    def infer_topic(category: str) -> str:
+        if "修業規定" in category:
+            return "graduation"
+        if "專題" in category:
+            return "capstone"
+        if "輔系" in category:
+            return "minor"
+        if "轉系" in category:
+            return "transfer"
+        if "實習" in category:
+            return "internship"
+        if "口試" in category:
+            return "thesis_oral"
+        return "general"
+
+    for i, rec in enumerate(data, 1):
+        category = rec.get("類別", "").strip()
+        topic = infer_topic(category)
+
+        lines = [f"類別：{category}"]
+        for k, v in rec.items():
+            if k == "類別":
+                continue
+            # 統一成「欄名：內容」的格式
+            lines.append(f"{k}：{v}")
+        text = "\n".join(lines)
+
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "academic_rules",
+            "content_type": "academic_rule",
+            "category": category,
+            "topic": topic,   # 單一字串，方便 filter
+            "idx": i,
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+
+# =========================
+# school（學校資訊） adapter
+# =========================
+def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
+    """
+    將 about_schoo.json 這類「學校資訊」整理成一份 Document，
+    並在 metadata 裡補充常用欄位（校名、校訓、網址等）。
+    """
+    # 預期格式：list[dict]
+    if not isinstance(obj, list) or not obj:
+        text = str(obj)
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "content_type": "school",
+            "needs_split": False,
+        }
+        return [Document(page_content=text, metadata=meta)]
+
+    # 做個安全的 helper：從不同 block 抓 key
+    def find_key(key: str, default: str = "") -> Any:
+        for block in obj:
+            if isinstance(block, dict) and key in block:
+                return block[key]
+        return default
+
+    # 基本資訊
+    name = find_key("名稱", "")
+    name_en = find_key("英文名稱", "")
+    motto = find_key("校訓", "")
+    founded_at = find_key("成立時間", "")
+    founder = find_key("創辦人", "")
+    school_type = find_key("類型", "")
+
+    address = find_key("地址", "")
+    phone = find_key("電話", "")
+    emergency_phone = find_key("緊急校安專線", "")
+    fax = find_key("傳真", "")
+    president_phone = find_key("校長室電話", "")
+    president_fax = find_key("校長室傳真", "")
+    president_email = find_key("校長室 email", "")
+
+    school_code = find_key("學校代碼", "")
+    url = find_key("網址", "")
+    departments = find_key("系所結構", [])
+    if isinstance(departments, list):
+        departments_str = "、".join(map(str, departments))
+    else:
+        departments_str = str(departments) if departments else ""
+
+    prev_name = find_key("前身", "")
+    reorg_at = find_key("改制時間", "")
+    rename_at = find_key("更名時間", "")
+    feature = find_key("特色", "")
+
+    # 給 LLM 看的文字內容（你可以之後再微調格式）
+    lines = [
+        f"名稱：{name}",
+        f"英文名稱：{name_en}",
+        f"校訓：{motto}",
+        f"成立時間：{founded_at}",
+        f"創辦人：{founder}",
+        f"類型：{school_type}",
+        "",
+        f"地址：{address}",
+        f"電話：{phone}",
+        f"緊急校安專線：{emergency_phone}",
+        f"傳真：{fax}",
+        f"校長室電話：{president_phone}",
+        f"校長室傳真：{president_fax}",
+        f"校長室 email：{president_email}",
+        "",
+        f"學校代碼：{school_code}",
+        f"網址：{url}",
+        f"系所結構：{departments_str}",
+        "",
+        f"前身：{prev_name}",
+        f"改制時間：{reorg_at}",
+        f"更名時間：{rename_at}",
+        f"特色：{feature}",
+    ]
+    text = "\n".join(lines)
+
+    meta = {
+        "source": source_path,
+        "file_type": "json",
+        "content_type": "school",
+        "name": name,
+        "name_en": name_en,
+        "motto": motto,
+        "founded_at": founded_at,
+        "founder": founder,
+        "school_type": school_type,
+        "address": address,
+        "phone": phone,
+        "emergency_phone": emergency_phone,
+        "fax": fax,
+        "president_phone": president_phone,
+        "president_fax": president_fax,
+        "president_email": president_email,
+        "school_code": school_code,
+        "url": url,
+        "departments": departments_str,   # ✅ 存成純字串就沒問題
+        "prev_name": prev_name,
+        "reorg_at": reorg_at,
+        "rename_at": rename_at,
+        "feature": feature,
+        "needs_split": False,  # 這份本來就不長，不再二次切塊
+        "idx": 1,
+    }
+
+    return [Document(page_content=text, metadata=meta)]
 
 # =========================
 # people（老師名錄） adapter
 # =========================
-_name_title_pat = re.compile(r"^\s*(?P<name>[\u4e00-\u9fa5A-Za-z0-9．・\s]+)\s*(?P<title>.+)?$")
+_name_title_pat = re.compile(
+    r"^\s*(?P<name>[\u4e00-\u9fa5A-Za-z0-9．・]+)\s*(?P<title>.+)?$"
+)
 
 def _parse_name_title(s: str) -> Dict[str, str]:
     m = _name_title_pat.match(s or "")
     if not m:
         return {"name": s or "", "title": ""}
+
     name = (m.group("name") or "").strip().replace("\u00a0", " ")
-    title = (m.group("title") or "").strip(" ,，")
+    title = (m.group("title") or "").strip(" ,，").replace("\u00a0", " ")
+
+    # 有些來源會把「職稱/職務：」這段也塞進來，這邊順便清掉開頭的標籤
+    if title.startswith("職稱/職務"):
+        title = re.sub(r"^職稱/職務[:：]?\s*", "", title)
+
     return {"name": name, "title": title}
 
+
+def _split_meta(raw: str) -> Dict[str, str]:
+    """
+    把原本塞在 metadata 的字串拆成三塊：
+    - education: 學歷
+    - experience: 經歷
+    - expertise: 教學與研究領域
+    這樣就不會在「研究領域」裡再把學歷、經歷重複印一次。
+    """
+    raw = (raw or "").strip()
+    if not raw:
+        return {"education": "", "experience": "", "expertise": ""}
+
+    education = ""
+    experience = ""
+    expertise = ""
+
+    txt = raw
+
+    # 先切掉「教學與研究領域」那一段，剩下前面給學歷/經歷用
+    head, sep, tail = txt.partition("教學與研究領域")
+    if sep:  # 有找到教學與研究領域
+        txt = head.strip()
+        expertise = tail.lstrip(" ：:").strip()
+    else:
+        txt = raw
+
+    # 處理學歷 / 經歷
+    if "學歷" in txt or "經歷" in txt:
+        if "學歷" in txt:
+            after_degree = txt.split("學歷", 1)[1]
+            after_degree = after_degree.lstrip(" ：:").strip()
+        else:
+            after_degree = txt
+
+        if "經歷" in after_degree:
+            part_deg, part_exp = after_degree.split("經歷", 1)
+            education = part_deg.strip(" 。\n\r\t")
+            experience = part_exp.lstrip(" ：:").strip()
+        else:
+            education = after_degree.strip(" 。\n\r\t")
+    else:
+        # 沒有特別標學歷/經歷，就全部當成研究/教學說明
+        if not expertise:
+            expertise = raw
+
+    return {
+        "education": education,
+        "experience": experience,
+        "expertise": expertise,
+    }
+
+
 def _fmt_people_page_content(meta: Dict[str, Any]) -> str:
-    return "\n".join([
+    lines = [
         f"姓名：{meta.get('name','')}",
         f"職稱/職務：{meta.get('title','')}",
         f"辦公室：{meta.get('office','')}",
         f"分機/電話：{meta.get('phone','')}",
         f"Email：{meta.get('email','')}",
-        f"研究領域：{meta.get('expertise','')}",
-    ])
+    ]
+    if meta.get("education"):
+        lines.append(f"學歷：{meta['education']}")
+    if meta.get("experience"):
+        lines.append(f"經歷：{meta['experience']}")
+    if meta.get("expertise"):
+        lines.append(f"研究領域：{meta['expertise']}")
+    return "\n".join(lines)
 
-def people_records_to_documents(data: List[Dict[str, Any]], source_path: str) -> List[Document]:
+
+def people_records_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
     docs: List[Document] = []
     for i, rec in enumerate(data, 1):
         who = _parse_name_title(rec.get("人物", ""))
+
+        raw_meta = rec.get("metadata") or ""
+        meta_parsed = _split_meta(raw_meta)
+
         meta = {
             "source": source_path,
             "file_type": "json",
@@ -79,15 +540,19 @@ def people_records_to_documents(data: List[Dict[str, Any]], source_path: str) ->
             "phone": rec.get("電話"),
             "email": rec.get("信箱"),
             "office": rec.get("辦公室"),
-            # 原始 JSON 多半把研究領域塞在 "metadata" 欄位前綴字串；這裡清掉前綴
-            "expertise": (rec.get("metadata") or "").replace("教學與研究領域 :", "").strip(),
+            "education": meta_parsed["education"],
+            "experience": meta_parsed["experience"],
+            "expertise": meta_parsed["expertise"],
             "idx": i,
-            # 標示：這類文件不需要再 split
             "needs_split": False,
         }
-        docs.append(Document(page_content=_fmt_people_page_content(meta), metadata=meta))
-    return docs  # 一人一段，不再切塊
-
+        docs.append(
+            Document(
+                page_content=_fmt_people_page_content(meta),
+                metadata=meta,
+            )
+        )
+    return docs
 
 # =========================
 # news（系網新聞） adapter
@@ -191,6 +656,21 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "news":
         data = obj if isinstance(obj, list) else [obj]
         return news_records_to_documents(data, str(path))
+    elif schema == "school":
+        # 直接交給 school adapter 處理（不再 flatten）
+        return school_info_to_documents(obj, str(path))
+    elif schema == "academic_rules":
+        data = obj if isinstance(obj, list) else [obj]
+        return academic_records_to_documents(data, str(path))
+    elif schema == "contacts":
+        data = obj if isinstance(obj, list) else [obj]
+        return contact_records_to_documents(data, str(path))
+    elif schema == "course_history":
+        data = obj if isinstance(obj, list) else [obj]
+        return course_records_to_documents(data, str(path))
+    elif schema == "course_overview":
+        data = obj if isinstance(obj, list) else [obj]
+        return course_overview_to_documents(data, str(path))
     else:
         # 後備：不認得的 JSON → 扁平化成一份 Document（仍保留 metadata）
         def flatten(o):
@@ -276,17 +756,18 @@ def main():
 
     # 統計各 type 方便你檢查
     from collections import Counter
-    type_count = Counter(d.metadata.get("type", "unknown") for d in final_docs)
-    print("▶ 類型統計：", dict(type_count))
+    ctype_count = Counter(
+        d.metadata.get("content_type", d.metadata.get("type", "unknown"))
+        for d in final_docs
+    )
+    print("▶ 類型統計：", dict(ctype_count))
 
     print("▶ 準備嵌入模型（多語）…")
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_name="BAAI/bge-m3",
         model_kwargs={"device": "cuda"},
+        encode_kwargs={"normalize_embeddings": True},  # 👈 跟 query.py 一樣
     )
-
-    def logistic_from_distance(d: float) -> float:
-        return 1.0 / (1.0 + math.exp(d))
 
     print("▶ 建立/更新 Chroma 向量庫…")
     vectordb = Chroma(
@@ -294,7 +775,6 @@ def main():
         embedding_function=embeddings,
         persist_directory=DB_DIR,
         collection_metadata={"hnsw:space": "cosine"},   # 距離度量：cosine / l2 / ip
-        relevance_score_fn=logistic_from_distance       # 距離→0~1 的轉換
     )
 
     # 穩定 ID：避免重複寫入；同內容+同來源會得到相同 id

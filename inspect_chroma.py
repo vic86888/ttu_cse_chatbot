@@ -53,7 +53,7 @@ print(col.count())                 # collection 中的紀錄數
 # inspect_chroma.py（替換底部查詢那段）
 
 print("\n=== 指定你想看的來源檔名（不直接取全文） ===")
-SRC = "data/department_members.json"   # 你要看的來源檔
+SRC = "data/ttu_cse_news.sorted.json"   # 你要看的來源檔
 FILTER_CONTENT_TYPE = None              # 例如 "news"；不過濾請設 None
 
 # 1) 先拿 ids + metadatas（不抓 documents）
@@ -96,7 +96,7 @@ def sort_key(item):
 rows = sorted(zip(ids, metas), key=sort_key)
 
 # 3) 只挑前 K 筆再去取 documents 預覽
-K = 5           # 想要預覽幾筆
+K = 30           # 想要預覽幾筆
 PREVIEW = 180   # 每筆預覽字數
 pick_ids = [rid for rid, _ in rows[:K]]
 
