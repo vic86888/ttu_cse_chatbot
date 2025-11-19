@@ -36,6 +36,14 @@ def detect_schema(obj: Any) -> str:
     if isinstance(obj, list) and obj:
         sample = obj[0]
     elif isinstance(obj, dict):
+        # 檢查是否是新格式的教職員資料（有 "成員列表" 鍵）
+        if "成員列表" in obj and isinstance(obj["成員列表"], list):
+            return "people"
+        # 檢查是否是新格式的課程歷史資料（有 "總覽" 和 "課程列表" 鍵）
+        if "總覽" in obj and isinstance(obj.get("總覽"), dict):
+            overview = obj["總覽"]
+            if "課程列表" in overview:
+                return "course_history"
         sample = obj
     else:
         return "unknown"
@@ -694,7 +702,11 @@ def load_json_as_documents(path: Path) -> List[Document]:
 
     schema = detect_schema(obj)
     if schema == "people":
-        data = obj if isinstance(obj, list) else [obj]
+        # 處理新格式：有 "成員列表" 鍵
+        if isinstance(obj, dict) and "成員列表" in obj:
+            data = obj["成員列表"]
+        else:
+            data = obj if isinstance(obj, list) else [obj]
         return people_records_to_documents(data, str(path))
     elif schema == "news":
         data = obj if isinstance(obj, list) else [obj]
@@ -709,7 +721,11 @@ def load_json_as_documents(path: Path) -> List[Document]:
         data = obj if isinstance(obj, list) else [obj]
         return contact_records_to_documents(data, str(path))
     elif schema == "course_history":
-        data = obj if isinstance(obj, list) else [obj]
+        # 處理新格式：有 "總覽" 和 "課程列表" 鍵
+        if isinstance(obj, dict) and "總覽" in obj:
+            data = obj["總覽"].get("課程列表", [])
+        else:
+            data = obj if isinstance(obj, list) else [obj]
         return course_records_to_documents(data, str(path))
     elif schema == "course_overview":
         data = obj if isinstance(obj, list) else [obj]
