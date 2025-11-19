@@ -63,8 +63,7 @@ def organize_courses_by_type_and_semester():
             "選別": course_type,
             "學年學期": semester,
             "所屬年級": grade,
-            "課程名稱": sorted(list(course_names)),  # 轉換為排序後的列表
-            "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+            "課程名稱": sorted(list(course_names))  # 轉換為排序後的列表
         })
     
     # 儲存為 JSON 檔案(使用已定義的 data_dir)

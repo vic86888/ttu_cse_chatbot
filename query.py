@@ -17,6 +17,14 @@ from langchain_core.documents import Document
 from langsmith import traceable
 from sentence_transformers import CrossEncoder
 
+# Rich 套件用於美化終端輸出
+from rich.console import Console
+from rich.markdown import Markdown
+from rich.panel import Panel
+from rich.prompt import Prompt
+
+console = Console()
+
 DB_DIR = "storage/chroma"
 COLL_NAME = "campus_rag"
 
@@ -110,7 +118,7 @@ def make_scored_retriever(vdb, k: int = 10):
     })
 
 RERANK_MODEL_NAME = "BAAI/bge-reranker-base"
-reranker = CrossEncoder(RERANK_MODEL_NAME, device="cuda")  # 沒 GPU 就拿掉 device
+reranker = CrossEncoder(RERANK_MODEL_NAME, device="gpu")
 
 def build_chain():
     # 1) LLM
@@ -130,10 +138,9 @@ def build_chain():
     prompt = ChatPromptTemplate.from_messages([
         ("system",
         "你是大同大學資工系問答機器人。\n"
-        "今天日期是：{today}，現在時間是：{now_time}（台北時間）。\n"
-        "學年等於民國紀年，114學年就是2025年"
-        "你會得到跟問題相關的文件，你只依據提供的文件內容回答問題，"
-        "若無法從文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
+        "學年等於民國紀年,114學年就是2025年。"
+        "你會得到跟問題相關的文件,你只依據提供的文件內容回答問題,"
+        "若無法從文件中找到答案,請清楚說明。請以繁體中文作答。\n\n"
         "{context}"),
         ("human", "{input}")
     ])
@@ -144,9 +151,10 @@ def build_chain():
         "tags": ["chain", "stuff"],
     })
 
-    # 4) 向量庫 & 檢索器（含分數）
+    # 4) 向量庫 & 檢索器(含分數)
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-m3",
+        # model_kwargs={"device": "cpu"},
         model_kwargs={"device": "cuda"},
         encode_kwargs={"normalize_embeddings": True},  # 🔴 很推薦加
     )
@@ -166,30 +174,7 @@ def build_chain():
         "tags": ["campus-rag", "cli"],
     })
 
-    # ➕ 包一層：自動加上 today
-    def inject_today(inputs: dict) -> dict:
-        """在每次呼叫時，動態注入今天日期字串。"""
-        # 明確使用台北時間，而不是系統預設時區
-        now = datetime.now(ZoneInfo("Asia/Taipei"))
-        today_str = now.strftime("%Y-%m-%d")          # 例如：2025-11-17
-        # 如果你想要民國格式，可以再多一個：
-        roc_year = now.year - 1911
-        today_roc = f"{roc_year}年{now.month}月{now.day}日"
-
-        # 可以選擇用哪一個給 LLM，看你偏好：
-        # HH:MM:SS（24 小時制）
-        now_time = now.strftime("%H:%M:%S")  # 例如 "14:03:27"
-
-        return {
-            **inputs,
-            "today": today_roc,
-            "now_time": now_time,
-        }
-        # return {**inputs, "today": today_str} # 今天日期是：(民國)114年11月17日
-
-    full_chain = RunnableLambda(inject_today) | rag_chain
-
-    return full_chain
+    return rag_chain
 
 def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
     seen = set()
@@ -247,20 +232,55 @@ def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
 
 @traceable(name="CLI-Ask", run_type="chain", metadata={"app": "campus_rag_cli"})
 def ask(chain, q: str):
-    return chain.invoke({"input": q})
+    """執行查詢,自動在問題前加上當前時間資訊"""
+    # 取得台北時間
+    now = datetime.now(ZoneInfo("Asia/Taipei"))
+    roc_year = now.year - 1911
+    today_roc = f"{roc_year}年{now.month}月{now.day}日"
+    # now_time = now.strftime("%H:%M:%S")
+    
+    # 將時間資訊附加到問題前面
+    # timestamped_q = f"[當前時間: {today_roc} {now_time}] {q}"
+    timestamped_q = f"[當前時間: {today_roc} ] {q}"
+    
+    return chain.invoke({"input": timestamped_q})
 
 if __name__ == "__main__":
     # 需要：export LANGSMITH_TRACING=true 與 LANGSMITH_API_KEY
     chain = build_chain()
-    print("💬 請輸入你的問題（Ctrl+C 結束）：")
+    
+    # 使用 rich 顯示歡迎訊息
+    console.print(Panel.fit(
+        "💬 大同大學資工系問答機器人\n輸入問題開始對話，按 Ctrl+C 結束",
+        title="歡迎",
+        border_style="cyan"
+    ))
+    
     try:
         while True:
-            q = input("> ")
-            # q += time()
+            # 使用 rich 的 Prompt 取代 input
+            q = Prompt.ask("\n[bold cyan]❓ 你的問題[/bold cyan]")
+            
+            if not q.strip():
+                continue
+            
+            # 執行查詢
             res = ask(chain, q)
-            print("\n🧠 答案：\n", res["answer"], "\n", sep="")
-            print("📚 來源、分數與片段：")
-            print(pretty_print_snippets_with_scores(res["context"]))
-            print("-" * 60)
+            
+            # 使用 rich Markdown 渲染答案
+            console.print("\n[bold green]🧠 答案：[/bold green]")
+            console.print(Panel(
+                Markdown(res["answer"]),
+                border_style="green",
+                padding=(1, 2)
+            ))
+            
+            # 顯示來源資訊
+            console.print("\n[bold yellow]📚 參考來源：[/bold yellow]")
+            sources_text = pretty_print_snippets_with_scores(res["context"])
+            console.print(sources_text)
+            
+            console.print("[dim]" + "─" * 80 + "[/dim]\n")
+            
     except KeyboardInterrupt:
-        print("\n再見！")
+        console.print("\n[bold blue]👋 再見！[/bold blue]")

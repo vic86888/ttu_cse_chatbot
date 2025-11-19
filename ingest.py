@@ -7,6 +7,10 @@ import hashlib
 from pathlib import Path
 from typing import List, Dict, Any
 
+# 強制使用 safetensors 格式以避免 PyTorch 2.5.1 的安全限制
+os.environ["TRANSFORMERS_PREFER_SAFETENSORS"] = "1"
+os.environ["SENTENCE_TRANSFORMERS_USE_SAFETENSORS"] = "1"
+
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
 from langchain_community.document_loaders import CSVLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -37,8 +41,8 @@ def detect_schema(obj: Any) -> str:
         return "unknown"
 
     keys = set(sample.keys())
-    # 老師名錄
-    if {"人物", "電話", "信箱"} & keys:
+    # 老師名錄 (支援兩種格式: 舊格式用「人物」, 新格式用「姓名」+「職稱」+「系所」)
+    if {"人物", "電話", "信箱"} & keys or {"姓名", "職稱", "信箱"} <= keys:
         return "people"
     # 系網新聞
     if {"url", "title", "published_at", "content"} <= keys:
@@ -52,7 +56,7 @@ def detect_schema(obj: Any) -> str:
         return "contacts"
     if {"學年學期", "課號", "課程名稱", "教師"} <= keys:
         return "course_history"
-    if {"選別", "學年學期", "課程名稱"} <= keys and not ({"課號", "教師"} & keys):
+    if {"選別", "學年學期", "所屬年級", "課程名稱"} <= keys and not ({"課號", "教師"} & keys):
         return "course_overview"
     return "unknown"
 
@@ -89,6 +93,8 @@ def course_overview_to_documents(
         year, term = parse_year_term(year_term_raw)
 
         select_type = str(rec.get("選別", "")).strip()   # 必修 / 選修
+        grade = str(rec.get("所屬年級", "")).strip()     # 一年級 / 二年級 / 三年級 / 四年級
+        data_source = str(rec.get("資料來源", "")).strip()  # URL
 
         names = rec.get("課程名稱") or []
         if not isinstance(names, list):
@@ -100,11 +106,14 @@ def course_overview_to_documents(
 
         # 給 LLM 的文字內容
         lines = [
-            f"學年學期：{year_term_raw}",
+            f"學年學期:{year_term_raw}",
+            f"所屬年級：{grade}",
             f"選別：{select_type}",
             "課程名稱列表：",
         ]
         lines.extend([f"- {n}" for n in names])
+        if data_source:
+            lines.append(f"資料來源：{data_source}")
         text = "\n".join(lines)
 
         meta = {
@@ -116,10 +125,12 @@ def course_overview_to_documents(
             "year_term": year_term_raw,
             "year": year,                     # int 或 None
             "term": term,                     # "上" / "下" / ""
+            "grade": grade,                   # 一年級 / 二年級 / 三年級 / 四年級
 
             "select_type": select_type,       # 必修 / 選修
             "course_count": course_count,     # int
             "courses": courses_str,           # ✅ 字串，不是 list
+            "data_source": data_source,       # 資料來源 URL
 
             "idx": i,
             "needs_split": False,             # 不再切塊
@@ -166,6 +177,8 @@ def course_records_to_documents(
         teacher = rec.get("教師", "") or ""
         category = rec.get("選別", "") or ""
         dept = rec.get("所屬系所", "") or ""
+        grade = rec.get("所屬年級", "") or ""
+        data_source = rec.get("資料來源", "") or ""
 
         credit_raw = rec.get("學分", None)
         try:
@@ -176,6 +189,7 @@ def course_records_to_documents(
         # 給 LLM 的文字
         lines = [
             f"學年學期：{yt}",
+            f"所屬年級：{grade}",
             f"課號：{code}",
             f"課程名稱：{name}",
             f"教師：{teacher}",
@@ -183,6 +197,8 @@ def course_records_to_documents(
             f"學分：{credits if credits is not None else ''}",
             f"所屬系所：{dept}",
         ]
+        if data_source:
+            lines.append(f"資料來源：{data_source}")
         text = "\n".join(lines)
 
         meta = {
@@ -194,6 +210,7 @@ def course_records_to_documents(
             "year_term": yt,
             "year": year,                  # int or None
             "term": term,                  # "上" / "下" / ""
+            "grade": grade,                # 一年級 / 二年級 / 三年級 / 四年級
 
             "course_code": code,
             "course_name": name,
@@ -202,6 +219,7 @@ def course_records_to_documents(
             "required": (category == "必修"),
             "credits": credits,            # float or None
             "department": dept,
+            "data_source": data_source,    # 資料來源 URL
 
             "idx": i,
             "needs_split": False,
@@ -220,6 +238,8 @@ def contact_records_to_documents(
     docs: List[Document] = []
 
     for i, rec in enumerate(data, 1):
+        data_source = rec.get("資料來源", "") or ""
+        
         if "辦理項目" in rec:  # 行政/招生類
             role = "service"
             item = rec.get("辦理項目", "").strip()
@@ -245,8 +265,10 @@ def contact_records_to_documents(
         else:
             # 保險：不符合預期欄位就 flatten 一下
             role = "unknown"
-            lines = [f"{k}：{v}" for k, v in rec.items()]
+            lines = [f"{k}：{v}" for k, v in rec.items() if k != "資料來源"]
 
+        if data_source:
+            lines.append(f"資料來源：{data_source}")
         text = "\n".join(lines)
 
         meta = {
@@ -259,6 +281,7 @@ def contact_records_to_documents(
             "department": rec.get("學系") or "",
             "person": rec.get("承辦人") or rec.get("聯絡人員") or "",
             "phone": rec.get("分機") or "",
+            "data_source": data_source,
             "idx": i,
             "needs_split": False,
         }
@@ -508,16 +531,22 @@ def _fmt_people_page_content(meta: Dict[str, Any]) -> str:
     lines = [
         f"姓名：{meta.get('name','')}",
         f"職稱/職務：{meta.get('title','')}",
+    ]
+    if meta.get("department"):
+        lines.append(f"系所：{meta['department']}")
+    lines.extend([
         f"辦公室：{meta.get('office','')}",
         f"分機/電話：{meta.get('phone','')}",
         f"Email：{meta.get('email','')}",
-    ]
+    ])
     if meta.get("education"):
         lines.append(f"學歷：{meta['education']}")
     if meta.get("experience"):
         lines.append(f"經歷：{meta['experience']}")
     if meta.get("expertise"):
         lines.append(f"研究領域：{meta['expertise']}")
+    if meta.get("data_source"):
+        lines.append(f"資料來源：{meta['data_source']}")
     return "\n".join(lines)
 
 
@@ -526,7 +555,19 @@ def people_records_to_documents(
 ) -> List[Document]:
     docs: List[Document] = []
     for i, rec in enumerate(data, 1):
-        who = _parse_name_title(rec.get("人物", ""))
+        # 支援兩種格式:
+        # 1. 舊格式: 「人物」欄位包含姓名和職稱
+        # 2. 新格式: 「姓名」和「職稱」分開
+        if "姓名" in rec:
+            # 新格式 (department_members.json)
+            who = {"name": rec.get("姓名", "").strip(), "title": rec.get("職稱", "").strip()}
+        else:
+            # 舊格式
+            who = _parse_name_title(rec.get("人物", ""))
+
+        # 取得系所和資料來源
+        department = rec.get("系所", "") or ""
+        data_source = rec.get("資料來源", "") or ""
 
         raw_meta = rec.get("metadata") or ""
         meta_parsed = _split_meta(raw_meta)
@@ -540,6 +581,8 @@ def people_records_to_documents(
             "phone": rec.get("電話"),
             "email": rec.get("信箱"),
             "office": rec.get("辦公室"),
+            "department": department,
+            "data_source": data_source,
             "education": meta_parsed["education"],
             "experience": meta_parsed["experience"],
             "expertise": meta_parsed["expertise"],
@@ -762,9 +805,10 @@ def main():
     )
     print("▶ 類型統計：", dict(ctype_count))
 
-    print("▶ 準備嵌入模型（多語）…")
+    print("▶ 準備嵌入模型(多語)…")
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-m3",
+        # model_kwargs={"device": "cpu"},
         model_kwargs={"device": "cuda"},
         # model_kwargs={"device": "cpu"},
         encode_kwargs={"normalize_embeddings": True},  # 👈 跟 query.py 一樣
