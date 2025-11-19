@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
 
 def get_course_history(school_year='113', semester='1', department='06', class_level='U0', grade_name=''):
     """
@@ -129,84 +130,9 @@ def get_course_history(school_year='113', semester='1', department='06', class_l
     
     return courses
 
-def inspect_form_options():
-    """
-    檢查表單中的選項值,以便找到正確的代碼
-    """
-    url = "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
-    
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    }
-    
-    print("正在檢查表單選項...")
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code != 200:
-        print(f"無法訪問網頁,狀態碼: {response.status_code}")
-        return
-    
-    response.encoding = 'utf-8'
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # 尋找學年度選項
-    schyear_select = soup.find('select', {'name': 'SchYear'})
-    if schyear_select:
-        print("\n學年度選項:")
-        options = schyear_select.find_all('option')
-        for option in options:
-            value = option.get('value', '')
-            text = option.get_text(strip=True)
-            print(f"  值: {value}, 文字: {text}")
-    
-    # 尋找系所選項
-    seldp_select = soup.find('select', {'name': 'SelDp'})
-    if seldp_select:
-        print("\n系所選項:")
-        options = seldp_select.find_all('option')
-        for option in options:
-            value = option.get('value', '')
-            text = option.get_text(strip=True)
-            if '資工' in text:
-                print(f"  *** 值: {value}, 文字: {text}")
-            else:
-                print(f"  值: {value}, 文字: {text}")
-    
-    # 尋找班級選項
-    selcl_select = soup.find('select', {'name': 'SelCl'})
-    if selcl_select:
-        print("\n班級選項:")
-        options = selcl_select.find_all('option')
-        for option in options:
-            value = option.get('value', '')
-            text = option.get_text(strip=True)
-            if '大學部' in text or '全部' in text or value == '':
-                print(f"  *** 值: {value}, 文字: {text}")
-            else:
-                print(f"  值: {value}, 文字: {text}")
-    
-    # 尋找學期選項
-    sem_select = soup.find('select', {'name': 'Sem'})
-    if sem_select:
-        print("\n學期選項:")
-        options = sem_select.find_all('option')
-        for option in options:
-            value = option.get('value', '')
-            text = option.get_text(strip=True)
-            print(f"  值: {value}, 文字: {text}")
-
 
 if __name__ == "__main__":
-    print("=== 大同大學歷史課程查詢爬蟲 ===\n")
-    
-    # 可以選擇先檢查表單選項(註解掉以節省時間)
-    # print("步驟 1: 檢查表單選項")
-    # print("-" * 50)
-    # inspect_form_options()
-    # print("\n" + "=" * 50)
-    
-    print("開始爬取課程資料 - 113學年度第一學期")
-    print("-" * 50)
+    print("=== 大同大學113學年度課程資料爬蟲 ===\n")
     
     # 定義要爬取的年級
     grade_levels = [
@@ -216,44 +142,74 @@ if __name__ == "__main__":
         ('U4', '四年級')
     ]
     
+    # 定義學期
+    semesters = [
+        ('1', '第一學期'),
+        ('2', '第二學期')
+    ]
+    
     all_courses = []
     
-    # 逐一爬取每個年級的課程
-    for class_level, grade_name in grade_levels:
-        print(f"\n正在爬取 {grade_name} 課程...")
-        courses = get_course_history(
-            school_year='113', 
-            semester='1', 
-            department='06', 
-            class_level=class_level,
-            grade_name=grade_name
-        )
+    # 逐一爬取每個學期和年級的課程
+    for semester_num, semester_name in semesters:
+        print(f"\n{'='*50}")
+        print(f"開始爬取 113學年度{semester_name}")
+        print('='*50)
         
-        if courses:
-            print(f"  ✓ {grade_name} 爬取成功: {len(courses)} 筆課程")
-            all_courses.extend(courses)
-        else:
-            print(f"  ✗ {grade_name} 爬取失敗")
+        for class_level, grade_name in grade_levels:
+            print(f"\n正在爬取 {grade_name} 課程...")
+            courses = get_course_history(
+                school_year='113', 
+                semester=semester_num, 
+                department='06', 
+                class_level=class_level,
+                grade_name=grade_name
+            )
+            
+            if courses:
+                print(f"  ✓ {grade_name} 爬取成功: {len(courses)} 筆課程")
+                all_courses.extend(courses)
+            else:
+                print(f"  ✗ {grade_name} 爬取失敗")
     
     if all_courses:
-        # 儲存為 JSON 檔案(專案根目錄的 data 資料夾)
-        import os
+        # 儲存到專案根目錄的 data 資料夾
         script_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(script_dir)
         data_dir = os.path.join(project_root, 'data')
         os.makedirs(data_dir, exist_ok=True)
-        output_file = os.path.join(data_dir, 'course_history_113_1.json')
+        output_file = os.path.join(data_dir, 'course_history_113.json')
+        
+        # 建立包含所有資料的總字典結構
+        # 總覽包含課程列表，課程列表是所有課程的 dictionary 陣列
+        output_data = {
+            "總覽": {
+                "課程總數": len(all_courses),
+                "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php",
+                "課程列表": all_courses
+            }
+        }
+        
+        # 將每個課程作為獨立的 dictionary 加入
+        for idx, course in enumerate(all_courses, start=1):
+            output_data[f"課程{idx}"] = course
+        
         with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(all_courses, f, ensure_ascii=False, indent=2)
+            json.dump(output_data, f, ensure_ascii=False, indent=2)
         
         print(f"\n{'='*50}")
         print(f"課程資料已儲存至 {output_file}")
         print(f"總計爬取 {len(all_courses)} 筆課程資料")
         print(f"{'='*50}")
         
-        # 統計每個年級的課程數量
-        print("\n年級統計:")
+        # 統計每個學期和年級的課程數量
+        print("\n學期統計:")
         from collections import Counter
+        semester_count = Counter(course['學年學期'] for course in all_courses)
+        for sem, count in sorted(semester_count.items()):
+            print(f"  {sem}: {count} 筆")
+        
+        print("\n年級統計:")
         grade_count = Counter(course['所屬年級'] for course in all_courses)
         for grade, count in sorted(grade_count.items()):
             print(f"  {grade}: {count} 筆")
@@ -265,4 +221,3 @@ if __name__ == "__main__":
                 print(json.dumps(course, ensure_ascii=False, indent=2))
     else:
         print("\n爬取失敗,請檢查 debug_response.html 以了解問題")
-
