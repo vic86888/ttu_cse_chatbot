@@ -118,7 +118,7 @@ def make_scored_retriever(vdb, k: int = 10):
     })
 
 RERANK_MODEL_NAME = "BAAI/bge-reranker-base"
-reranker = CrossEncoder(RERANK_MODEL_NAME, device="cpu")
+reranker = CrossEncoder(RERANK_MODEL_NAME, device="gpu")
 
 def build_chain():
     # 1) LLM
