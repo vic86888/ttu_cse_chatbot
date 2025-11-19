@@ -240,12 +240,19 @@ def main():
         }
         members_data.append(member)
 
-    # 建立包含所有資料的總字典
+    # 建立包含所有資料的總字典結構
+    # 總覽包含成員列表，成員列表是所有成員的 dictionary 陣列
     output_data = {
-        "成員總數": len(members_data),
-        "資料來源": source_url,
-        "成員列表": members_data
+        "總覽": {
+            "成員總數": len(members_data),
+            "資料來源": source_url,
+            "成員列表": members_data
+        }
     }
+    
+    # 將每個成員作為獨立的 dictionary 加入
+    for idx, member in enumerate(members_data, start=1):
+        output_data[f"成員{idx}"] = member
     
     # 將資料寫入 JSON 檔案
     with open(json_path, 'w', encoding='utf-8') as f:
