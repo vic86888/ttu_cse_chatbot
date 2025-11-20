@@ -36,6 +36,19 @@ def detect_schema(obj: Any) -> str:
     if isinstance(obj, list) and obj:
         sample = obj[0]
     elif isinstance(obj, dict):
+        # 檢查是否是新格式的教職員資料（有 "總覽" 和 "成員列表" 鍵）
+        if "總覽" in obj and isinstance(obj.get("總覽"), dict):
+            overview = obj["總覽"]
+            if "成員列表" in overview:
+                return "people"
+        # 檢查是否是舊格式的教職員資料（有 "成員列表" 鍵）
+        if "成員列表" in obj and isinstance(obj["成員列表"], list):
+            return "people"
+        # 檢查是否是新格式的課程歷史資料（有 "總覽" 和 "課程列表" 鍵）
+        if "總覽" in obj and isinstance(obj.get("總覽"), dict):
+            overview = obj["總覽"]
+            if "課程列表" in overview:
+                return "course_history"
         sample = obj
     else:
         return "unknown"
@@ -569,8 +582,14 @@ def people_records_to_documents(
         department = rec.get("系所", "") or ""
         data_source = rec.get("資料來源", "") or ""
 
+        # 優先從 JSON 直接讀取「學歷」欄位
+        education_direct = rec.get("學歷", "").strip()
+        
         raw_meta = rec.get("metadata") or ""
         meta_parsed = _split_meta(raw_meta)
+
+        # 如果 JSON 有直接的「學歷」欄位，使用它；否則使用從 metadata 解析的
+        education_final = education_direct if education_direct else meta_parsed["education"]
 
         meta = {
             "source": source_path,
@@ -583,7 +602,7 @@ def people_records_to_documents(
             "office": rec.get("辦公室"),
             "department": department,
             "data_source": data_source,
-            "education": meta_parsed["education"],
+            "education": education_final,
             "experience": meta_parsed["experience"],
             "expertise": meta_parsed["expertise"],
             "idx": i,
@@ -694,8 +713,23 @@ def load_json_as_documents(path: Path) -> List[Document]:
 
     schema = detect_schema(obj)
     if schema == "people":
-        data = obj if isinstance(obj, list) else [obj]
-        return people_records_to_documents(data, str(path))
+        # 處理新格式：有 "總覽" 和 "成員列表" 鍵
+        docs = []
+        if isinstance(obj, dict) and "總覽" in obj:
+            overview = obj["總覽"]
+            member_list = overview.get("成員列表", [])
+            
+            # 只處理每一位成員，不生成總覽 document
+            docs.extend(people_records_to_documents(member_list, str(path)))
+        elif isinstance(obj, dict) and "成員列表" in obj:
+            # 舊格式：只有成員列表，沒有總覽
+            data = obj["成員列表"]
+            docs = people_records_to_documents(data, str(path))
+        else:
+            # 更舊的格式
+            data = obj if isinstance(obj, list) else [obj]
+            docs = people_records_to_documents(data, str(path))
+        return docs
     elif schema == "news":
         data = obj if isinstance(obj, list) else [obj]
         return news_records_to_documents(data, str(path))
@@ -709,8 +743,61 @@ def load_json_as_documents(path: Path) -> List[Document]:
         data = obj if isinstance(obj, list) else [obj]
         return contact_records_to_documents(data, str(path))
     elif schema == "course_history":
-        data = obj if isinstance(obj, list) else [obj]
-        return course_records_to_documents(data, str(path))
+        # 處理新格式：有 "總覽" 和 "課程列表" 鍵
+        docs = []
+        if isinstance(obj, dict) and "總覽" in obj:
+            overview = obj["總覽"]
+            course_list = overview.get("課程列表", [])
+            
+            # 1. 將「總覽」資訊分成多個較小的 documents
+            course_count = overview.get('課程總數', 0)
+            data_source = overview.get('資料來源', '')
+            
+            # 將課程名單分成多份（每份最多 30 門課）
+            chunk_size = 30
+            course_names_all = []
+            for course in course_list:
+                name = course.get('課程名稱', '')
+                code = course.get('課號', '')
+                if name:
+                    course_names_all.append(f"{name}({code})")
+            
+            # 計算需要多少份
+            num_chunks = (len(course_names_all) + chunk_size - 1) // chunk_size
+            
+            for chunk_idx in range(num_chunks):
+                start_idx = chunk_idx * chunk_size
+                end_idx = min(start_idx + chunk_size, len(course_names_all))
+                chunk_names = course_names_all[start_idx:end_idx]
+                chunk_names_str = "、".join(chunk_names)
+                
+                overview_text = f"課程總數：{course_count}\n資料來源：{data_source}\n\n課程名單（第 {chunk_idx + 1}/{num_chunks} 部分）：\n{chunk_names_str}"
+                
+                overview_doc = Document(
+                    page_content=overview_text,
+                    metadata={
+                        "source": str(path),
+                        "file_type": "json",
+                        "type": "course_history_overview",
+                        "content_type": "course_history_overview",
+                        "course_count": course_count,
+                        "data_source": data_source,
+                        "course_names": chunk_names_str,
+                        "chunk_index": chunk_idx,
+                        "total_chunks": num_chunks,
+                        "idx": chunk_idx,
+                        "needs_split": False,
+                    }
+                )
+                docs.append(overview_doc)
+            
+            # 2. 處理每一門課程
+            docs.extend(course_records_to_documents(course_list, str(path)))
+        else:
+            # 舊格式：沒有總覽結構
+            data = obj if isinstance(obj, list) else [obj]
+            docs = course_records_to_documents(data, str(path))
+        return docs
     elif schema == "course_overview":
         data = obj if isinstance(obj, list) else [obj]
         return course_overview_to_documents(data, str(path))
@@ -810,6 +897,7 @@ def main():
         model_name="BAAI/bge-m3",
         # model_kwargs={"device": "cpu"},
         model_kwargs={"device": "cuda"},
+        # model_kwargs={"device": "cpu"},
         encode_kwargs={"normalize_embeddings": True},  # 👈 跟 query.py 一樣
     )
 
