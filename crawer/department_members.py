@@ -68,22 +68,24 @@ def main():
                 if 'E-mail' in text:
                     email = text
                     print("信箱:"+text)
-            combined_string = "。".join(all_info[1:3])
-            print("metadata: " + combined_string)
             
-            # 檢查 metadata 中是否包含學歷，若有則提取
+            # 檢查所有資訊中是否包含學歷,若有則提取
             education_from_metadata = "無"
             metadata_parts = []
-            for part in all_info[1:3]:
+            for part in all_info[1:]:  # 檢查所有資訊(除了第一個姓名職稱)
                 if '學歷' in part or '博士' in part or '碩士' in part or '學士' in part:
                     # 只保留博士學歷
                     if '博士' in part:
+                        education_from_metadata = part
+                    # 如果有學歷相關但不是博士,也記錄下來(其他學位)
+                    elif education_from_metadata == "無":
                         education_from_metadata = part
                 else:
                     metadata_parts.append(part)
             
             # 重新組合不含學歷的 metadata
             combined_string = "。".join(metadata_parts) if metadata_parts else ""
+            print("metadata: " + combined_string)
             
             print('-'*20)
             
