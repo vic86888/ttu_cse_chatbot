@@ -14,9 +14,10 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_core.runnables import RunnableLambda
 from langchain_core.documents import Document
-from langchain_core.output_parsers import StrOutputParser
 from sentence_transformers import CrossEncoder
 
 # 全域變數
@@ -127,7 +128,10 @@ def build_chain():
         ("human", "{input}")
     ])
     
-    # 3) 向量庫 & 檢索器
+    # 3) stuff chain
+    doc_chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+    
+    # 4) 向量庫 & 檢索器
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-m3",
         model_kwargs={"device": "cuda"},
@@ -140,35 +144,11 @@ def build_chain():
     )
     
     scored_retriever = make_scored_retriever(vectordb, k=10)
+    retriever_runnable = itemgetter("input") | scored_retriever
     
-    # 4) 格式化文件為字串的函數
-    def format_docs(docs):
-        return "\n\n".join(doc.page_content for doc in docs)
-    
-    # 5) 手動構建 RAG chain
-    rag_chain = (
-        {
-            "context": scored_retriever | RunnableLambda(format_docs),
-            "input": RunnablePassthrough()
-        }
-        | prompt
-        | llm
-        | StrOutputParser()
-    )
-    
-    # 包裝成返回 dict 的形式 (保持與原來 API 一致)
-    def rag_with_context(input_dict):
-        query = input_dict["input"]
-        # 獲取文件
-        docs = scored_retriever.invoke(query)
-        # 執行 chain
-        answer = rag_chain.invoke(query)
-        return {
-            "answer": answer,
-            "context": docs
-        }
-    
-    return RunnableLambda(rag_with_context)
+    # 5) RAG 鏈
+    rag_chain = create_retrieval_chain(retriever_runnable, doc_chain)
+    return rag_chain
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -187,7 +167,7 @@ app = FastAPI(title="TTU CSE Chatbot API", lifespan=lifespan)
 # CORS 設定
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"],  # Vite 預設埠
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # Vite 預設埠
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -196,11 +176,6 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "TTU CSE Chatbot API is running"}
-
-@app.get("/favicon.ico")
-async def favicon():
-    """防止 favicon 404 錯誤"""
-    return {"message": "No favicon"}
 
 @app.get("/health")
 async def health_check():

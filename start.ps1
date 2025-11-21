@@ -5,11 +5,14 @@ Write-Host "   TTU CSE Chatbot - Starting..." -ForegroundColor Cyan
 Write-Host "=====================================" -ForegroundColor Cyan
 Write-Host ""
 
+# Get current script directory
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+
 # Start backend with venv
 Write-Host "Starting Backend Server (with venv)..." -ForegroundColor Green
 $backendScript = @"
-Set-Location 'd:\畢業專題\ttu_cse_chatbot\backend'
-& 'd:\畢業專題\ttu_cse_chatbot\venv\Scripts\Activate.ps1'
+Set-Location '$scriptDir\backend'
+& '$scriptDir\venv\Scripts\Activate.ps1'
 python main.py
 "@
 Start-Process powershell -ArgumentList "-NoExit", "-Command", $backendScript
@@ -18,7 +21,7 @@ Start-Sleep -Seconds 3
 
 # Start frontend
 Write-Host "Starting Frontend Server..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location 'd:\畢業專題\ttu_cse_chatbot\frontend'; npm run dev"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$scriptDir\frontend'; npm run dev"
 
 Write-Host ""
 Write-Host "=====================================" -ForegroundColor Yellow

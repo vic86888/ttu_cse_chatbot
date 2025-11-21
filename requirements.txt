@@ -23,7 +23,7 @@ certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_175964887469
 cffi @ file:///home/task_176009805548162/conda-bld/cffi_1760098067589/work
 chardet==5.2.0
 charset-normalizer==3.4.3
-chromadb==1.0.20
+chromadb==0.5.23
 click==8.2.1
 coloredlogs==15.0.1
 constantly==15.1.0

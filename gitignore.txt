@@ -48,6 +48,7 @@ venv.bak/
 # Vector Database Storage
 storage/
 *.sqlite3
+.sqlite3
 
 # Model Cache (optional - uncomment if you don't want to cache models)
 # .cache/
