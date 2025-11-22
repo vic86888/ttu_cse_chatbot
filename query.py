@@ -1,6 +1,7 @@
 # query.py
 from typing import Set
 import os
+import re
 
 from datetime import datetime
 from zoneinfo import ZoneInfo  # 新增這行
@@ -22,6 +23,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 from rich.prompt import Prompt
+
+Prompt.prompt_suffix = ""  # 或 " " 之類的，避免預設的冒號
 
 console = Console()
 
@@ -59,7 +62,7 @@ def rerank_docs(query: str, docs: list[Document], top_n: int) -> list[Document]:
 
 def make_scored_retriever(vdb, k: int = 10):
     # 先抓比較多，再給 reranker 挑前 k
-    k_retrieve = max(k * 4, 20)
+    k_retrieve = max(k * 4, 100)
 
     def _retrieve(query: str):
         def as_docs(pairs):
@@ -118,7 +121,7 @@ def make_scored_retriever(vdb, k: int = 10):
     })
 
 RERANK_MODEL_NAME = "BAAI/bge-reranker-base"
-reranker = CrossEncoder(RERANK_MODEL_NAME, device="cuda")
+reranker = CrossEncoder(RERANK_MODEL_NAME, device="cuda")  # 或 "cpu"
 
 def build_chain():
     # 1) LLM
@@ -135,15 +138,16 @@ def build_chain():
     # 2) 提示詞
     from langchain_core.prompts import ChatPromptTemplate
 
+    # 在 build_chain 函式內修改 prompt
     prompt = ChatPromptTemplate.from_messages([
         ("system",
-        "你是大同大學資工系問答機器人。\n"
-        "學年等於民國紀年,114學年就是2025年。"
-        "你會得到跟問題相關的文件,你只依據提供的文件內容回答問題,"
-        "若無法從文件中找到答案,請清楚說明。請以繁體中文作答。\n\n"
-        "{context}"),
+         "你是大同大學資工系問答機器人。你會得到跟問題相關的文件，你只依據提供的文件內容回答問題，"
+         "若無法從文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
+         "{context}"),
         ("human", "{input}")
-    ])
+    ]).with_config({
+        "tags": ["chain", "stuff"],
+    })
 
     # 3) stuff chain
     doc_chain = create_stuff_documents_chain(llm=llm, prompt=prompt).with_config({
@@ -259,20 +263,52 @@ if __name__ == "__main__":
     try:
         while True:
             # 使用 rich 的 Prompt 取代 input
-            q = Prompt.ask("\n[bold cyan]❓ 你的問題[/bold cyan]")
+            console.print("[bold cyan]❓ 你的問題[/bold cyan]")
+            q = Prompt.ask("")  # 空提示，讓使用者從空欄輸入
             
             if not q.strip():
                 continue
             
             # 執行查詢
-            res = ask(chain, q)
+            res = ask(chain, q)            
+            raw = res["answer"]
+            # --- 修改開始：使用 Regex 解析 XML ---
+            thinking = ""
+            answer = raw
+
+            # 1. 嘗試提取 <think> 區塊
+            think_match = re.search(r"<think>(.*?)</think>", raw, re.DOTALL)
+            if think_match:
+                thinking = think_match.group(1).strip()
+
+            # 2. 嘗試提取 <answer> 區塊
+            answer_match = re.search(r"<answer>(.*?)</answer>", raw, re.DOTALL)
+            if answer_match:
+                answer = answer_match.group(1).strip()
+            else:
+                # 如果找不到 <answer> 標籤，可能模型沒跟隨格式
+                # 為了保險，如果找到了 <think>，就把剩下的當作 answer
+                # 或者直接顯示原始文字
+                if think_match:
+                    # 把 raw 中的 <think>...</think> 移除，剩下的當作回答
+                    answer = raw.replace(think_match.group(0), "").strip()
+            # --- 修改結束 ---
+
+            # 印思考
+            if thinking:
+                console.print("\n[bold purple]🔍 思考過程：[/bold purple]")
+                console.print(Panel(
+                Markdown(thinking),
+                border_style="purple",
+                padding=(1,2)
+            ))
             
-            # 使用 rich Markdown 渲染答案
-            console.print("\n[bold green]🧠 答案：[/bold green]")
+            # 印最終回答 (如果有解析失敗，answer 會是原始全文，至少不會報錯)
+            console.print("\n[bold green]✅ 最終回答：[/bold green]")
             console.print(Panel(
-                Markdown(res["answer"]),
+                Markdown(answer),
                 border_style="green",
-                padding=(1, 2)
+                padding=(1,2)
             ))
             
             # 顯示來源資訊
