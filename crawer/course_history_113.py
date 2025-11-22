@@ -180,19 +180,37 @@ if __name__ == "__main__":
         os.makedirs(data_dir, exist_ok=True)
         output_file = os.path.join(data_dir, 'course_history_113.json')
         
-        # 建立包含所有資料的總字典結構
-        # 總覽包含課程列表，課程列表是所有課程的 dictionary 陣列
-        output_data = {
-            "總覽": {
-                "課程總數": len(all_courses),
-                "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php",
-                "課程列表": all_courses
-            }
-        }
+        # 按學期和年級組織課程資料
+        output_data = {}
         
-        # 將每個課程作為獨立的 dictionary 加入
-        for idx, course in enumerate(all_courses, start=1):
-            output_data[f"課程{idx}"] = course
+        for course in all_courses:
+            semester = course['學年學期']
+            grade = course['所屬年級']
+            
+            # 建立學期的 key，如果不存在
+            if semester not in output_data:
+                output_data[semester] = {}
+            
+            # 建立年級的 key，如果不存在
+            if grade not in output_data[semester]:
+                output_data[semester][grade] = {
+                    "課程數": 0,
+                    "課程列表": []
+                }
+            
+            # 建立課程資料，包含所需欄位
+            course_data = {
+                "課程名稱": course.get('課程名稱', ''),
+                "課號": course.get('課號', ''),
+                "教師": course.get('教師', ''),
+                "選別": course.get('選別', ''),
+                "學分": course.get('學分', ''),
+                "資料來源": course.get('資料來源', '')
+            }
+            
+            # 加入課程到對應的學期和年級
+            output_data[semester][grade]["課程列表"].append(course_data)
+            output_data[semester][grade]["課程數"] += 1
         
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, ensure_ascii=False, indent=2)
