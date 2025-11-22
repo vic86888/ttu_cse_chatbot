@@ -98,7 +98,8 @@ class TTUCSECrawerTestSpider(scrapy.Spider):
                 yield response.follow(
                     self._ensure_lang_zh(url),
                     callback=self.parse_detail,
-                    meta={"list_date": list_date_str},
+                    meta={"list_date": list_date_str,
+                          "category": "最新消息/活動",}, # ✅ 改成「類別
                 )
 
         # 2) 是否需要抓下一頁？
@@ -132,7 +133,7 @@ class TTUCSECrawerTestSpider(scrapy.Spider):
         yield {
             "url": self._ensure_lang_zh(self._force_https(response.url)),
             "title": title,
-            "h1": h1,
+            "category": response.meta.get("category", "最新消息/活動"),  # ✅ 改成「類別」
             "published_at": published,
             "content": text.strip(),
         }

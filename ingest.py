@@ -18,7 +18,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain.schema import Document
 
-from langchain_community.document_loaders import UnstructuredMarkdownLoader
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 DATA_DIR = Path("data")
 DB_DIR = "storage/chroma"
@@ -35,7 +36,7 @@ def detect_schema(obj: Any) -> str:
     """
     回傳 "people" / "news" / "school" / "unknown"
     - people: 有「人物」「電話」「信箱」等鍵
-    - news:   有 "url","title","published_at","content"
+    - news:   有 "url","title","published_at","content"（可額外含 "category"）
     - school: 有「名稱」「英文名稱」「校訓」等鍵（例如 about_schoo.json）
     """
     sample = None
@@ -50,11 +51,18 @@ def detect_schema(obj: Any) -> str:
         # 檢查是否是舊格式的教職員資料（有 "成員列表" 鍵）
         if "成員列表" in obj and isinstance(obj["成員列表"], list):
             return "people"
-        # 檢查是否是新格式的課程歷史資料（有 "總覽" 和 "課程列表" 鍵）
-        if "總覽" in obj and isinstance(obj.get("總覽"), dict):
-            overview = obj["總覽"]
-            if "課程列表" in overview:
-                return "course_history"
+        elif isinstance(obj, dict):
+            # --- ✅ 新格式：課程歷史（巢狀：113上/113下 → 年級 → 課程列表） ---
+            term_keys = [
+                k for k in obj.keys()
+                if re.match(r"^\d{2,3}[上下]$", str(k).strip())
+            ]
+            if term_keys:
+                v0 = obj.get(term_keys[0])
+                if isinstance(v0, dict):
+                    # 任一 grade block 內含「課程列表」就視為新格式
+                    if any(isinstance(gv, dict) and "課程列表" in gv for gv in v0.values()):
+                        return "course_history_nested"
         sample = obj
     else:
         return "unknown"
@@ -86,6 +94,225 @@ def detect_schema(obj: Any) -> str:
     if {"年", "月", "日", "活動事項"} <= keys:
         return "calendar"
     return "unknown"
+
+# =========================
+# 新格式 course_history（巢狀：學期→年級→課程列表） adapter
+#  - overview 的 idx 使用全域遞增 int（避免 stable_id 重複）
+#  - overview 內容含「教師 / 選別 / 學分」
+#  - overview 依 token ≤ 500 動態分批，且不拆單一課程條目
+#  - 每個 overview chunk 最後附資料來源 URL
+#  - term/grade 先排序，確保 idx 穩定
+# =========================
+def course_history_nested_to_documents(
+    obj: Dict[str, Any], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+
+    overview_global_idx = 0   # overview 全域 idx（int, 檔內唯一）
+    global_course_idx = 0     # 每門課全域 idx（int, 檔內唯一）
+
+    def as_int(x, default=None):
+        try:
+            s = str(x).strip()
+            if not s:
+                return default
+            return int(s)
+        except Exception:
+            return default
+
+    def parse_year_term(s: str) -> tuple[int | None, str]:
+        """把 '113上' / '113下' 拆成 (113, '上'/'下')"""
+        s = (s or "").strip()
+        if not s:
+            return None, ""
+        for i, ch in enumerate(s):
+            if not ch.isdigit():
+                year = as_int(s[:i], None)
+                term = s[i:]
+                return year, term
+        return as_int(s, None), ""
+
+    def term_sort_key(t: str):
+        """學期排序：年小→大；同年 上→下"""
+        year, term = parse_year_term(t)
+        term_order = 0 if term == "上" else 1 if term == "下" else 9
+        return (year or 0, term_order, t)
+
+    GRADE_ORDER = {
+        "一年級": 1, "二年級": 2, "三年級": 3, "四年級": 4, "研究所": 10,
+    }
+    def grade_sort_key(g: str):
+        return (GRADE_ORDER.get(g, 99), g)
+
+    def parse_credits(x: Any) -> float | None:
+        try:
+            s = str(x).strip()
+            if not s or s.lower() == "nan":
+                return None
+            return float(s)
+        except Exception:
+            return None
+
+    # ===== token 計數與不拆課程的 batching =====
+    def count_chars(text: str) -> int:
+        # 直接用 Python 字串長度（以 Unicode 字元計）
+        return len(text or "")
+
+    def batch_course_lines_by_chars(
+        header_lines: List[str],
+        course_lines: List[str],
+        tail_lines: List[str],
+        max_chars: int = 500,
+    ) -> List[List[str]]:
+        """
+        course_lines 每一條是一門課，不可拆。
+        依字元數上限分批（含 header+tail）。
+        """
+        batches: List[List[str]] = []
+
+        fixed_text = "\n".join(header_lines + tail_lines)
+        fixed_chars = count_chars(fixed_text)
+
+        if fixed_chars >= max_chars:
+            batches.append(header_lines + course_lines + tail_lines)
+            return batches
+
+        cur_chars = fixed_chars
+        current_courses: List[str] = []
+
+        for line in course_lines:
+            line_chars = count_chars(line)
+
+            if current_courses and (cur_chars + line_chars) > max_chars:
+                batches.append(header_lines + current_courses + tail_lines)
+                current_courses = []
+                cur_chars = fixed_chars
+
+            # 單一課程自己就超過 max_chars：仍要放（不拆課）
+            current_courses.append(line)
+            cur_chars += line_chars
+
+        if current_courses:
+            batches.append(header_lines + current_courses + tail_lines)
+
+        return batches
+
+
+    # ===== term 先排序（113上 → 113下）=====
+    for year_term in sorted(obj.keys(), key=term_sort_key):
+        grades_block = obj.get(year_term)
+        if not isinstance(grades_block, dict):
+            continue
+
+        year, term = parse_year_term(str(year_term))
+
+        # ===== grade 先排序（一 → 二 → 三 → 四）=====
+        for grade_name in sorted(grades_block.keys(), key=grade_sort_key):
+            grade_data = grades_block.get(grade_name)
+            if not isinstance(grade_data, dict):
+                continue
+
+            course_list = grade_data.get("課程列表", []) or []
+            if not isinstance(course_list, list):
+                course_list = [course_list]
+
+            course_count = grade_data.get("課程數")
+            try:
+                course_count = int(course_count)
+            except Exception:
+                course_count = len(course_list)
+
+            # ========= 預先整理 overview 的課程條目（不可拆原子） =========
+            details_all: List[str] = []
+            data_sources_all: List[str] = []
+
+            for c in course_list:
+                if not isinstance(c, dict):
+                    continue
+
+                name     = str(c.get("課程名稱", "")).strip()
+                code     = str(c.get("課號", "")).strip()
+                teacher  = str(c.get("教師", "")).strip()
+                category = str(c.get("選別", "")).strip()
+                credits  = parse_credits(c.get("學分"))
+                ds       = str(c.get("資料來源", "")).strip()
+
+                if ds:
+                    data_sources_all.append(ds)
+
+                if not name:
+                    continue
+
+                d = f"{name}"
+                if code:
+                    d += f"({code})"
+                if teacher:
+                    d += f" / {teacher}"
+                if category:
+                    d += f" / {category}"
+                if credits is not None:
+                    d += f" / {credits}學分"
+
+                details_all.append(d)
+
+            data_source_str = "；".join(sorted(set(data_sources_all)))
+
+            # ========== (A) overview docs（≤500 tokens，不拆課） ==========
+            header_lines = [
+                f"學年學期：{year_term}",
+                f"所屬年級：{grade_name}",
+                f"課程數：{course_count}",
+                "",
+                "課程名單："
+            ]
+
+            # 每門課 1 行，不可拆
+            course_lines = [f"- {d}" for d in details_all]
+
+            tail_lines = []
+            if data_source_str:
+                tail_lines = ["", f"資料來源：{data_source_str}"]
+
+            batches = batch_course_lines_by_chars(
+                header_lines=header_lines,
+                course_lines=course_lines,
+                tail_lines=tail_lines,
+                max_chars=500,
+            )
+
+            num_chunks = len(batches)
+
+            for chunk_idx, lines in enumerate(batches):
+                overview_text = "\n".join(lines)
+
+                overview_global_idx += 1
+
+                docs.append(Document(
+                    page_content=overview_text,
+                    metadata={
+                        "source": source_path,
+                        "file_type": "json",
+                        "type": "course_history_overview",
+                        "content_type": "course_history_overview",
+
+                        "year_term": str(year_term),
+                        "year": year,
+                        "term": term,
+                        "grade": str(grade_name),
+
+                        "course_count": course_count,
+                        "course_names": "、".join(details_all),
+                        "data_source": data_source_str,
+
+                        "idx": overview_global_idx,  # int
+                        "chunk": chunk_idx,
+                        "total_chunks": num_chunks,
+                        "needs_split": False,
+                    }
+                ))
+
+    return docs
+
 
 # =========================
 # calendar.json（行事曆：依月分切塊） adapter
@@ -195,6 +422,108 @@ def calendar_months_to_documents(
             "idx": idx,
             "needs_split": False,  # 月 chunk 不再二次切
         }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+
+def calendar_events_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    """
+    將行事曆每一筆活動獨立成一份 Document，
+    並補 event_date/event_date_ts 讓 retriever 能用時間 filter。
+    """
+    docs: List[Document] = []
+    if not data:
+        return docs
+
+    tz = ZoneInfo("Asia/Taipei")
+
+    def to_int(x) -> int | None:
+        try:
+            s = str(x).strip()
+            return int(s) if s else None
+        except Exception:
+            return None
+
+    def parse_range_start(day_raw: str) -> tuple[int | None, int | None]:
+        """
+        從「日」欄抓起始(月,日)：
+        - "1" -> (None, 1)
+        - "8~12" -> (None, 8)
+        - "10/13~11/3" -> (10, 13)
+        """
+        s = (day_raw or "").strip()
+        if not s:
+            return None, None
+
+        m = re.match(r"(\d+)\s*/\s*(\d+)\s*~\s*(\d+)\s*/\s*(\d+)", s)
+        if m:
+            return int(m.group(1)), int(m.group(2))
+
+        m = re.match(r"(\d+)\s*~\s*(\d+)", s)
+        if m:
+            return None, int(m.group(1))
+
+        m = re.search(r"(\d+)", s)
+        if m:
+            return None, int(m.group(1))
+
+        return None, None
+
+    idx = 0
+    for rec in data:
+        year_roc = to_int(rec.get("年"))
+        month = to_int(rec.get("月"))
+        day_raw = str(rec.get("日", "")).strip()
+
+        start_m_raw, start_d = parse_range_start(day_raw)
+        start_m = start_m_raw if start_m_raw is not None else month
+
+        year_ad = year_roc + 1911 if year_roc is not None else None
+
+        event_date_iso = None
+        event_date_ts = None
+        if year_ad and start_m and start_d:
+            event_date_iso = f"{year_ad:04d}-{start_m:02d}-{start_d:02d}"
+            event_date_ts = int(datetime(year_ad, start_m, start_d, tzinfo=tz).timestamp())
+
+        weekday = str(rec.get("星期", "")).strip()
+        activity = str(rec.get("活動事項", "")).strip()
+        url = str(rec.get("資料來源", "")).strip()
+
+        idx += 1
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+
+            # ✅ 給 retriever 用
+            "type": "calendar",
+            "content_type": "calendar",
+
+            "title": str(rec.get("title", "行事曆")).strip(),
+            "year_roc": year_roc,
+            "year_ad": year_ad,
+            "month": start_m,
+            "day_raw": day_raw,
+            "weekday": weekday,
+
+            "event_date": event_date_iso,
+            "event_date_ts": event_date_ts,   # ✅ 關鍵：epoch int
+
+            "activity": activity,
+            "url": url,
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        text = "\n".join([
+            f"行事曆日期：{event_date_iso or ''}",
+            f"星期：{weekday}",
+            f"活動：{activity}",
+            f"資料來源：{url}",
+        ])
 
         docs.append(Document(page_content=text, metadata=meta))
 
@@ -773,6 +1102,169 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
 # =========================
 # people（老師名錄） adapter
 # =========================
+
+def people_overview_to_documents(
+    data: List[Dict[str, Any]],
+    source_path: str,
+    max_chars: int = 500,
+) -> List[Document]:
+    docs: List[Document] = []
+    if not data:
+        return docs
+
+    # -------- helpers --------
+    def count_chars(text: str) -> int:
+        return len(text or "")
+
+    def batch_lines_by_chars(
+        header_lines: List[str],
+        item_lines: List[str],
+        tail_lines: List[str],
+        max_chars: int,
+    ) -> List[List[str]]:
+        batches: List[List[str]] = []
+
+        fixed_text = "\n".join(header_lines + tail_lines)
+        fixed_chars = count_chars(fixed_text)
+        if fixed_chars >= max_chars:
+            batches.append(header_lines + item_lines + tail_lines)
+            return batches
+
+        cur_chars = fixed_chars
+        cur_items: List[str] = []
+
+        for line in item_lines:
+            lc = count_chars(line)
+            if cur_items and (cur_chars + lc) > max_chars:
+                batches.append(header_lines + cur_items + tail_lines)
+                cur_items = []
+                cur_chars = fixed_chars
+
+            cur_items.append(line)
+            cur_chars += lc
+
+        if cur_items:
+            batches.append(header_lines + cur_items + tail_lines)
+        return batches
+
+    def is_faculty_title(title: str) -> bool:
+        t = title or ""
+        if "系務助理" in t:
+            return False
+        # 只要含教授系職稱就算 faculty（含兼任）
+        return any(k in t for k in ["講座教授", "教授", "副教授", "助理教授"])
+
+    def rank_group(title: str) -> str:
+        t = title or ""
+        if "講座教授" in t:
+            return "chair_professor"
+        if "兼任" in t and "教授" in t:
+            return "adjunct_professor"
+        # 注意判斷順序：先副教授/助理教授，再教授
+        if "副教授" in t:
+            return "associate_professor"
+        if "助理教授" in t:
+            return "assistant_professor"
+        if "教授" in t:
+            return "professor"
+        return "other"
+
+    # -------- collect faculty --------
+    faculty_rows = []
+    dept_set = set()
+    ds_set = set()
+
+    for rec in data:
+        title = str(rec.get("職稱", "") or rec.get("人物", "")).strip()
+        if not is_faculty_title(title):
+            continue
+
+        name = str(rec.get("姓名", "")).strip()
+        if not name:
+            # 舊格式 fallback
+            name = str(rec.get("人物", "")).strip()
+
+        dept = str(rec.get("系所", "")).strip()
+        if dept:
+            dept_set.add(dept)
+
+        ds = str(rec.get("資料來源", "")).strip()
+        if ds:
+            ds_set.add(ds)
+
+        # overview 單行（不可拆的原子）
+        line = f"{name} / {title}"
+        faculty_rows.append((rank_group(title), line, name))
+
+    if not faculty_rows:
+        return docs
+
+    data_source_str = "；".join(sorted(ds_set))
+    departments_str = "、".join(sorted(dept_set))
+
+    # -------- build overview scopes --------
+    overview_idx = 0
+
+    def emit_scope(scope: str, group: str, lines: List[str], names: List[str]):
+        nonlocal overview_idx, docs
+
+        header = "教授總覽" if scope == "faculty_all" else f"{group} 總覽"
+        header_lines = [header, "成員列表："]
+        item_lines = [f"- {ln}" for ln in lines]
+        tail_lines = ["", f"資料來源：{data_source_str}"] if data_source_str else []
+
+        batches = batch_lines_by_chars(header_lines, item_lines, tail_lines, max_chars)
+        total_chunks = len(batches)
+
+        for chunk_i, batch_lines in enumerate(batches):
+            overview_idx += 1
+            text = "\n".join(batch_lines)
+
+            docs.append(Document(
+                page_content=text,
+                metadata={
+                    "source": source_path,
+                    "file_type": "json",
+                    "type": "people_overview",
+                    "content_type": "people_overview",
+
+                    "overview_scope": scope,
+                    "rank_group": group if scope == "rank_group" else "",
+
+                    "people_count": len(names),
+                    "departments": departments_str,
+                    "names": "、".join(names),
+                    "data_source": data_source_str,
+
+                    "idx": overview_idx,     # overview 內全域 int
+                    "chunk": chunk_i,
+                    "total_chunks": total_chunks,
+                    "needs_split": False,
+                }
+            ))
+
+    # (1) faculty_all：全體教授
+    all_lines = [line for _, line, _ in faculty_rows]
+    all_names = [name for _, _, name in faculty_rows]
+    emit_scope("faculty_all", "", all_lines, all_names)
+
+    # (2) rank_group：依職級分組
+    grouped: Dict[str, List[tuple[str, str]]] = {}
+    for rg, line, name in faculty_rows:
+        grouped.setdefault(rg, []).append((line, name))
+
+    # 固定輸出順序
+    order = ["chair_professor", "professor", "associate_professor", "assistant_professor", "adjunct_professor"]
+    for rg in order:
+        items = grouped.get(rg, [])
+        if not items:
+            continue
+        lines = [x[0] for x in items]
+        names = [x[1] for x in items]
+        emit_scope("rank_group", rg, lines, names)
+
+    return docs
+
 _name_title_pat = re.compile(
     r"^\s*(?P<name>[\u4e00-\u9fa5A-Za-z0-9．・]+)\s*(?P<title>.+)?$"
 )
@@ -925,8 +1417,10 @@ def people_records_to_documents(
 # =========================
 def _fmt_news_page_content(meta: Dict[str, Any], content: str) -> str:
     return "\n".join([
+        f"類別：{meta.get('category','')}",   # ← 新增        
         f"標題：{meta.get('title','')}",
         f"日期：{meta.get('published_at','')}",
+        f"連結：{meta.get('url','')}",        # ← 新增（方便 LLM/檢索知道來源）
         "內文：",
         content or "",
     ])
@@ -934,14 +1428,12 @@ def _fmt_news_page_content(meta: Dict[str, Any], content: str) -> str:
 def news_records_to_documents(data: List[Dict[str, Any]], source_path: str) -> List[Document]:
     docs: List[Document] = []
 
-    # 目標：控制每塊長度，避免嵌入模型截斷（中文字數≈token 數量的好近似）
-    TARGET_CHARS = 1000      # 大致對應 256–384 tokens
+    TARGET_CHARS = 1000
     OVERLAP_CHARS = 80
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=TARGET_CHARS,
         chunk_overlap=OVERLAP_CHARS,
-        # 強化中文標點分割；最後再用空白、英文標點補刀
         separators=["\n\n", "\n", "。", "！", "？", "；", "、", "：", "——", " ", ",", ".", "，", ":"]
     )
 
@@ -961,6 +1453,7 @@ def news_records_to_documents(data: List[Dict[str, Any]], source_path: str) -> L
         published_at = rec.get("published_at")
         published_ts = to_ts(published_at)
         url = rec.get("url")
+        category = rec.get("category") or ""   # ← 新增：符合 ttu_cse_news.sorted.json
 
         # 為每篇新聞產生穩定 article_id（利於重組與去重）
         article_key = f"{source_path}|{url or title}|{published_at or ''}|{i}"
@@ -969,18 +1462,22 @@ def news_records_to_documents(data: List[Dict[str, Any]], source_path: str) -> L
         base_meta = {
             "source": source_path,
             "file_type": "json",
+
+            # （可選但推薦）跟其他 adapter 一致
+            "type": "news",
             "content_type": "news",
+
             "url": url,
             "title": title,
+            "category": category,               # ← 新增
             "published_at": published_at,
-            "published_at_ts": published_ts,  # 之後好用於排序/過濾
+            "published_at_ts": published_ts,
+
             "idx": i,
             "article_id": article_id,
-            # 我們會在此函式完成切塊，避免主流程再次切
             "needs_split": False,
         }
 
-        # 短文直接一塊（避免不必要切割）
         if len(content) <= TARGET_CHARS:
             docs.append(Document(
                 page_content=_fmt_news_page_content(base_meta, content),
@@ -988,10 +1485,8 @@ def news_records_to_documents(data: List[Dict[str, Any]], source_path: str) -> L
             ))
             continue
 
-        # 長文：只對「內文」做切塊，再把標題/日期當前綴補回每塊
         parts = splitter.split_text(content)
 
-        # 若最後一塊太短，併回前一塊，避免產生「碎尾」
         if len(parts) >= 2 and len(parts[-1]) < TARGET_CHARS // 3:
             parts[-2] = parts[-2] + ("\n" if not parts[-2].endswith("\n") else "") + parts[-1]
             parts.pop()
@@ -1017,22 +1512,23 @@ def load_json_as_documents(path: Path) -> List[Document]:
 
     schema = detect_schema(obj)
     if schema == "people":
-        # 處理新格式：有 "總覽" 和 "成員列表" 鍵
-        docs = []
+        # 1) 取出 member_list（支援多種 people JSON 格式）
         if isinstance(obj, dict) and "總覽" in obj:
-            overview = obj["總覽"]
-            member_list = overview.get("成員列表", [])
-            
-            # 只處理每一位成員，不生成總覽 document
-            docs.extend(people_records_to_documents(member_list, str(path)))
+            overview = obj["總覽"] or {}
+            member_list = overview.get("成員列表", []) or []
         elif isinstance(obj, dict) and "成員列表" in obj:
-            # 舊格式：只有成員列表，沒有總覽
-            data = obj["成員列表"]
-            docs = people_records_to_documents(data, str(path))
+            member_list = obj.get("成員列表", []) or []
         else:
-            # 更舊的格式
-            data = obj if isinstance(obj, list) else [obj]
-            docs = people_records_to_documents(data, str(path))
+            member_list = obj if isinstance(obj, list) else [obj]
+
+        # 2) 個別老師 documents
+        docs = people_records_to_documents(member_list, str(path))
+
+        # 3) ✅ 教授總覽 documents（不管格式都加）
+        docs.extend(
+            people_overview_to_documents(member_list, str(path), max_chars=500)
+        )
+
         return docs
     elif schema == "news":
         data = obj if isinstance(obj, list) else [obj]
@@ -1046,62 +1542,9 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "contacts":
         data = obj if isinstance(obj, list) else [obj]
         return contact_records_to_documents(data, str(path))
-    elif schema == "course_history":
-        # 處理新格式：有 "總覽" 和 "課程列表" 鍵
-        docs = []
-        if isinstance(obj, dict) and "總覽" in obj:
-            overview = obj["總覽"]
-            course_list = overview.get("課程列表", [])
-            
-            # 1. 將「總覽」資訊分成多個較小的 documents
-            course_count = overview.get('課程總數', 0)
-            data_source = overview.get('資料來源', '')
-            
-            # 將課程名單分成多份（每份最多 30 門課）
-            chunk_size = 30
-            course_names_all = []
-            for course in course_list:
-                name = course.get('課程名稱', '')
-                code = course.get('課號', '')
-                if name:
-                    course_names_all.append(f"{name}({code})")
-            
-            # 計算需要多少份
-            num_chunks = (len(course_names_all) + chunk_size - 1) // chunk_size
-            
-            for chunk_idx in range(num_chunks):
-                start_idx = chunk_idx * chunk_size
-                end_idx = min(start_idx + chunk_size, len(course_names_all))
-                chunk_names = course_names_all[start_idx:end_idx]
-                chunk_names_str = "、".join(chunk_names)
-                
-                overview_text = f"課程總數：{course_count}\n資料來源：{data_source}\n\n課程名單（第 {chunk_idx + 1}/{num_chunks} 部分）：\n{chunk_names_str}"
-                
-                overview_doc = Document(
-                    page_content=overview_text,
-                    metadata={
-                        "source": str(path),
-                        "file_type": "json",
-                        "type": "course_history_overview",
-                        "content_type": "course_history_overview",
-                        "course_count": course_count,
-                        "data_source": data_source,
-                        "course_names": chunk_names_str,
-                        "chunk_index": chunk_idx,
-                        "total_chunks": num_chunks,
-                        "idx": chunk_idx,
-                        "needs_split": False,
-                    }
-                )
-                docs.append(overview_doc)
-            
-            # 2. 處理每一門課程
-            docs.extend(course_records_to_documents(course_list, str(path)))
-        else:
-            # 舊格式：沒有總覽結構
-            data = obj if isinstance(obj, list) else [obj]
-            docs = course_records_to_documents(data, str(path))
-        return docs
+        # --- ✅ 新格式巢狀課程歷史 ---
+    elif schema == "course_history_nested":
+        return course_history_nested_to_documents(obj, str(path))
     elif schema == "course_overview":
         data = obj if isinstance(obj, list) else [obj]
         return course_overview_to_documents(data, str(path))
@@ -1111,7 +1554,11 @@ def load_json_as_documents(path: Path) -> List[Document]:
         return program_courses_to_documents(data, str(path), md_out_dir=md_dir)
     elif schema == "calendar":
         data = obj if isinstance(obj, list) else [obj]
-        return calendar_months_to_documents(data, str(path))
+        docs = []
+        docs.extend(calendar_months_to_documents(data, str(path)))   # 月總覽（原本的）
+        docs.extend(calendar_events_to_documents(data, str(path)))   # ✅ 新增：單筆活動
+        return docs
+
 
     else:
         # 後備：不認得的 JSON → 扁平化成一份 Document（仍保留 metadata）
@@ -1158,20 +1605,6 @@ def load_documents(data_dir: Path) -> List[Document]:
         elif suf in {".json", ".jsonl"}:
             # 你的兩個 JSON（department_members.json, ttu_cse_news.sorted.json）會走這條
             docs.extend(load_json_as_documents(path))
-        elif suf == ".md":
-            # 優先用 UnstructuredMarkdownLoader（保留章節/表格結構）
-            try:
-                loader = UnstructuredMarkdownLoader(str(path), mode="single")
-                for i, d in enumerate(loader.load(), 1):
-                    d.metadata.update({"source": str(path), "type": "md", "needs_split": True, "idx": i})
-                    docs.append(d)
-            except Exception:
-                # fallback：當純文字讀
-                text = path.read_text(encoding="utf-8")
-                docs.append(Document(
-                    page_content=text,
-                    metadata={"source": str(path), "type": "md", "needs_split": True, "idx": 1}
-                ))
         else:
             # 忽略其他格式
             continue
