@@ -49,6 +49,19 @@ def detect_schema(obj: Any) -> str:
             overview = obj["總覽"]
             if "課程列表" in overview:
                 return "course_history"
+        # 檢查是否是最新格式的課程歷史資料（以學期和年級為 key）
+        # 檢查第一層 key 是否為學期格式（如 "113上"、"113下"）
+        for key in obj.keys():
+            if re.match(r'^\d{3}[上下]$', str(key)):
+                # 檢查第二層是否有年級和課程列表結構
+                semester_data = obj[key]
+                if isinstance(semester_data, dict):
+                    for grade_key in semester_data.keys():
+                        if isinstance(semester_data[grade_key], dict):
+                            grade_data = semester_data[grade_key]
+                            if "課程數" in grade_data and "課程列表" in grade_data:
+                                return "course_history_new"
+                break
         sample = obj
     else:
         return "unknown"
@@ -742,8 +755,77 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "contacts":
         data = obj if isinstance(obj, list) else [obj]
         return contact_records_to_documents(data, str(path))
+    elif schema == "course_history_new":
+        # 處理最新格式：以學期和年級為 key
+        # 每個「學期+年級」組合成為一筆 Document
+        docs = []
+        
+        for semester, semester_data in obj.items():
+            if not isinstance(semester_data, dict):
+                continue
+                
+            for grade, grade_data in semester_data.items():
+                if not isinstance(grade_data, dict):
+                    continue
+                
+                course_count = grade_data.get("課程數", 0)
+                course_list = grade_data.get("課程列表", [])
+                
+                # 建立該學期+年級的文字內容
+                lines = [
+                    f"學年學期：{semester}",
+                    f"年級：{grade}",
+                    f"課程數：{course_count}",
+                    "",
+                    "課程列表："
+                ]
+                
+                # 將每門課程的詳細資訊加入
+                for idx, course in enumerate(course_list, 1):
+                    course_name = course.get("課程名稱", "")
+                    course_code = course.get("課號", "")
+                    teacher = course.get("教師", "")
+                    category = course.get("選別", "")
+                    credits = course.get("學分", "")
+                    
+                    lines.append(f"\n{idx}. {course_name}")
+                    lines.append(f"   課號：{course_code}")
+                    lines.append(f"   教師：{teacher}")
+                    lines.append(f"   選別：{category}")
+                    lines.append(f"   學分：{credits}")
+                
+                # 加入資料來源（從第一門課程取得）
+                if course_list:
+                    data_source = course_list[0].get("資料來源", "")
+                    if data_source:
+                        lines.append(f"\n資料來源：{data_source}")
+                
+                text = "\n".join(lines)
+                
+                # 建立課程名稱列表字串（用於 metadata）
+                course_names = [c.get("課程名稱", "") for c in course_list if c.get("課程名稱")]
+                course_names_str = "、".join(course_names)
+                
+                # 建立 metadata
+                meta = {
+                    "source": str(path),
+                    "file_type": "json",
+                    "type": "course_history",
+                    "content_type": "course_history",
+                    "year_term": semester,
+                    "grade": grade,
+                    "course_count": course_count,
+                    "course_names": course_names_str,
+                    "data_source": course_list[0].get("資料來源", "") if course_list else "",
+                    "needs_split": False,
+                    "idx": f"{semester}_{grade}",  # 唯一識別碼
+                }
+                
+                docs.append(Document(page_content=text, metadata=meta))
+        
+        return docs
     elif schema == "course_history":
-        # 處理新格式：有 "總覽" 和 "課程列表" 鍵
+        # 處理舊格式：有 "總覽" 和 "課程列表" 鍵
         docs = []
         if isinstance(obj, dict) and "總覽" in obj:
             overview = obj["總覽"]
@@ -794,7 +876,7 @@ def load_json_as_documents(path: Path) -> List[Document]:
             # 2. 處理每一門課程
             docs.extend(course_records_to_documents(course_list, str(path)))
         else:
-            # 舊格式：沒有總覽結構
+            # 更舊格式：沒有總覽結構
             data = obj if isinstance(obj, list) else [obj]
             docs = course_records_to_documents(data, str(path))
         return docs
