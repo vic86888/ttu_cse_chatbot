@@ -16,11 +16,17 @@ from langchain_community.document_loaders import CSVLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-from langchain_core.documents import Document
+from langchain.schema import Document
+
+from langchain_community.document_loaders import UnstructuredMarkdownLoader
 
 DATA_DIR = Path("data")
 DB_DIR = "storage/chroma"
 COLL_NAME = "campus_rag"
+
+# === Markdown export 設定 ===
+EXPORT_MD = True
+MD_EXPORT_DIR = Path("data_md")   # 會把 md 輸出到這裡
 
 # =========================
 # JSON schema 自動偵測
@@ -71,7 +77,256 @@ def detect_schema(obj: Any) -> str:
         return "course_history"
     if {"選別", "學年學期", "所屬年級", "課程名稱"} <= keys and not ({"課號", "教師"} & keys):
         return "course_overview"
+    # 人工智慧學分學程（或其他學分學程）課程清單
+    # 特色鍵：有「設置宗旨/適用對象/課程代碼/課程名稱/學分數」
+    if {"設置宗旨", "適用對象", "課程代碼", "課程名稱", "學分數"} <= keys:
+        return "program_courses"
+        # 行事曆 / 校務日程
+    # 特色鍵：有「年/月/日/活動事項」（通常還有 星期、資料來源）
+    if {"年", "月", "日", "活動事項"} <= keys:
+        return "calendar"
     return "unknown"
+
+# =========================
+# calendar.json（行事曆：依月分切塊） adapter
+# =========================
+def calendar_months_to_documents(
+    data: List[Dict[str, Any]], source_path: str
+) -> List[Document]:
+    docs: List[Document] = []
+    if not data:
+        return docs
+
+    def to_int(x) -> int | None:
+        try:
+            s = str(x).strip()
+            return int(s) if s else None
+        except Exception:
+            return None
+
+    def parse_day_start(day_raw: str) -> int | None:
+        """
+        抓「起始日」排序用：
+        - "1" -> 1
+        - "8~12" -> 8
+        - "10/13~11/3" -> 13 (取起始日)
+        解析失敗就 None
+        """
+        s = (day_raw or "").strip()
+        if not s:
+            return None
+        # 取第一段可能的數字
+        m = re.search(r"(\d+)", s)
+        if not m:
+            return None
+        try:
+            return int(m.group(1))
+        except Exception:
+            return None
+
+    # 1) 依 (年, 月) 分組
+    grouped: Dict[tuple[int | None, int | None], List[Dict[str, Any]]] = {}
+    for rec in data:
+        y = to_int(rec.get("年"))
+        m = to_int(rec.get("月"))
+        grouped.setdefault((y, m), []).append(rec)
+
+    # 2) 依年/月排序輸出
+    month_items = sorted(grouped.items(), key=lambda kv: (kv[0][0] or 0, kv[0][1] or 0))
+
+    idx = 0
+    for (year_roc, month), items in month_items:
+        idx += 1
+        year_ad = year_roc + 1911 if year_roc is not None else None
+
+        # 先按「起始日」粗排序（None 的保持原順序）
+        items_sorted = sorted(
+            items,
+            key=lambda r: (parse_day_start(str(r.get("日", ""))) is None,
+                           parse_day_start(str(r.get("日", ""))) or 0)
+        )
+
+        # 3) 組 page_content（保留你其他 JSON 的「欄名：內容」風格）
+        header = f"行事曆：{year_roc if year_roc is not None else ''}年{month if month is not None else ''}月"
+        lines = [header, "活動列表："]
+
+        events_for_meta = []
+        for r in items_sorted:
+            day_raw = str(r.get("日", "")).strip()
+            weekday = str(r.get("星期", "")).strip()
+            event = str(r.get("活動事項", "")).strip()
+            if weekday:
+                lines.append(f"- {month}/{day_raw}（{weekday}）：{event}")
+            else:
+                lines.append(f"- {month}/{day_raw}：{event}")
+
+            # metadata 不能放 list 裡的 dict，轉成可索引字串
+            events_for_meta.append(f"{month}/{day_raw}:{event}")
+
+        # 若這個月的資料來源都一樣，取第一個；不同也沒關係，先留空或合併
+        data_sources = []
+        for r in items_sorted:
+            ds = str(r.get("資料來源", "")).strip()
+            if ds:
+                data_sources.append(ds)
+        data_source_str = "；".join(sorted(set(data_sources)))
+
+        if data_source_str:
+            lines.append(f"資料來源：{data_source_str}")
+
+        text = "\n".join(lines)
+
+        # 4) 特化 metadata
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "calendar_month",
+            "content_type": "calendar_month",
+
+            "title": str(items_sorted[0].get("title", "")).strip(),
+            "year_roc": year_roc,
+            "year_ad": year_ad,
+            "month": month,
+
+            "event_count": len(items_sorted),
+            "events": "、".join(events_for_meta),   # ✅ 存成字串
+            "data_source": data_source_str,
+
+            "idx": idx,
+            "needs_split": False,  # 月 chunk 不再二次切
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
+    
+# =========================
+# program_courses.json（以課程類別分組切塊） adapter
+# =========================
+def program_courses_to_documents(
+    data: List[Dict[str, Any]], source_path: str, md_out_dir: Path | None = None
+) -> List[Document]:
+    docs: List[Document] = []
+
+    if not data:
+        return []
+
+    # 取學程層級資訊（每筆都一樣，拿第一筆即可）
+    program_title = str(data[0].get("title", "")).strip()
+    program_purpose = str(data[0].get("設置宗旨", "")).strip()
+    program_target = str(data[0].get("適用對象", "")).strip()
+
+    def parse_credits(x: Any) -> float | None:
+        try:
+            s = str(x).strip()
+            if not s or s.lower() == "nan":
+                return None
+            return float(s)
+        except Exception:
+            return None
+
+    def extract_substitutes(note: str) -> str:
+        note = note or ""
+        alts = re.findall(r"【([^】]+)】", note)
+        alts = [a.strip() for a in alts if a.strip()]
+        return "、".join(alts)
+
+    # 1) 依課程類別分組
+    grouped: Dict[str, List[Dict[str, Any]]] = {}
+    for rec in data:
+        cat = str(rec.get("課程類別", "")).strip() or "未分類"
+        grouped.setdefault(cat, []).append(rec)
+
+    # 2) 每個類別 → 一份 Document
+    for idx, (cat, items) in enumerate(grouped.items(), 1):
+        lines = [
+            f"學程：{program_title}",
+            f"課程類別：{cat}",
+            "課程列表："
+        ]
+
+        course_names = []
+        required_count = 0
+        credits_sum = 0.0
+
+        for rec in items:
+            code = str(rec.get("課程代碼", "")).strip()
+            name = str(rec.get("課程名稱", "")).strip()
+            credits = parse_credits(rec.get("學分數"))
+            note = str(rec.get("備註", "")).strip()
+            note = "" if note.lower() == "nan" else note
+
+            required = ("必修" in note) or ("必選" in note)
+            if required:
+                required_count += 1
+
+            if credits is not None:
+                credits_sum += credits
+
+            substitutes = extract_substitutes(note)
+
+            # 類別 chunk 內每門課的條目
+            b = f"- {name}"
+            if code:
+                b += f"（{code}）"
+            if credits is not None:
+                b += f" / {credits}學分"
+            if required:
+                b += " / 必修"
+            if substitutes:
+                b += f" / 可替代：{substitutes}"
+            if note and not substitutes:
+                b += f" / 備註：{note}"
+
+            lines.append(b)
+            if name and code:
+                course_names.append(f"{name}({code})")
+            elif name:
+                course_names.append(name)
+
+        text = "\n".join(lines)
+
+        # === (新增) 同步輸出 Markdown 檔 ===
+        if md_out_dir is not None:
+            md_out_dir.mkdir(parents=True, exist_ok=True)
+
+            def _safe(s: str) -> str:
+                s = s or "untitled"
+                # 檔名安全化：保留中文/英文/數字/底線/減號，其餘換成 _
+                return re.sub(r"[^\w\u4e00-\u9fff-]+", "_", s).strip("_")
+
+            safe_title = _safe(program_title or Path(source_path).stem)
+            safe_cat = _safe(cat)
+            md_path = md_out_dir / f"{safe_title}__{safe_cat}.md"
+            md_path.write_text(text, encoding="utf-8")
+
+        meta = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "program_course_category",
+            "content_type": "program_course_category",
+
+            # 學程層級
+            "program_title": program_title,
+            "program_purpose": program_purpose,
+            "program_target": program_target,
+
+            # 類別層級（切塊 key）
+            "course_category": cat,
+            "course_count": len(items),
+            "required_count": required_count,
+            "credits_sum": credits_sum,
+
+            # 為了 metadata 可索引、不能放 list → 轉字串
+            "courses": "、".join(course_names),
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=text, metadata=meta))
+
+    return docs
 
 # =========================
 # course_overview.json（課程總覽） adapter
@@ -407,9 +662,27 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
     reorg_at = find_key("改制時間", "")
     rename_at = find_key("更名時間", "")
     feature = find_key("特色", "")
+    # 你原資料有，但目前沒抓到的欄位
+    student_count = find_key("學生人數", "")
+    mascots = find_key("校友吉祥物", [])
+    if isinstance(mascots, list):
+        mascots_str = "、".join(map(str, mascots))
+    else:
+        mascots_str = str(mascots) if mascots else ""
 
-    # 給 LLM 看的文字內容（你可以之後再微調格式）
+    focus_fields = find_key("重點領域", [])
+    if isinstance(focus_fields, list):
+        focus_fields_str = "、".join(map(str, focus_fields))
+    else:
+        focus_fields_str = str(focus_fields) if focus_fields else ""
+
+    philosophy = find_key("辦學理念", "")
+    alliance = find_key("聯盟", "")
+
+
+    # 給 LLM 看的文字內容（依原始文件順序）
     lines = [
+        # 1) 基本校務
         f"名稱：{name}",
         f"英文名稱：{name_en}",
         f"校訓：{motto}",
@@ -417,6 +690,8 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
         f"創辦人：{founder}",
         f"類型：{school_type}",
         "",
+
+        # 2) 聯絡資訊
         f"地址：{address}",
         f"電話：{phone}",
         f"緊急校安專線：{emergency_phone}",
@@ -425,14 +700,26 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
         f"校長室傳真：{president_fax}",
         f"校長室 email：{president_email}",
         "",
+
+        # 3) 其他校務
         f"學校代碼：{school_code}",
         f"網址：{url}",
         f"系所結構：{departments_str}",
+        f"學生人數：{student_count}",
+        f"校友吉祥物：{mascots_str}",
         "",
+
+        # 4) 歷史沿革
         f"前身：{prev_name}",
         f"改制時間：{reorg_at}",
         f"更名時間：{rename_at}",
+        "",
+
+        # 5) 辦學特色
         f"特色：{feature}",
+        f"重點領域：{focus_fields_str}",
+        f"辦學理念：{philosophy}",
+        f"聯盟：{alliance}",
     ]
     text = "\n".join(lines)
 
@@ -440,12 +727,16 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
         "source": source_path,
         "file_type": "json",
         "content_type": "school",
+
+        # 1) 基本校務
         "name": name,
         "name_en": name_en,
         "motto": motto,
         "founded_at": founded_at,
         "founder": founder,
         "school_type": school_type,
+
+        # 2) 聯絡資訊
         "address": address,
         "phone": phone,
         "emergency_phone": emergency_phone,
@@ -453,16 +744,29 @@ def school_info_to_documents(obj: Any, source_path: str) -> List[Document]:
         "president_phone": president_phone,
         "president_fax": president_fax,
         "president_email": president_email,
+
+        # 3) 其他校務
         "school_code": school_code,
         "url": url,
-        "departments": departments_str,   # ✅ 存成純字串就沒問題
+        "departments": departments_str,    # 已經是 "、" 串好的字串
+        "student_count": student_count,
+        "mascots": mascots_str,
+
+        # 4) 歷史沿革
         "prev_name": prev_name,
         "reorg_at": reorg_at,
         "rename_at": rename_at,
+
+        # 5) 辦學特色
         "feature": feature,
-        "needs_split": False,  # 這份本來就不長，不再二次切塊
+        "focus_fields": focus_fields_str,
+        "philosophy": philosophy,
+        "alliance": alliance,
+
+        "needs_split": False,
         "idx": 1,
     }
+
 
     return [Document(page_content=text, metadata=meta)]
 
@@ -801,6 +1105,14 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "course_overview":
         data = obj if isinstance(obj, list) else [obj]
         return course_overview_to_documents(data, str(path))
+    elif schema == "program_courses":
+        data = obj if isinstance(obj, list) else [obj]
+        md_dir = (MD_EXPORT_DIR / path.stem) if EXPORT_MD else None
+        return program_courses_to_documents(data, str(path), md_out_dir=md_dir)
+    elif schema == "calendar":
+        data = obj if isinstance(obj, list) else [obj]
+        return calendar_months_to_documents(data, str(path))
+
     else:
         # 後備：不認得的 JSON → 扁平化成一份 Document（仍保留 metadata）
         def flatten(o):
@@ -846,6 +1158,20 @@ def load_documents(data_dir: Path) -> List[Document]:
         elif suf in {".json", ".jsonl"}:
             # 你的兩個 JSON（department_members.json, ttu_cse_news.sorted.json）會走這條
             docs.extend(load_json_as_documents(path))
+        elif suf == ".md":
+            # 優先用 UnstructuredMarkdownLoader（保留章節/表格結構）
+            try:
+                loader = UnstructuredMarkdownLoader(str(path), mode="single")
+                for i, d in enumerate(loader.load(), 1):
+                    d.metadata.update({"source": str(path), "type": "md", "needs_split": True, "idx": i})
+                    docs.append(d)
+            except Exception:
+                # fallback：當純文字讀
+                text = path.read_text(encoding="utf-8")
+                docs.append(Document(
+                    page_content=text,
+                    metadata={"source": str(path), "type": "md", "needs_split": True, "idx": 1}
+                ))
         else:
             # 忽略其他格式
             continue
