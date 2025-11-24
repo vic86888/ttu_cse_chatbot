@@ -1,6 +1,5 @@
 # ingest.py
 import os
-import math
 import json
 import re
 import hashlib
@@ -24,10 +23,6 @@ from zoneinfo import ZoneInfo
 DATA_DIR = Path("data")
 DB_DIR = "storage/chroma"
 COLL_NAME = "campus_rag"
-
-# === Markdown export 設定 ===
-EXPORT_MD = True
-MD_EXPORT_DIR = Path("data_md")   # 會把 md 輸出到這裡
 
 # =========================
 # JSON schema 自動偵測
@@ -533,7 +528,7 @@ def calendar_events_to_documents(
 # program_courses.json（以課程類別分組切塊） adapter
 # =========================
 def program_courses_to_documents(
-    data: List[Dict[str, Any]], source_path: str, md_out_dir: Path | None = None
+    data: List[Dict[str, Any]], source_path: str
 ) -> List[Document]:
     docs: List[Document] = []
 
@@ -614,20 +609,6 @@ def program_courses_to_documents(
                 course_names.append(name)
 
         text = "\n".join(lines)
-
-        # === (新增) 同步輸出 Markdown 檔 ===
-        if md_out_dir is not None:
-            md_out_dir.mkdir(parents=True, exist_ok=True)
-
-            def _safe(s: str) -> str:
-                s = s or "untitled"
-                # 檔名安全化：保留中文/英文/數字/底線/減號，其餘換成 _
-                return re.sub(r"[^\w\u4e00-\u9fff-]+", "_", s).strip("_")
-
-            safe_title = _safe(program_title or Path(source_path).stem)
-            safe_cat = _safe(cat)
-            md_path = md_out_dir / f"{safe_title}__{safe_cat}.md"
-            md_path.write_text(text, encoding="utf-8")
 
         meta = {
             "source": source_path,
@@ -1550,8 +1531,7 @@ def load_json_as_documents(path: Path) -> List[Document]:
         return course_overview_to_documents(data, str(path))
     elif schema == "program_courses":
         data = obj if isinstance(obj, list) else [obj]
-        md_dir = (MD_EXPORT_DIR / path.stem) if EXPORT_MD else None
-        return program_courses_to_documents(data, str(path), md_out_dir=md_dir)
+        return program_courses_to_documents(data, str(path))
     elif schema == "calendar":
         data = obj if isinstance(obj, list) else [obj]
         docs = []
