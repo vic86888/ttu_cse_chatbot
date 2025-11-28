@@ -4,8 +4,8 @@
 """
 Chroma Cleaner (互動版)
 - 輸入檔名：刪除該來源檔在向量庫中的所有切塊（比對 metadata.source）
+- 輸入以 / 結尾的路徑（例如 data/）：刪除該資料夾底下所有來源
 - 輸入 ALL：清空整個 collection（刪除所有切塊）
-- 不使用任何 CLI 參數；啟動後依提示輸入即可
 
 需求：
     pip install chromadb
@@ -21,7 +21,7 @@ import chromadb
 PERSIST_DIR = "storage/chroma"
 COLL_NAME   = "campus_rag"
 
-BATCH_SIZE_ALL = 10_000   # 清空時每批刪除筆數
+BATCH_SIZE_ALL  = 10_000   # 清空時每批刪除筆數
 BATCH_SCAN      = 10_000   # 掃描 metadatas 時每批讀取筆數
 
 
@@ -30,7 +30,6 @@ def connect_collection(persist_dir: str, coll_name: str):
     try:
         col = client.get_collection(coll_name)
     except Exception as e:
-        # 0.6+ list_collections 會回傳名稱列表
         names = client.list_collections()
         print(f"[錯誤] 找不到 collection：{coll_name}")
         print(f"       目前可用 collections：{names}")
@@ -126,6 +125,45 @@ def delete_by_source(col, src: str) -> None:
     print(f"[完成] collection 由 {before} → {after}（預期刪除 {matched} 筆）")
 
 
+def delete_by_source_prefix(col, prefix: str) -> None:
+    """
+    刪除所有 metadata.source 以 prefix 開頭的來源，例如 prefix='data/'。
+    不動其他來源（例如 data_qwen/）。
+    """
+    print(f"\n[刪除資料夾] prefix = {prefix}")
+    sources = list_unique_sources(col)
+    norm_prefix = prefix.replace("\\", "/")
+    targets = [s for s in sources if s.replace("\\", "/").startswith(norm_prefix)]
+
+    if not targets:
+        print("  - 找不到任何符合該 prefix 的來源檔，未執行刪除。")
+        return
+
+    print(f"  - 將刪除 {len(targets)} 個來源檔：")
+    for s in targets:
+        print(f"    - {s}")
+
+    confirm = input("⚠️ 確定要刪除以上所有來源？(yes/no) ").strip().lower()
+    if confirm not in {"y", "yes"}:
+        print("已取消刪除。")
+        return
+
+    total_before = col.count()
+    deleted_expected = 0
+
+    for src in targets:
+        where = {"source": {"$eq": src}}
+        n = count_where(col, where=where)
+        if n == 0:
+            continue
+        deleted_expected += n
+        col.delete(where=where)
+        print(f"  - 已刪除來源 {src} 的 {n} 筆切塊")
+
+    total_after = col.count()
+    print(f"[完成] collection 由 {total_before} → {total_after}（預期刪除約 {deleted_expected} 筆）")
+
+
 def main():
     print(f"連線到 Chroma：{PERSIST_DIR} / collection={COLL_NAME}")
     _, col = connect_collection(PERSIST_DIR, COLL_NAME)
@@ -133,7 +171,13 @@ def main():
     print(f"目前切塊總數：{total}")
 
     try:
-        user = input("\n請輸入要刪除的檔名（或完整路徑）；輸入 ALL 以清空；直接 Enter 離開： ").strip()
+        user = input(
+            "\n請輸入要刪除的檔名或路徑：\n"
+            " - 輸入檔名（或完整路徑）：只刪除該檔案來源\n"
+            " - 輸入以 '/' 結尾的路徑（例如 data/）：刪除此資料夾底下所有來源\n"
+            " - 輸入 ALL：清空整個 collection\n"
+            " - 直接 Enter 離開\n\n> "
+        ).strip()
     except (EOFError, KeyboardInterrupt):
         print("\n已離開。")
         return
@@ -150,7 +194,12 @@ def main():
             print("已取消清空。")
         return
 
-    # 刪除單一來源檔
+    # 🔹 新增：以 prefix 刪除整個資料夾（例如 data/）
+    if user.endswith("/") or user.endswith("\\"):
+        delete_by_source_prefix(col, user)
+        return
+
+    # 原本邏輯：刪除單一來源檔
     print("\n搜尋來源中，請稍候…")
     sources = list_unique_sources(col)
     matches = match_sources(sources, user)
