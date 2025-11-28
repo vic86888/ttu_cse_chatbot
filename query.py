@@ -17,6 +17,7 @@ from langchain_core.runnables import RunnableLambda
 from langchain_core.documents import Document
 from langsmith import traceable
 from sentence_transformers import CrossEncoder
+from langchain_core.output_parsers import StrOutputParser
 
 # Rich 套件用於美化終端輸出
 from rich.console import Console
@@ -31,13 +32,10 @@ console = Console()
 DB_DIR = "storage/chroma"
 COLL_NAME = "campus_rag"
 
-# 你原本的關鍵字
-EVENT_KEYWORDS = ["新聞","消息","news","最新","最近","活動","說明會","講座","論壇","營隊","徵才","行事曆"]
-
-# 時間窗參數（自行調整）
-NEWS_LOOKBACK_DAYS = 120   # 新聞：只抓過去 N 天（含今天）
-CAL_PAST_DAYS      = 60    # 行事曆：抓過去 N 天
-CAL_FUTURE_DAYS    = 180   # 行事曆：抓未來 N 天
+# EVENT_KEYWORDS = [
+#     "新聞", "消息", "news", "最新",
+#     "最近", "活動", "說明會", "講座", "論壇", "營隊", "徵才"
+# ]
 
 from langchain_core.documents import Document
 
@@ -64,6 +62,7 @@ def rerank_docs(query: str, docs: list[Document], top_n: int) -> list[Document]:
     return out
 
 def make_scored_retriever(vdb, k: int = 10):
+    # 先抓比較多，再給 reranker 挑前 k
     k_retrieve = max(k * 4, 100)
 
     def _retrieve(query: str):
@@ -75,105 +74,45 @@ def make_scored_retriever(vdb, k: int = 10):
                 out.append(Document(page_content=doc.page_content, metadata=md))
             return out
 
-        q_lower = (query or "").lower()
-        prefer_news = any(kw in q_lower for kw in EVENT_KEYWORDS)
+        # q = (query or "").lower()
+        # prefer_news = any(kw in q for kw in EVENT_KEYWORDS)
 
         docs: list[Document] = []
+        # if prefer_news:
+        #     news_pairs = vdb.similarity_search_with_relevance_scores(
+        #         query, k=k_retrieve, filter={"content_type": "news"}
+        #     )
+        #     docs.extend(as_docs(news_pairs))
 
-        if prefer_news:
-            now_ts = int(datetime.now(ZoneInfo("Asia/Taipei")).timestamp())
+        #     if len(docs) < k_retrieve:
+        #         more_pairs = vdb.similarity_search_with_relevance_scores(
+        #             query, k=k_retrieve
+        #         )
+        #         docs.extend(as_docs(more_pairs))
 
-            # --- 1) 新聞：只抓過去 NEWS_LOOKBACK_DAYS 天 ---
-            news_cutoff = now_ts - NEWS_LOOKBACK_DAYS * 24 * 3600
-            news_pairs = vdb.similarity_search_with_relevance_scores(
-                query,
-                k=k_retrieve,
-                filter={
-                    "$and": [
-                        {"content_type": "news"},
-                        {"published_at_ts": {"$gte": news_cutoff}}
-                    ]
-                }
-            )
-            docs.extend(as_docs(news_pairs))
-
-            # --- 2) 行事曆：抓過去 CAL_PAST_DAYS 天 + 未來 CAL_FUTURE_DAYS 天 ---
-            cal_start = now_ts - CAL_PAST_DAYS * 24 * 3600
-            cal_end   = now_ts + CAL_FUTURE_DAYS * 24 * 3600
-
-            cal_pairs = vdb.similarity_search_with_relevance_scores(
-                query,
-                k=k_retrieve,
-                filter={
-                    "$and": [
-                        {"content_type": "calendar"},          # 你新增的 event docs
-                        {"event_date_ts": {"$gte": cal_start}},
-                        {"event_date_ts": {"$lte": cal_end}},
-                    ]
-                }
-            )
-            docs.extend(as_docs(cal_pairs))
-
-            # （可選）Fallback：如果你還沒加 calendar_events_to_documents，
-            # 只會有 calendar_month chunk，這裡補抓一點避免完全空
-            if not cal_pairs:
-                cal_month_pairs = vdb.similarity_search_with_relevance_scores(
-                    query,
-                    k=min(20, k_retrieve),
-                    filter={"content_type": "calendar_month"}
-                )
-                docs.extend(as_docs(cal_month_pairs))
-
-            # --- 3) 不夠再補一般候選 ---
-            if len(docs) < k_retrieve:
-                more_pairs = vdb.similarity_search_with_relevance_scores(
-                    query, k=k_retrieve
-                )
-                docs.extend(as_docs(more_pairs))
-
-            # --- 4) 去重 ---
-            seen = set()
-            uniq = []
-            for d in docs:
-                md = d.metadata or {}
-                key = (
-                    ("page", md.get("source"), md.get("page"))
-                    if md.get("page") is not None
-                    else ("article", md.get("source"), md.get("article_id"))
-                    if md.get("article_id")
-                    else ("row", md.get("source"), md.get("idx"))
-                )
-                if key in seen:
-                    continue
-                seen.add(key)
-                uniq.append(d)
-            docs = uniq
-
-        else:
-            pairs = vdb.similarity_search_with_relevance_scores(
+        #     # 去重（source+article_id 或 source+idx）
+        #     seen = set()
+        #     uniq = []
+        #     for d in docs:
+        #         md = d.metadata or {}
+        #         key = (
+        #             ("article", md.get("source"), md.get("article_id"))
+        #             if md.get("article_id")
+        #             else ("row", md.get("source"), md.get("idx"))
+        #         )
+        #         if key in seen:
+        #             continue
+        #         seen.add(key)
+        #         uniq.append(d)
+        #     docs = uniq
+        # else:
+        pairs = vdb.similarity_search_with_relevance_scores(
                 query, k=k_retrieve
-            )
-            docs = as_docs(pairs)
+        )
+        docs = as_docs(pairs)
 
-        # --- 5) cross-encoder rerank（語意）---
+        # ⭐ 最關鍵：用 cross-encoder 重新排序，只保留前 k 個
         docs = rerank_docs(query, docs, top_n=k)
-
-        # --- 6) prefer_news 時做「時間導向 final sort」---
-        if prefer_news:
-            now_ts = int(datetime.now(ZoneInfo("Asia/Taipei")).timestamp())
-
-            def time_key(d):
-                md = d.metadata or {}
-                ts = md.get("published_at_ts") or md.get("event_date_ts") or 0
-                rr = md.get("rerank_score") or 0.0
-
-                # 讓「離現在最近」的排前面，且未來活動優先於過去活動
-                future_flag = 0 if ts >= now_ts else 1
-                delta = abs(int(ts) - now_ts)
-                return (future_flag, delta, -float(rr))
-
-            docs = sorted(docs, key=time_key)
-
         return docs
 
     return RunnableLambda(_retrieve).with_config({
@@ -188,17 +127,44 @@ reranker = CrossEncoder(RERANK_MODEL_NAME, device="cuda")  # 或 "cpu"
 def build_chain():
     # 1) LLM
     llm = ChatOllama(
-        # model="cwchang/llama-3-taiwan-8b-instruct:latest",
+#        model="cwchang/llama-3-taiwan-8b-instruct:latest",
         model="qwen3:latest",
         temperature=0,
+        # num_gpu=0,          # ⭐ 關掉 GPU，全部跑在 CPU
     ).with_config({
         "run_name": "Ollama-LLM",
         "tags": ["ollama", "tw-8b", "local"],
         "metadata": {"provider": "ollama"},
     })
 
+    # 1.5) ✨ 新增：時間相關 query rewriter
+    rewrite_prompt = ChatPromptTemplate.from_messages([
+        (
+            "system",
+            "你是一個查詢改寫器。\n"
+            "你知道現在時間是：{now}（時區：Asia/Taipei）。\n"
+            "請閱讀使用者的問題，將其中的「相對時間」"
+            "（例如：今天、明天、後天、這週、下週、上週、上個月、下個月、最近幾天、這學期、下學期、今年、明年等）\n"
+            "換算成「明確的日期或年月」後，改寫成一個新的問題句子。\n"
+            "規則：\n"
+            "1. 如果問題中沒有相對時間，就原封不動輸出原始問題。\n"
+            "2. **一律使用西元年份（例如：2025年10月），不要使用民國年（例如：民國114年）。**\n"
+            "3. **不要加入「學年度」「學年」「學期」等字眼，除非使用者原本問題就有。**\n"
+            "4. 僅輸出改寫後的問題，不要任何解釋、不要加前綴、不要多行說明。\n"
+        ),
+        ("human", "{query}")
+    ]).with_config({
+        "run_name": "TemporalQueryRewriter",
+        "tags": ["query-rewrite", "temporal"],
+    })
+
+    # 這條鏈輸入 {"query": str, "now": str}，輸出一個乾淨字串
+    rewrite_chain = (rewrite_prompt | llm | StrOutputParser()).with_config({
+        "run_name": "RewriteChain",
+        "tags": ["chain", "rewrite"],
+    })
+
     # 2) 提示詞
-    from langchain_core.prompts import ChatPromptTemplate
 
     # 在 build_chain 函式內修改 prompt
     prompt = ChatPromptTemplate.from_messages([
@@ -206,7 +172,7 @@ def build_chain():
         "現在時間：{now}\n\n"
         "目前學期：{acad_term}\n\n"
         "你是大同大學資工系問答機器人。請根據系統提供的資訊（如現在時間、目前學期）以及與問題相關的文件內容回答問題。"
-        "回答結尾需附上參考網址，若沒有則附上來源文件"
+        "回答結尾需附上回答時參考資料的來源網址，若沒有則附上來源文件"
         "若無法從系統提供的資訊（如現在時間、目前學期）以及文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
         "{context}"
         ),
@@ -244,7 +210,11 @@ def build_chain():
         "tags": ["campus-rag", "cli"],
     })
 
-    return rag_chain
+    # ✨ 改：回傳兩條鏈
+    return {
+        "rag": rag_chain,
+        "rewrite": rewrite_chain,
+    }
 
 def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
     seen = set()
@@ -300,10 +270,35 @@ def pretty_print_snippets_with_scores(context_docs, max_chars: int = 240):
 
     return "\n".join(rows)
 
+def extract_clean_query(text: str) -> str:
+    """從 rewriter 輸出中抽出『真正要拿去當 query 的那句話』"""
+    if not text:
+        return ""
+
+    # 1) 如果 LLM 真的有照 <answer> 格式，可以優先抓 <answer>
+    m = re.search(r"<answer>(.*?)</answer>", text, re.DOTALL)
+    if m:
+        return m.group(1).strip()
+
+    # 2) 把 <think>...</think> 整塊砍掉
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+
+    # 3) 有時候會多行，我們取最後一行當 query（通常是那句問句）
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    if not lines:
+        return ""
+    return lines[-1]
+
 @traceable(name="CLI-Ask", run_type="chain", metadata={"app": "campus_rag_cli"})
-def ask(chain, q: str):
+def ask(chains, q: str):
+    """執行查詢：先用 LLM 做時間改寫，再丟給 RAG"""
+    rag_chain = chains["rag"]
+    rewrite_chain = chains["rewrite"]    # 取得台北時間
+
     now = datetime.now(ZoneInfo("Asia/Taipei"))
     roc_year = now.year - 1911
+    today_roc = f"{roc_year}年{now.month}月{now.day}日"
+    # now_time = now.strftime("%H:%M:%S")
 
     m, d = now.month, now.day
 
@@ -322,16 +317,36 @@ def ask(chain, q: str):
 
     now_str = f"民國{roc_year}年{m}月{d}日 {now.strftime('%H:%M')}"
 
-    # ✅ 多傳 acad_term 給 prompt
-    return chain.invoke({
-        "input": q,
+    # --- ✨ 新增：先讓 LLM 把 query 改寫成具體時間的問句 ---
+    try:
+        rewritten_q = rewrite_chain.invoke({
+            "query": q,
+            "now": now_str,
+        }).strip()
+        rewritten_q = extract_clean_query(rewritten_q)
+    except Exception:
+        # 避免 rewriter 掛掉整個系統，保底用原始問題
+        rewritten_q = q
+
+    if not rewritten_q:
+        rewritten_q = q
+    # ---------------------------------------------------------
+    print(f"[DEBUG] rewritten query: {rewritten_q}")
+    print(f"[DEBUG] cleaned rewrite: {rewritten_q!r}")
+
+    # 之後就用改寫後的問題做檢索與回答
+    return rag_chain.invoke({
+        "input": rewritten_q,
         "now": now_str,
-        "acad_term": acad_term
+        "acad_term": acad_term,
+        # 你也可以順便把原始/改寫後 query 傳進去，方便之後在 prompt 用
+        "original_query": q,
+        "rewritten_query": rewritten_q,
     })
 
 if __name__ == "__main__":
     # 需要：export LANGSMITH_TRACING=true 與 LANGSMITH_API_KEY
-    chain = build_chain()
+    chains = build_chain() # 會拿到 {"rag": ..., "rewrite": ...}
     
     # 使用 rich 顯示歡迎訊息
     console.print(Panel.fit(
@@ -349,8 +364,8 @@ if __name__ == "__main__":
             if not q.strip():
                 continue
             
-            # 執行查詢
-            res = ask(chain, q)            
+            # ✨ 這裡改成丟 chains
+            res = ask(chains, q)            
             raw = res["answer"]
             # --- 修改開始：使用 Regex 解析 XML ---
             thinking = ""
