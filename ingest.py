@@ -21,6 +21,8 @@ from langchain.schema import Document
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from collections import defaultdict
+
 # ingest.py 開頭
 from json_rewriter import rewrite_json_record
 
@@ -62,6 +64,21 @@ def detect_schema(obj: Any) -> str:
                     # 任一 grade block 內含「課程列表」就視為新格式
                     if any(isinstance(gv, dict) and "課程列表" in gv for gv in v0.values()):
                         return "course_history_nested"
+
+            # 3) ✅ 在這裡加：必修科目(檢核)表 required_by_semester
+            if "semesters" in obj and isinstance(obj["semesters"], dict):
+                semesters = obj["semesters"]
+                for v in semesters.values():
+                    # 找到第一個有資料的學期來看
+                    if isinstance(v, list) and v:
+                        first = v[0]
+                        if isinstance(first, dict):
+                            inner_keys = set(first.keys())
+                            # 這幾個是這個 JSON 很有特色的欄位
+                            if {"raw", "學分", "共同必修小計", "專業必修小計"} <= inner_keys:
+                                return "required_by_semester"
+                        break  # 看一個樣本就夠了
+
         sample = obj
     else:
         return "unknown"
@@ -78,6 +95,11 @@ def detect_schema(obj: Any) -> str:
         return "school"
     if "類別" in keys and ("內容" in keys or "說明" in keys):
         return "academic_rules"
+    
+    # 🔹 新增：數位教學課程實施要點＋彈性教學週
+    if {"實施要點", "彈性教學週活動規劃"} <= keys:
+        return "flexible_week_rules"
+
     if ("辦理項目" in keys and "承辦人" in keys) or ("學系" in keys and "聯絡人員" in keys):
         return "contacts"
     if {"學年學期", "課號", "課程名稱", "教師"} <= keys:
@@ -88,11 +110,908 @@ def detect_schema(obj: Any) -> str:
     # 特色鍵：有「設置宗旨/適用對象/課程代碼/課程名稱/學分數」
     if {"設置宗旨", "適用對象", "課程代碼", "課程名稱", "學分數"} <= keys:
         return "program_courses"
+    
+    # 🔹 新增：姊妹校列表（大同大學姊妹校）
+    if "continents" in keys and "title" in keys and ("source" in keys or "來源" in keys):
+        return "sister_schools"
+    
+    # 🔹 2025 春季姊妹校交換 / 雙聯學位公告這類 JSON
+    if {"title", "url", "section1", "section2", "section3", "section4"} <= keys:
+        return "exchange_program_call"
+
         # 行事曆 / 校務日程
     # 特色鍵：有「年/月/日/活動事項」（通常還有 星期、資料來源）
     if {"年", "月", "日", "活動事項"} <= keys:
         return "calendar"
     return "unknown"
+
+
+# =========================
+# ttu_exchange_2025_spring.json adapter
+# =========================
+
+def exchange_program_call_to_documents(
+    obj: Dict[str, Any],
+    source_path: str | Path,
+) -> List[Document]:
+    """
+    將 2025 春季姊妹校交換 / 雙聯學位公告 JSON
+    轉成多筆可入庫的 Document：
+
+    1) 一份「整體公告總覽」：
+       - 包含標題、網址、時間說明、注意事項、承辦人
+
+    2) 多筆「申請所需資料項目」：
+       - 來自 section2.rows，每一項 (1,2,…,11,113) 一筆
+
+    3) 多筆「姊妹校詳情」：
+       - 來自 section3.waves[*].schools，每所學校一筆
+       - 包含：波次、截止時間、學校名稱、門檻/語言要求等
+
+    4) 多筆「每一波姊妹校總覽」：
+       - 一波可能切成多個 chunk，每個 chunk 控制在 ~500 字內
+       - 方便問「第一波有哪些學校？」時，一次列出多間
+    """
+    docs: List[Document] = []
+
+    source_path_str = str(source_path)
+    title = str(obj.get("title") or "").strip()
+    url = str(obj.get("url") or "").strip()
+
+    section1 = obj.get("section1") or {}
+    sec1_title = str(section1.get("title") or "").strip()
+    sec1_content = str(section1.get("content") or "").strip()
+
+    section2 = obj.get("section2") or {}
+    sec2_title = str(section2.get("title") or "").strip()
+    rows = section2.get("rows") or []
+
+    section3_note = obj.get("section3_note") or {}
+    sec3_note_title = str(section3_note.get("title") or "").strip()
+    sec3_note_content = str(section3_note.get("content") or "").strip()
+
+    section3 = obj.get("section3") or {}
+    sec3_title = str(section3.get("title") or "").strip()
+    waves = section3.get("waves") or []
+
+    section4 = obj.get("section4") or {}
+    sec4_title = str(section4.get("title") or "").strip()
+    sec4_content = str(section4.get("content") or "").strip()
+
+    idx = 0
+
+    # === (1) 整體公告總覽 ===
+    overview_record: Dict[str, Any] = {
+        "公告標題": title,
+        "公告網址": url,
+        "時間標題": sec1_title,
+        "時間內容": sec1_content,
+        "申請步驟標題": sec2_title,
+        "申請注意事項標題": sec3_note_title,
+        "申請注意事項內容": sec3_note_content,
+        "姊妹校列表標題": sec3_title,
+        "承辦人標題": sec4_title,
+        "承辦人資訊": sec4_content,
+    }
+
+    try:
+        overview_text = rewrite_json_record(
+            record=overview_record,
+            schema_hint="exchange_program_overview",
+            max_chars=900,
+        )
+    except Exception as e:
+        print(
+            "[exchange_program_call_to_documents] "
+            f"rewrite_json_record (overview) 發生錯誤（程式終止）：{e}"
+        )
+        sys.exit(1)
+
+    overview_meta = {
+        "source": source_path_str,
+        "file_type": "json",
+        "content_type": "exchange_program_overview",
+
+        "title": title or sec1_title,
+        "url": url,
+
+        "idx": idx,
+        "needs_split": False,
+    }
+    docs.append(Document(page_content=overview_text.strip(), metadata=overview_meta))
+    idx += 1
+
+    # === (2) 申請所需資料項目（section2.rows） ===
+    if isinstance(rows, list):
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+
+            item_no = str(row.get("編號") or "").strip()
+            item_name = str(row.get("項目") or "").strip()
+            item_desc = str(row.get("說明") or "").strip()
+
+            if not (item_name or item_desc):
+                continue
+
+            record_item: Dict[str, Any] = {
+                "公告標題": title,
+                "公告網址": url,
+                "項目編號": item_no,
+                "項目名稱": item_name,
+                "項目說明": item_desc,
+                "資料來源": url,
+            }
+
+            try:
+                item_text = rewrite_json_record(
+                    record=record_item,
+                    schema_hint="exchange_required_item",
+                    max_chars=500,
+                )
+            except Exception as e:
+                print(
+                    "[exchange_program_call_to_documents] "
+                    f"rewrite_json_record (required_item) 發生錯誤（程式終止）：{e}"
+                )
+                sys.exit(1)
+
+            item_meta = {
+                "source": source_path_str,
+                "file_type": "json",
+                "content_type": "exchange_required_item",
+
+                "title": f"{title}-申請資料項目{item_no}",
+                "url": url,
+
+                "item_no": item_no,
+                "item_name": item_name,
+
+                "idx": idx,
+                "needs_split": False,
+            }
+
+            docs.append(Document(page_content=item_text.strip(), metadata=item_meta))
+            idx += 1
+
+    # === (3) 姊妹校：每所學校一筆 + (4) 每一波總覽 ===
+    MAX_RAW_CHARS_PER_CHUNK = 400   # 粗估原始資料長度
+    MAX_WAVE_OVERVIEW_CHARS = 500   # 給重寫器的字數上限
+
+    if isinstance(waves, list):
+        for wave_obj in waves:
+            if not isinstance(wave_obj, dict):
+                continue
+
+            wave_name = str(wave_obj.get("wave") or "").strip()
+            wave_deadline = str(wave_obj.get("deadline") or "").strip()
+            schools = wave_obj.get("schools") or []
+            if not isinstance(schools, list) or not schools:
+                # 有些 wave 可能沒有列學校（例如只有截止說明），就先略過
+                continue
+
+            # 給「波次總覽」用的暫存列表
+            wave_school_summaries: List[Dict[str, str]] = []
+
+            # --- 3.1 每所學校一個 doc ---
+            for school in schools:
+                if not isinstance(school, dict):
+                    continue
+
+                no = str(school.get("編號") or "").strip()
+                school_name = str(school.get("學校名稱") or "").strip()
+                requirement = str(school.get("姊妹校要求條件") or "").strip()
+
+                if not (school_name or requirement):
+                    continue
+
+                record_school: Dict[str, Any] = {
+                    "公告標題": title,
+                    "公告網址": url,
+                    "申請梯次": wave_name,
+                    "截止時間說明": wave_deadline,
+                    "學校編號": no,
+                    "學校名稱": school_name,
+                    "姊妹校要求條件": requirement,
+                    "資料來源": url,
+                }
+
+                try:
+                    school_text = rewrite_json_record(
+                        record=record_school,
+                        schema_hint="exchange_partner_school",
+                        max_chars=650,
+                    )
+                except Exception as e:
+                    print(
+                        "[exchange_program_call_to_documents] "
+                        f"rewrite_json_record (school) 發生錯誤（程式終止）：{e}"
+                    )
+                    sys.exit(1)
+
+                school_meta = {
+                    "source": source_path_str,
+                    "file_type": "json",
+                    "content_type": "exchange_partner_school",
+
+                    "title": f"{title}-{wave_name}-{school_name or no}",
+                    "url": url,
+
+                    "wave": wave_name,
+                    "wave_deadline": wave_deadline,
+                    "school_no": no,
+                    "school_name": school_name,
+
+                    "idx": idx,
+                    "needs_split": False,
+                }
+
+                docs.append(
+                    Document(page_content=school_text.strip(), metadata=school_meta)
+                )
+                idx += 1
+
+                wave_school_summaries.append(
+                    {
+                        "學校編號": no,
+                        "學校名稱": school_name,
+                        "姊妹校要求條件": requirement,
+                    }
+                )
+
+            if not wave_school_summaries:
+                continue
+
+            # --- 4. 每一波姊妹校總覽：依原始長度切塊 ---
+            chunks: List[List[Dict[str, str]]] = []
+            current_chunk: List[Dict[str, str]] = []
+            current_len = 0
+
+            for s in wave_school_summaries:
+                name = s.get("學校名稱") or ""
+                req = s.get("姊妹校要求條件") or ""
+                est = len(name) + len(req) + 10  # 很粗的估算
+
+                if current_chunk and current_len + est > MAX_RAW_CHARS_PER_CHUNK:
+                    chunks.append(current_chunk)
+                    current_chunk = []
+                    current_len = 0
+
+                current_chunk.append(s)
+                current_len += est
+
+            if current_chunk:
+                chunks.append(current_chunk)
+
+            num_chunks = len(chunks)
+
+            for chunk_idx, schools_chunk in enumerate(chunks):
+                record_wave: Dict[str, Any] = {
+                    "公告標題": title,
+                    "公告網址": url,
+                    "申請梯次": wave_name,
+                    "截止時間說明": wave_deadline,
+                    "學校總數": len(wave_school_summaries),
+                    "本段學校數": len(schools_chunk),
+                    "分段資訊": {
+                        "第幾部分": chunk_idx + 1,
+                        "總部分數": num_chunks,
+                    },
+                    "學校列表": schools_chunk,
+                    "資料來源": url,
+                }
+
+                try:
+                    wave_text = rewrite_json_record(
+                        record=record_wave,
+                        schema_hint="exchange_wave_overview",
+                        max_chars=MAX_WAVE_OVERVIEW_CHARS,
+                    )
+                except Exception as e:
+                    print(
+                        "[exchange_program_call_to_documents] "
+                        f"rewrite_json_record (wave_overview) 發生錯誤（程式終止）：{e}"
+                    )
+                    sys.exit(1)
+
+                wave_meta = {
+                    "source": source_path_str,
+                    "file_type": "json",
+                    "content_type": "exchange_wave_overview",
+
+                    "title": f"{title}-{wave_name}姊妹校總覽",
+                    "url": url,
+
+                    "wave": wave_name,
+                    "wave_deadline": wave_deadline,
+                    "wave_school_count": len(wave_school_summaries),
+                    "wave_chunk": chunk_idx,
+                    "wave_chunk_total": num_chunks,
+
+                    "idx": idx,
+                    "needs_split": False,
+                }
+
+                docs.append(
+                    Document(page_content=wave_text.strip(), metadata=wave_meta)
+                )
+                idx += 1
+
+    return docs
+
+# =========================
+# ttu_sisters.json adapter
+# =========================
+
+def sister_schools_to_documents(
+    obj: Dict[str, Any],
+    source_path: str | Path,
+) -> List[Document]:
+    """
+    將 ttu_sisters.json 轉成多筆姊妹校文件：
+    1) 一所姊妹校（含洲別 + 國家/地區 + 網址） = 一份 Document
+    2) 每個國家/地區的姊妹校總覽（切成多個 chunk，控制在約 500 字內）
+    3) 全世界姊妹校分布總覽（以各國學校數統計，不逐一列校名）
+    """
+    docs: List[Document] = []
+
+    # 統一轉成字串，避免 PosixPath 跑進 metadata
+    source_path_str = str(source_path)
+    title = str(obj.get("title") or "大同大學姊妹校").strip()
+    source_url = str(obj.get("source") or source_path_str).strip()
+
+    continents = obj.get("continents") or {}
+    if not isinstance(continents, dict):
+        continents = {}
+
+    idx = 0
+
+    # 用來之後做「每國 overview」和「全球總覽」的聚合：key = (洲別, 國家/地區)
+    grouped_by_country: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
+
+    # === (1) 一所姊妹校一個 doc ===
+    for continent_label, region_dict in continents.items():
+        if not isinstance(region_dict, dict):
+            continue
+
+        for country_label, schools in region_dict.items():
+            if not isinstance(schools, list):
+                continue
+
+            for school in schools:
+                if not isinstance(school, dict):
+                    continue
+
+                name = str(school.get("name", "")).strip()
+                website = str(school.get("website", "")).strip()
+
+                # 如果 name / website 都空，就略過
+                if not name and not website:
+                    continue
+
+                # 給「每國 overview / 全球總覽」用的聚合資料（只留名稱 + 網址）
+                grouped_by_country[(continent_label, country_label)].append(
+                    {
+                        "學校名稱": name,
+                        "學校網址": website,
+                    }
+                )
+
+                record: Dict[str, Any] = {
+                    "標題": title,
+                    "計畫類型": "姊妹校/國際合作學校",
+                    "洲別": continent_label,
+                    "國家或地區": country_label,
+                    "學校名稱": name,
+                    "學校網址": website,
+                    "資料來源": source_url,
+                }
+
+                try:
+                    text = rewrite_json_record(
+                        record=record,
+                        schema_hint="sister_school",
+                        max_chars=220,
+                    )
+                except Exception as e:
+                    print(
+                        "[sister_schools_to_documents] "
+                        f"rewrite_json_record 發生錯誤（程式終止）：{e}"
+                    )
+                    sys.exit(1)
+
+                metadata = {
+                    "source": source_path_str,
+                    "file_type": "json",
+                    "content_type": "sister_school",
+
+                    "title": title,
+                    "source_url": source_url,
+                    "continent_label": continent_label,
+                    "country_label": country_label,
+                    "school_name": name,
+                    "school_website": website,
+
+                    "idx": idx,
+                    "needs_split": False,
+                }
+
+                docs.append(Document(page_content=text, metadata=metadata))
+                idx += 1
+
+    # === (2) 每一個「國家/地區」產生多個 overview chunk（依原始字數切塊） ===
+    MAX_RAW_CHARS_PER_CHUNK = 400   # 事前估算：原始資料目標 <= 400 字
+    MAX_OVERVIEW_CHARS = 500        # 給重寫器的字數上限
+
+    for (continent_label, country_label), schools in sorted(
+        grouped_by_country.items(),
+        key=lambda kv: (kv[0][0], kv[0][1]),
+    ):
+        if not schools:
+            continue
+
+        total_schools = len(schools)
+
+        # 依「估算字數」切成多個 chunk
+        chunks: List[List[Dict[str, str]]] = []
+        current_chunk: List[Dict[str, str]] = []
+        current_len = 0
+
+        for s in schools:
+            name = s.get("學校名稱") or ""
+            url = s.get("學校網址") or ""
+            # 粗估：名稱長度 + 網址長度 + 一些標點/連接詞
+            est = len(name) + len(url) + 10
+
+            # 若加上這一筆會超過上限，就先收成一個 chunk
+            if current_chunk and current_len + est > MAX_RAW_CHARS_PER_CHUNK:
+                chunks.append(current_chunk)
+                current_chunk = []
+                current_len = 0
+
+            current_chunk.append(s)
+            current_len += est
+
+        if current_chunk:
+            chunks.append(current_chunk)
+
+        num_chunks = len(chunks)
+
+        for chunk_idx, schools_chunk in enumerate(chunks):
+            if not schools_chunk:
+                continue
+
+            record_country_overview: Dict[str, Any] = {
+                "標題": f"大同大學{country_label}姊妹校總覽",
+                "洲別": continent_label,
+                "國家或地區": country_label,
+                "學校總數": total_schools,
+                "本段學校數": len(schools_chunk),
+                "分段資訊": {
+                    "第幾部分": chunk_idx + 1,
+                    "總部分數": num_chunks,
+                },
+                # 這裡每筆都有「學校名稱 / 學校網址」，LLM 會依這些來寫句子
+                "學校列表": schools_chunk,
+                "資料來源": source_url,
+            }
+
+            try:
+                overview_text = rewrite_json_record(
+                    record=record_country_overview,
+                    schema_hint="sister_school_country_overview",
+                    max_chars=MAX_OVERVIEW_CHARS,
+                )
+            except Exception as e:
+                print(
+                    "[sister_schools_to_documents] "
+                    f"rewrite_json_record (country_overview) 發生錯誤（程式終止）：{e}"
+                )
+                sys.exit(1)
+
+            overview_meta = {
+                "source": source_path_str,
+                "file_type": "json",
+                "content_type": "sister_school_overview",
+
+                "title": f"{country_label}姊妹校總覽",
+                "source_url": source_url,
+                "continent_label": continent_label,
+                "country_label": country_label,
+                "school_count": total_schools,
+
+                "chunk": chunk_idx,
+                "chunk_total": num_chunks,
+                "chunk_school_count": len(schools_chunk),
+                "overview_scope": "country",
+
+                "idx": idx,
+                "needs_split": False,
+            }
+
+            docs.append(
+                Document(page_content=overview_text.strip(), metadata=overview_meta)
+            )
+            idx += 1
+
+    # === (3) 加回「全球姊妹校分布總覽」一個大 chunk ===
+    if grouped_by_country:
+        total_schools_global = sum(len(v) for v in grouped_by_country.values())
+
+        # 以「洲別 + 國家」整理每國的學校數
+        country_items: List[Dict[str, Any]] = []
+        for (continent_label, country_label), schools in sorted(
+            grouped_by_country.items(),
+            key=lambda kv: (kv[0][0], kv[0][1]),
+        ):
+            country_items.append(
+                {
+                    "洲別": continent_label,
+                    "國家或地區": country_label,
+                    "學校數": len(schools),
+                }
+            )
+
+        overview_record_global: Dict[str, Any] = {
+            "標題": f"{title}全球總覽",
+            "說明": "大同大學所有姊妹校與國際合作學校的全球分布總覽，"
+                    "依洲別與國家/地區列出各國姊妹校數量。",
+            "總學校數": total_schools_global,
+            "國家分布列表": country_items,
+            "資料來源": source_url,
+        }
+
+        try:
+            overview_text_global = rewrite_json_record(
+                record=overview_record_global,
+                schema_hint="sister_school_global_overview",
+                max_chars=1500,  # 這顆允許長一點，讓統計敘述完整
+            )
+        except Exception as e:
+            print(
+                "[sister_schools_to_documents] "
+                f"rewrite_json_record (global_overview) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        overview_meta_global = {
+            "source": source_path_str,
+            "file_type": "json",
+            "content_type": "sister_school_global_overview",
+
+            "title": f"{title}全球總覽",
+            "source_url": source_url,
+            "overview_scope": "global",
+            "total_school_count": total_schools_global,
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(
+            Document(page_content=overview_text_global.strip(), metadata=overview_meta_global)
+        )
+
+    return docs
+
+# =========================
+# ttu_flexible_week.json adapter
+# =========================
+
+def flexible_week_rules_to_documents(
+    obj: Dict[str, Any], source_path: str
+) -> List[Document]:
+    """
+    將 ttu_flexible_week.json 轉成 1~2 份 academic_rule 類型的 Document：
+    - 一份：數位教學課程實施要點
+    - 一份：彈性教學週活動規劃
+    """
+    docs: List[Document] = []
+
+    title = str(obj.get("title", "")).strip()
+    source_url = str(obj.get("source_url", "")).strip()
+    pdf_url = str(obj.get("pdf_url", "")).strip()
+
+    guidelines_raw = obj.get("實施要點", []) or []
+    if not isinstance(guidelines_raw, list):
+        guidelines_raw = [guidelines_raw]
+
+    flex_raw = obj.get("彈性教學週活動規劃", []) or []
+    if not isinstance(flex_raw, list):
+        flex_raw = [flex_raw]
+
+    def parse_numbered(items: List[Any]) -> List[Dict[str, Any]]:
+        """
+        把「1. xxx」「2. yyyy」這種條文，拆成有 條次 / 內容 / 原始文字 的列表，
+        讓 LLM 可以看得比較清楚。
+        """
+        parsed: List[Dict[str, Any]] = []
+        for line in items:
+            s = str(line).strip()
+            if not s:
+                continue
+            m = re.match(r"(\d+)\.\s*(.*)", s)
+            if m:
+                try:
+                    num = int(m.group(1))
+                except Exception:
+                    num = None
+                content = m.group(2).strip() or s
+            else:
+                num = None
+                content = s
+            parsed.append(
+                {
+                    "條次": num,
+                    "內容": content,
+                    "原始文字": s,
+                }
+            )
+        return parsed
+
+    guidelines_entries = parse_numbered(guidelines_raw)
+    flex_entries = [
+        {"說明": str(line).strip()}
+        for line in flex_raw
+        if str(line).strip()
+    ]
+
+    idx = 0
+
+    # === (1) 數位教學課程實施要點 ===
+    if guidelines_entries:
+        idx += 1
+        record_guidelines: Dict[str, Any] = {
+            "標題": title or "大同大學數位教學課程實施要點",
+            "規定主題": "數位教學課程實施要點",
+            "條文數量": len(guidelines_entries),
+            "條文列表": guidelines_entries,
+            "來源網址": source_url,
+            "PDF下載": pdf_url,
+            "來源檔案": source_path,
+        }
+        try:
+            text_guidelines = rewrite_json_record(
+                record=record_guidelines,
+                schema_hint="academic_rules_digital_teaching",
+                max_chars=600,
+            )
+        except Exception as e:
+            print(
+                "[flexible_week_rules_to_documents] "
+                f"rewrite_json_record (實施要點) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        meta_guidelines = {
+            "source": source_path,
+            "file_type": "json",
+            # 統一歸在 academic_rule 類型底下
+            "type": "academic_rules_digital_teaching",
+            "content_type": "academic_rule",
+
+            "title": title,
+            "category": "數位教學課程實施要點",
+            "topic": "digital_teaching",
+            "source_url": source_url,
+            "pdf_url": pdf_url,
+            "rule_count": len(guidelines_entries),
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(
+            Document(page_content=text_guidelines.strip(), metadata=meta_guidelines)
+        )
+
+    # === (2) 彈性教學週活動規劃 ===
+    if flex_entries:
+        idx += 1
+        record_flex: Dict[str, Any] = {
+            "標題": title or "大同大學數位教學課程實施要點及彈性教學週相關規定",
+            "規定主題": "彈性教學週活動規劃",
+            "活動與規定列表": flex_entries,
+            "來源網址": source_url,
+            "PDF下載": pdf_url,
+            "來源檔案": source_path,
+        }
+        try:
+            text_flex = rewrite_json_record(
+                record=record_flex,
+                schema_hint="academic_rules_flexible_week",
+                max_chars=400,
+            )
+        except Exception as e:
+            print(
+                "[flexible_week_rules_to_documents] "
+                f"rewrite_json_record (彈性教學週活動規劃) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        meta_flex = {
+            "source": source_path,
+            "file_type": "json",
+            "type": "academic_rules_flexible_week",
+            "content_type": "academic_rule",
+
+            "title": title,
+            "category": "彈性教學週活動規劃",
+            "topic": "flexible_week",
+            "source_url": source_url,
+            "pdf_url": pdf_url,
+            "activity_count": len(flex_entries),
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(
+            Document(page_content=text_flex.strip(), metadata=meta_flex)
+        )
+
+    return docs
+
+# =========================
+# cse_required_by_semester.json adapter
+# =========================
+
+import sys
+from typing import Any, Dict, List
+from langchain_core.documents import Document
+from json_rewriter import rewrite_json_record
+
+
+def _parse_semester_label(label: str) -> Dict[str, Any]:
+    """把「一上 / 一下 / 二上 / ...」拆成年級 / 學期等欄位。"""
+    grade_map = {"一": 1, "二": 2, "三": 3, "四": 4}
+    grade_name_map = {
+        1: "一年級",
+        2: "二年級",
+        3: "三年級",
+        4: "四年級",
+    }
+    term_name_map = {"上": "上學期", "下": "下學期"}
+
+    grade = None
+    grade_name = None
+    term = None
+    term_name = None
+
+    if isinstance(label, str) and len(label) >= 2:
+        g = label[0]
+        t = label[1]
+        grade = grade_map.get(g)
+        grade_name = grade_name_map.get(grade)
+        term = t
+        term_name = term_name_map.get(t)
+
+    return {
+        "grade": grade,
+        "grade_name": grade_name,
+        "term": term,           # "上" / "下"
+        "term_name": term_name, # "上學期" / "下學期"
+    }
+
+
+def required_by_semester_to_documents(obj: Dict[str, Any], source_path: str) -> List[Document]:
+    """
+    將『大同大學資訊工程學系大學部必修科目(檢核)表』轉成 RAG 文件。
+    - 每學期一個 overview doc
+    - 額外一個「備註 / 先修條件」doc
+    """
+    docs: List[Document] = []
+
+    title = obj.get("title") or "大同大學資訊工程學系大學部必修科目(檢核)表"
+    source_pdf = obj.get("source_pdf")
+    semesters = obj.get("semesters") or {}
+    notes_text = obj.get("備註")
+
+    # 先依學期名稱排序，避免每次 ingest 順序飄移
+    semester_items = sorted(semesters.items(), key=lambda kv: kv[0])
+
+    for idx, (sem_label, course_list) in enumerate(semester_items):
+        course_list = course_list or []
+        parsed = _parse_semester_label(sem_label)
+
+        # 從第一筆課拿共同必修/專業必修小計（JSON 每筆都一樣）
+        common_total = None
+        major_total = None
+        if course_list:
+            first = course_list[0]
+            common_total = first.get("共同必修小計")
+            major_total = first.get("專業必修小計")
+
+        # 簡化課程列表給 rewriter 用
+        simple_courses = []
+        for c in course_list:
+            simple_courses.append({
+                "課程名稱": c.get("raw"),
+                "類別": c.get("類別"),
+                "學分": c.get("學分"),
+            })
+
+        record: Dict[str, Any] = {
+            "系所": "資訊工程學系",
+            "學制": "大學部",
+            "標題": title,
+            "學期代碼": sem_label,  # 例如「一上」「一下」
+            "年級": parsed.get("grade_name"),
+            "學期別": parsed.get("term_name"),
+            "課程數": len(simple_courses),
+            "共同必修總學分": common_total,
+            "專業必修總學分": major_total,
+            "課程列表": simple_courses,
+            "資料來源": source_pdf or source_path,
+        }
+
+        # ✅ 套用你原本的 try/except 寫法
+        try:
+            overview_text = rewrite_json_record(
+                record=record,
+                schema_hint="required_courses_by_semester",
+                max_chars=500,
+            )
+        except Exception as e:
+            print(f"[required_by_semester_to_documents] rewrite_json_record 發生錯誤（程式終止）：{e}")
+            sys.exit(1)
+
+        metadata = {
+            "source": source_path,
+            "file_type": "json",
+            "content_type": "required_courses_by_semester",
+            "title": title,
+            "source_pdf": source_pdf,
+            "semester_label": sem_label,
+            "grade": parsed.get("grade"),
+            "grade_name": parsed.get("grade_name"),
+            "term": parsed.get("term"),
+            "term_name": parsed.get("term_name"),
+            "course_count": len(simple_courses),
+            "required_common_credits": common_total,
+            "required_major_credits": major_total,
+            "idx": idx,
+            "needs_split": False,  # 已是短 overview，不需再切 chunk
+        }
+
+        docs.append(Document(page_content=overview_text, metadata=metadata))
+
+    # 再做一個「備註 / 先修條件」獨立文件
+    if isinstance(notes_text, str) and notes_text.strip():
+        note_record: Dict[str, Any] = {
+            "系所": "資訊工程學系",
+            "學制": "大學部",
+            "標題": title,
+            "說明": "必修科目相關備註與修課順序說明",
+            "備註": notes_text,
+            "資料來源": source_pdf or source_path,
+        }
+
+        # ✅ 備註這邊也一樣用 try/except
+        try:
+            note_text = rewrite_json_record(
+                record=note_record,
+                schema_hint="required_courses_note",
+                max_chars=400,
+            )
+        except Exception as e:
+            print(f"[required_by_semester_to_documents] 備註 rewrite_json_record 發生錯誤（程式終止）：{e}")
+            sys.exit(1)
+
+        note_meta = {
+            "source": source_path,
+            "file_type": "json",
+            "content_type": "required_courses_note",
+            "title": title,
+            "source_pdf": source_pdf,
+            "note_type": "prerequisite_rules",
+            "idx": len(docs),  # 接在後面
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=note_text, metadata=note_meta))
+
+    return docs
 
 # =========================
 # 新格式 course_history（巢狀：學期→年級→課程列表） adapter
@@ -1724,6 +2643,11 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "academic_rules":
         data = obj if isinstance(obj, list) else [obj]
         return academic_records_to_documents(data, str(path))
+    
+    # 🔹 新增：數位教學課程實施要點＋彈性教學週
+    elif schema == "flexible_week_rules":
+        return flexible_week_rules_to_documents(obj, str(path))
+
     elif schema == "contacts":
         data = obj if isinstance(obj, list) else [obj]
         return contact_records_to_documents(data, str(path))
@@ -1736,12 +2660,22 @@ def load_json_as_documents(path: Path) -> List[Document]:
     elif schema == "program_courses":
         data = obj if isinstance(obj, list) else [obj]
         return program_courses_to_documents(data, str(path))
+    
+    # 🔹 新增：姊妹校列表
+    elif schema == "sister_schools":
+        return sister_schools_to_documents(obj, str(path))
+    
+    elif schema == "exchange_program_call":
+        return exchange_program_call_to_documents(obj, str(path))
+
     elif schema == "calendar":
         data = obj if isinstance(obj, list) else [obj]
         docs = []
         docs.extend(calendar_months_to_documents(data, str(path)))   # 月總覽（原本的）
         docs.extend(calendar_events_to_documents(data, str(path)))   # ✅ 新增：單筆活動
         return docs
+    elif schema == "required_by_semester":
+        return required_by_semester_to_documents(obj, str(path))
 
 
         # 其他已知 schema 都在上面處理完
