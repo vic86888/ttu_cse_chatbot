@@ -1,0 +1,1702 @@
+{
+  "113上": {
+    "一年級": {
+      "課程數": 25,
+      "課程列表": [
+        {
+          "課程名稱": "現代公民素養",
+          "課號": "G0040B",
+          "教師": "包蒼龍",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "勞作教育",
+          "課號": "G0070D",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "微積分(一)",
+          "課號": "G1011A",
+          "教師": "蔡援宗",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "微積分(一)",
+          "課號": "G1011B",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "微積分(二)",
+          "課號": "G1012",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機概論",
+          "課號": "G1210A",
+          "教師": "周憲政",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機概論",
+          "課號": "G1210B",
+          "教師": "徐家銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計(一)",
+          "課號": "I1251A",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計(一)",
+          "課號": "I1251B",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(一)",
+          "課號": "I1261A",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(一)",
+          "課號": "I1261B",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "線性代數",
+          "課號": "I2610A",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "線性代數",
+          "課號": "I2610B",
+          "教師": "李政哲",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "國語文能力表達(一)",
+          "課號": "G1431I",
+          "教師": "楊雅筑",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "國語文能力表達(一)",
+          "課號": "G1431J",
+          "教師": "楊雅筑",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511G",
+          "教師": "高萍穗",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511H",
+          "教師": "江妍",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511I",
+          "教師": "",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511J",
+          "教師": "許峻維",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511K",
+          "教師": "江朝偉",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(一)",
+          "課號": "G1511L",
+          "教師": "張文漢",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "日語(一)",
+          "課號": "G1611C",
+          "教師": "林麗娟",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "日語(一)",
+          "課號": "G1611F",
+          "教師": "林芷苓",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大一體育(一)",
+          "課號": "G1821J",
+          "教師": "唐吉民",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大一體育(一)",
+          "課號": "G1821K",
+          "教師": "陳宏澤",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "二年級": {
+      "課程數": 20,
+      "課程列表": [
+        {
+          "課程名稱": "程式設計(二)",
+          "課號": "I1252",
+          "教師": "黃國軒",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(二)",
+          "課號": "I1262",
+          "教師": "黃國軒",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位電子實驗",
+          "課號": "I2080B",
+          "教師": "包蒼龍",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位電子學",
+          "課號": "I2090A",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位電子學",
+          "課號": "I2090B",
+          "教師": "包蒼龍",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400A",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料庫系統",
+          "課號": "I3360A",
+          "教師": "鄭福炯",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料庫系統",
+          "課號": "I3360B",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "普通物理",
+          "課號": "G1110C",
+          "教師": "黃提銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513G",
+          "教師": "江妍",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513H",
+          "教師": "顏郁哲",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513I",
+          "教師": "田培蓮",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513J",
+          "教師": "朱湘蓮",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513K",
+          "教師": "江朝偉",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(三)",
+          "課號": "G1513L",
+          "教師": "張文漢",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(一)",
+          "課號": "G1841C",
+          "教師": "簡吉利",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(一)",
+          "課號": "G1841L",
+          "教師": "唐吉民",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(一)",
+          "課號": "G1841N",
+          "教師": "陳宏澤",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(一)",
+          "課號": "G1841P",
+          "教師": "邱芳斌",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位電子實驗",
+          "課號": "I2080A",
+          "教師": "",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "三年級": {
+      "課程數": 19,
+      "課程列表": [
+        {
+          "課程名稱": "雜誌研讀(一)",
+          "課號": "G3011A",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "雜誌研讀(一)",
+          "課號": "G3011B",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400B",
+          "教師": "高一統",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "離散數學",
+          "課號": "I2600",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機率與統計",
+          "課號": "I2620A",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機率與統計",
+          "課號": "I2620B",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "作業系統",
+          "課號": "I3320A",
+          "教師": "柯振揚",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "作業系統",
+          "課號": "I3320B",
+          "教師": "徐家銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機演算法",
+          "課號": "I3400A",
+          "教師": "葉慶隆",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機演算法",
+          "課號": "I3400B",
+          "教師": "葉慶隆",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊安全導論",
+          "課號": "I3160",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "Python程式設計實驗",
+          "課號": "I3190",
+          "教師": "謝尚琳",
+          "選別": "選修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "視窗程式設計",
+          "課號": "I3450",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人機互動概論",
+          "課號": "I3840",
+          "教師": "鄭穎懋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人工智慧程式設計與Python",
+          "課號": "I3960",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊實務專題",
+          "課號": "I4170",
+          "教師": "謝尚琳",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資通訊安全實務",
+          "課號": "I4230",
+          "教師": "徐家銘",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網路管理",
+          "課號": "I4590",
+          "教師": "黃謝璋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "普通物理",
+          "課號": "G1110C",
+          "教師": "黃提銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "四年級": {
+      "課程數": 32,
+      "課程列表": [
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020A",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020B",
+          "教師": "黃國軒",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊講座",
+          "課號": "I2000A",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊講座",
+          "課號": "I2000B",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400B",
+          "教師": "高一統",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機組織",
+          "課號": "I3250",
+          "教師": "李良德",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊安全導論",
+          "課號": "I3160",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "Python程式設計實驗",
+          "課號": "I3190",
+          "教師": "謝尚琳",
+          "選別": "選修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "視窗程式設計",
+          "課號": "I3450",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人機互動概論",
+          "課號": "I3840",
+          "教師": "鄭穎懋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人工智慧程式設計與Python",
+          "課號": "I3960",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊實務專題",
+          "課號": "I4170",
+          "教師": "謝尚琳",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位鑑識方法與應用",
+          "課號": "I4220",
+          "教師": "周憲政",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資通訊安全實務",
+          "課號": "I4230",
+          "教師": "徐家銘",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "物聯網技術",
+          "課號": "I4250",
+          "教師": "鄭福炯",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "進階程式開發技術",
+          "課號": "I4390",
+          "教師": "柯振揚",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "高等數據通信",
+          "課號": "I4570",
+          "教師": "馬金溝",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "創新服務專題製作(二)",
+          "課號": "I4582",
+          "教師": "鄭穎懋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網路管理",
+          "課號": "I4590",
+          "教師": "黃謝璋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "類神經網路概論",
+          "課號": "I4850",
+          "教師": "許超雲",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "無線網路安全",
+          "課號": "I5280A",
+          "教師": "黃國軒",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "無線通訊系統",
+          "課號": "I5550",
+          "教師": "蔡佳勝",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "影像分析與處理",
+          "課號": "I5560",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "手持裝置應用系統設計",
+          "課號": "I5630",
+          "教師": "鄭福炯",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "知識工程",
+          "課號": "I5850",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資通安全鑑識與應用",
+          "課號": "I6050",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "區塊鏈技術與應用",
+          "課號": "I6060",
+          "教師": "周憲政",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "知識圖譜",
+          "課號": "I6140",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機器視覺原理與應用",
+          "課號": "I6150",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大師講堂(一)",
+          "課號": "B5081",
+          "教師": "王佳琪",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "普通物理",
+          "課號": "G1110C",
+          "教師": "黃提銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "科技創新與創業實務",
+          "課號": "X4110",
+          "教師": "梁奮鵬",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    }
+  },
+  "113下": {
+    "一年級": {
+      "課程數": 34,
+      "課程列表": [
+        {
+          "課程名稱": "勞作教育",
+          "課號": "G0070E",
+          "教師": "徐家銘",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "勞作教育",
+          "課號": "G0070G",
+          "教師": "包蒼龍",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "微積分(二)",
+          "課號": "G1012D",
+          "教師": "蔡援宗",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "微積分(二)",
+          "課號": "G1012E",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "普通物理",
+          "課號": "G1110A",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "普通物理",
+          "課號": "G1110B",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計(一)",
+          "課號": "I1251",
+          "教師": "黃國軒",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計(二)",
+          "課號": "I1252",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(一)",
+          "課號": "I1261",
+          "教師": "黃國軒",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(二)",
+          "課號": "I1262A",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "程式設計實驗(二)",
+          "課號": "I1262B",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "線性代數",
+          "課號": "I2610",
+          "教師": "李政哲",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "國語文能力表達(二)",
+          "課號": "G1432I",
+          "教師": "楊雅筑",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "國語文能力表達(二)",
+          "課號": "G1432J",
+          "教師": "楊雅筑",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512G",
+          "教師": "高萍穗",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512H",
+          "教師": "江妍",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512I",
+          "教師": "",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512J",
+          "教師": "許峻維",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512K",
+          "教師": "江朝偉",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(二)",
+          "課號": "G1512L",
+          "教師": "張文漢",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "日語(二)",
+          "課號": "G1612O",
+          "教師": "林麗娟",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "日語(二)",
+          "課號": "G1612R",
+          "教師": "林芷苓",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大一體育(二)",
+          "課號": "G1822N",
+          "教師": "唐吉民",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大一體育(二)",
+          "課號": "G1822O",
+          "教師": "陳宏澤",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000A",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000B",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000C",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000D",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000E",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000F",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000G",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000H",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000I",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "社會設計",
+          "課號": "Y1000J",
+          "教師": "程東奕",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "二年級": {
+      "課程數": 22,
+      "課程列表": [
+        {
+          "課程名稱": "資訊講座",
+          "課號": "I2000A",
+          "教師": "鄭穎懋",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊講座",
+          "課號": "I2000B",
+          "教師": "鄭穎懋",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "邏輯設計實驗",
+          "課號": "I2120A",
+          "教師": "柯振揚",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "邏輯設計實驗",
+          "課號": "I2120B",
+          "教師": "鄭福炯",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "邏輯設計",
+          "課號": "I2150A",
+          "教師": "柯振揚",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "邏輯設計",
+          "課號": "I2150B",
+          "教師": "周憲政",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "物件導向程式設計",
+          "課號": "I2360A",
+          "教師": "徐家銘",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "物件導向程式設計",
+          "課號": "I2360B",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400A",
+          "教師": "謝尚琳",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "離散數學",
+          "課號": "I2600A",
+          "教師": "蔡佳勝",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "離散數學",
+          "課號": "I2600B",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "線性代數",
+          "課號": "I2610",
+          "教師": "李政哲",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514G",
+          "教師": "江妍",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514H",
+          "教師": "顏郁哲",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514I",
+          "教師": "田培蓮",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514J",
+          "教師": "朱湘蓮",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514K",
+          "教師": "江朝偉",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "英文(四)",
+          "課號": "G1514L",
+          "教師": "張文漢",
+          "選別": "必修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(二)",
+          "課號": "G1842A",
+          "教師": "邱芳斌",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(二)",
+          "課號": "G1842E",
+          "教師": "簡吉利",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(二)",
+          "課號": "G1842K",
+          "教師": "陳宏澤",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大二體育(二)",
+          "課號": "G1842S",
+          "教師": "唐吉民",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "三年級": {
+      "課程數": 21,
+      "課程列表": [
+        {
+          "課程名稱": "雜誌研讀(二)",
+          "課號": "G3012F",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "雜誌研讀(二)",
+          "課號": "G3012G",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020B",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020D",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400B",
+          "教師": "高一統",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機率與統計",
+          "課號": "I2620",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機組織",
+          "課號": "I3250A",
+          "教師": "葉慶隆",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機組織",
+          "課號": "I3250B",
+          "教師": "葉慶隆",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "作業系統",
+          "課號": "I3320",
+          "教師": "李良德",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機演算法",
+          "課號": "I3400",
+          "教師": "黃得原",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊安全管理",
+          "課號": "I3640",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "深度神經網路實驗",
+          "課號": "I3940",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人工智慧程式設計與Python",
+          "課號": "I3960",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "測量技術",
+          "課號": "I3980",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網頁程式設計與安全實務",
+          "課號": "I4010",
+          "教師": "包蒼龍",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資通訊安全實務",
+          "課號": "I4230",
+          "教師": "徐家銘",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大三體育(二)",
+          "課號": "G1832A",
+          "教師": "徐育廷",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大三體育(二)",
+          "課號": "G1832C",
+          "教師": "邱芳斌",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大三體育(二)",
+          "課號": "G1832E",
+          "教師": "陳宏澤",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大三體育(二)",
+          "課號": "G1832G",
+          "教師": "歐陽振漢",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大三體育(二)",
+          "課號": "G1832I",
+          "教師": "唐吉民",
+          "選別": "必修",
+          "學分": "0.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    },
+    "四年級": {
+      "課程數": 34,
+      "課程列表": [
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020B",
+          "教師": "卓世明",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "專題實驗",
+          "課號": "G3020D",
+          "教師": "謝禎冏",
+          "選別": "必修",
+          "學分": "1.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資料結構",
+          "課號": "I2400B",
+          "教師": "高一統",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機率與統計",
+          "課號": "I2620",
+          "教師": "張薰文",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機組織",
+          "課號": "I3250C",
+          "教師": "黃得原",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "作業系統",
+          "課號": "I3320",
+          "教師": "李良德",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機演算法",
+          "課號": "I3400",
+          "教師": "黃得原",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "進階程式開發技術",
+          "課號": "I4390",
+          "教師": "鄭福炯",
+          "選別": "必修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資訊安全管理",
+          "課號": "I3640",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "深度神經網路實驗",
+          "課號": "I3940",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "人工智慧程式設計與Python",
+          "課號": "I3960",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "測量技術",
+          "課號": "I3980",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網頁程式設計與安全實務",
+          "課號": "I4010",
+          "教師": "包蒼龍",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "進階人機互動",
+          "課號": "I4030",
+          "教師": "鄭穎懋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "進階專題實驗",
+          "課號": "I4040",
+          "教師": "謝尚琳",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "AI實務專題",
+          "課號": "I4210",
+          "教師": "謝禎冏",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "資通訊安全實務",
+          "課號": "I4230",
+          "教師": "徐家銘",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "作業系統設計",
+          "課號": "I4320",
+          "教師": "周憲政",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "數位訊號處理",
+          "課號": "I4550",
+          "教師": "馬金溝",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "創新服務專題製作(一)",
+          "課號": "I4581",
+          "教師": "鄭穎懋",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "電子商務",
+          "課號": "I4790",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "嵌入式系統程式設計",
+          "課號": "I4820",
+          "教師": "黃得原",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "密碼學",
+          "課號": "I5320",
+          "教師": "黃國軒",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機器學習",
+          "課號": "I5790",
+          "教師": "鄭福炯",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "專家系統",
+          "課號": "I5820",
+          "教師": "林宜隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "自然語言處理",
+          "課號": "I5840",
+          "教師": "葉慶隆",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "計算機網路專論",
+          "課號": "I5900",
+          "教師": "蔡佳勝",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網路安全與滲透測試技術",
+          "課號": "I6070",
+          "教師": "徐家銘",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "機器學習與辨識技術",
+          "課號": "I6090",
+          "教師": "卓世明",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "大師講堂(二)",
+          "課號": "B5082",
+          "教師": "王佳琪",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "網路安全",
+          "課號": "E6770",
+          "教師": "汪順祥",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "雲端應用開發",
+          "課號": "I4300",
+          "教師": "王永心",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "行動隨意網路",
+          "課號": "I5460",
+          "教師": "",
+          "選別": "選修",
+          "學分": "3.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        },
+        {
+          "課程名稱": "科技創新與創業實務",
+          "課號": "X4110",
+          "教師": "梁奮鵬",
+          "選別": "選修",
+          "學分": "2.0",
+          "資料來源": "https://tchinfo.ttu.edu.tw/couquery/historysbj.php"
+        }
+      ]
+    }
+  }
+}

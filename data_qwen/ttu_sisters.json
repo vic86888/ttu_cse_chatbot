@@ -1,0 +1,728 @@
+{
+    "title": "大同大學姊妹校",
+    "source": "https://ao.ttu.edu.tw/p/412-1073-2438.php",
+    "continents": {
+        "亞洲 (ASIA)": {
+            "其他地區 / Regional": [
+                {
+                    "name": "國際多邊學生交換計畫(亞太大學交流會)",
+                    "website": "https://usco2.umap.org/"
+                }
+            ],
+            "中國  CHINA": [
+                {
+                    "name": "泰山醫學院",
+                    "website": "http://www.tsmc.edu.cn"
+                },
+                {
+                    "name": "濟南大學",
+                    "website": "http://www.ujn.edu.cn"
+                },
+                {
+                    "name": "齊魯工業大學",
+                    "website": "http://www.qlu.edu.cn"
+                },
+                {
+                    "name": "魯東大學",
+                    "website": "http://www.ldu.edu.cn/"
+                },
+                {
+                    "name": "中國石油大學(華東)",
+                    "website": "http://www.upc.edu.cn"
+                },
+                {
+                    "name": "德州學院",
+                    "website": "http://www.dzu.edu.cn"
+                },
+                {
+                    "name": "棗莊學院",
+                    "website": "http://www.uzz.edu.cn/"
+                },
+                {
+                    "name": "青島理工大學",
+                    "website": "http://www.qut.edu.cn/"
+                },
+                {
+                    "name": "青島大學",
+                    "website": "http://www.qdu.edu.cn"
+                },
+                {
+                    "name": "聊城大學",
+                    "website": "https://www.lcu.edu.cn/"
+                },
+                {
+                    "name": "山東建築大學",
+                    "website": "http://www.sdjzu.edu.cn"
+                },
+                {
+                    "name": "山東農業工程學院",
+                    "website": "http://www.sdaeu.edu.cn"
+                },
+                {
+                    "name": "山東農業大學",
+                    "website": "http://www.sdau.edu.cn"
+                },
+                {
+                    "name": "江南大學",
+                    "website": "http://www.jiangnan.edu.cn"
+                },
+                {
+                    "name": "浙江工業大學材料科學與工程學院",
+                    "website": "https://mse.zjut.edu.cn/"
+                },
+                {
+                    "name": "浙江大學材料科學與工程學院",
+                    "website": "https://mse.zju.edu.cn/"
+                },
+                {
+                    "name": "溫州理工學院(甌江學院)",
+                    "website": "http://www.wzut.edu.cn"
+                },
+                {
+                    "name": "溫州大學",
+                    "website": "http://www.wzu.edu.cn"
+                },
+                {
+                    "name": "浙江萬里學院",
+                    "website": "http://www.zwu.edu.cn"
+                },
+                {
+                    "name": "華中農業大學",
+                    "website": "https://www.hzau.edu.cn"
+                },
+                {
+                    "name": "湖南大學",
+                    "website": "https://www-en.hnu.edu.cn"
+                },
+                {
+                    "name": "四川大學錦城學院",
+                    "website": "https://www.cdjcc.edu.cn"
+                },
+                {
+                    "name": "廈門理工學院",
+                    "website": "https://www.xmut.edu.cn"
+                },
+                {
+                    "name": "莆田學院",
+                    "website": "https://www.ptu.edu.cn"
+                },
+                {
+                    "name": "泉州師範學院",
+                    "website": "https://www.qztc.edu.cn"
+                },
+                {
+                    "name": "福建師範大學",
+                    "website": "https://www.fjnu.edu.cn"
+                },
+                {
+                    "name": "福州大學石油化工學院",
+                    "website": "https://sph.fzu.edu.cn"
+                },
+                {
+                    "name": "東莞理工學院(粵台學院)",
+                    "website": "https://www.dgut.edu.cn"
+                },
+                {
+                    "name": "五邑大學",
+                    "website": "https://www.wyu.edu.cn"
+                },
+                {
+                    "name": "東莞理工學院城市學院",
+                    "website": "https://dgcu.edu.cn"
+                },
+                {
+                    "name": "惠州學院",
+                    "website": "https://www.hzu.edu.cn"
+                },
+                {
+                    "name": "石家莊資訊工程職業學院",
+                    "website": "https://www.sjziei.edu.cn"
+                },
+                {
+                    "name": "山西大同大學",
+                    "website": "https://www.sxdtdx.edu.cn"
+                },
+                {
+                    "name": "延安大學",
+                    "website": "https://www.yau.edu.cn"
+                },
+                {
+                    "name": "滁州學院",
+                    "website": "http://www.chzu.edu.cn"
+                },
+                {
+                    "name": "上海電機學院",
+                    "website": "https://www.sdju.edu.cn"
+                },
+                {
+                    "name": "廣西師範學院",
+                    "website": "https://www.gxnu.edu.cn"
+                },
+                {
+                    "name": "南京航空航太大學金城學院",
+                    "website": "https://jc.nuaa.edu.cn"
+                },
+                {
+                    "name": "新疆師範大學",
+                    "website": "https://www.xjnu.edu.cn"
+                },
+                {
+                    "name": "哈爾濱工業大學",
+                    "website": "https://en.hit.edu.cn/"
+                },
+                {
+                    "name": "哈爾濱商業大學",
+                    "website": "http://www.hrbcu.edu.cn"
+                },
+                {
+                    "name": "哈爾濱職業技術學院",
+                    "website": "http://www.hzjxy.org.cn"
+                },
+                {
+                    "name": "哈爾濱理工大學",
+                    "website": "http://www.hrbust.edu.cn"
+                },
+                {
+                    "name": "長春工業大學",
+                    "website": "http://www.ccut.edu.cn"
+                },
+                {
+                    "name": "吉林動畫學院",
+                    "website": "https://www.jlai.edu.cn"
+                },
+                {
+                    "name": "長春工程學院",
+                    "website": "http://www.ccit.edu.cn"
+                },
+                {
+                    "name": "長春師範大學",
+                    "website": "https://www.ccsfu.edu.cn"
+                },
+                {
+                    "name": "長春大學",
+                    "website": "https://www.ccu.edu.cn"
+                },
+                {
+                    "name": "吉林師範大學",
+                    "website": "https://www.jlnu.edu.cn"
+                },
+                {
+                    "name": "吉林工程技術師範學院",
+                    "website": "https://www.jlict.edu.cn"
+                },
+                {
+                    "name": "長春科技學院",
+                    "website": "https://www.cstu.edu.cn"
+                },
+                {
+                    "name": "大連東軟信息學院",
+                    "website": "https://www.neusoft.edu.cn"
+                },
+                {
+                    "name": "大連工業大學",
+                    "website": "https://www.dlpu.edu.cn"
+                },
+                {
+                    "name": "鞍山師範學院",
+                    "website": "https://www.asnc.edu.cn"
+                },
+                {
+                    "name": "遼寧對外經貿學院",
+                    "website": "http://www.luibe.edu.cn"
+                },
+                {
+                    "name": "中國傳媒大學理工學部資訊工程學院",
+                    "website": "http://Communication University of China English site"
+                },
+                {
+                    "name": "北京林業大學",
+                    "website": "https://www.bjfu.edu.cn"
+                },
+                {
+                    "name": "北京吉利學院",
+                    "website": "https://www.guc.edu.cn/"
+                },
+                {
+                    "name": "中國石油大學(北京)",
+                    "website": "https://www.cup.edu.cn/"
+                }
+            ],
+            "日本 JAPAN": [
+                {
+                    "name": "千葉大學",
+                    "website": "https://www.chiba-u.ac.jp/"
+                },
+                {
+                    "name": "廣島經濟大學",
+                    "website": "http://www.hue.ac.jp/"
+                },
+                {
+                    "name": "長岡造形大學",
+                    "website": "http://www.nagaoka-id.ac.jp/"
+                },
+                {
+                    "name": "京都工藝纖維大學",
+                    "website": "http://www.kit.ac.jp/"
+                },
+                {
+                    "name": "大阪學院大學",
+                    "website": "http://www.osaka-gu.ac.jp/"
+                },
+                {
+                    "name": "早稻田大學",
+                    "website": "http://www.waseda.jp/top/index-j.html"
+                },
+                {
+                    "name": "武藏野大學",
+                    "website": "http://www.musashino-u.ac.jp/"
+                },
+                {
+                    "name": "大阪工業大學",
+                    "website": "http://www.oit.ac.jp/"
+                },
+                {
+                    "name": "熊本大學",
+                    "website": "http://ewww.kumamoto-u.ac.jp/ch/"
+                },
+                {
+                    "name": "東京都市大學",
+                    "website": "https://www.tcu.ac.jp/"
+                }
+            ],
+            "韓國 KOREA": [
+                {
+                    "name": "亞洲大學",
+                    "website": "http://www.ajou.ac.kr/"
+                },
+                {
+                    "name": "中央大學",
+                    "website": "http://www.cau.ac.kr/"
+                },
+                {
+                    "name": "東國大學",
+                    "website": "http://www.dongguk.edu/"
+                },
+                {
+                    "name": "梨花女子大學",
+                    "website": "http://www.ewha.ac.kr/"
+                },
+                {
+                    "name": "仁荷大學",
+                    "website": "http://www.inha.ac.kr/"
+                },
+                {
+                    "name": "國立蔚山科學技術研究院",
+                    "website": "https://www.unist.ac.kr/gate_page.html"
+                }
+            ],
+            "新加坡 SINGAPORE": [
+                {
+                    "name": "南洋理工學院",
+                    "website": "http://www.ntu.edu.sg/Pages/home.aspx"
+                }
+            ],
+            "馬來西亞 MALAYSIA": [
+                {
+                    "name": "Berjaya University College",
+                    "website": "http://www.berjaya.edu.my/home/"
+                }
+            ],
+            "香港 HONG KONG": [
+                {
+                    "name": "香港理工大學",
+                    "website": "https://www.polyu.edu.hk/web/tc/home/index.html"
+                }
+            ],
+            "泰國 THAILAND": [
+                {
+                    "name": "KING MONGKUT ’S INSTITUTE OF TECHNOLOGY LADKRBANG",
+                    "website": "http://kmitl.ac.th/en"
+                },
+                {
+                    "name": "農業大學( 理學院)",
+                    "website": "http://www.sci.ku.ac.th:8000/en/"
+                },
+                {
+                    "name": "農業大學 ( 管理科學院)",
+                    "website": "http://www.ku.ac.th/web2012/index.php?c=adms&m=selcon_eng&time=20120806140205"
+                },
+                {
+                    "name": "孟谷國王科技大學(Thonburi)",
+                    "website": "http://global.kmutt.ac.th/"
+                },
+                {
+                    "name": "朱拉隆功大學",
+                    "website": "http://www.chula.ac.th/en/"
+                }
+            ],
+            "菲律賓 PHILIPPINES": [
+                {
+                    "name": "Mindanao State University-Iligan Institute of Technology",
+                    "website": "https://www.msuiit.edu.ph/"
+                },
+                {
+                    "name": "Surigao State College of Technology",
+                    "website": "https://www.ssct.edu.ph/"
+                },
+                {
+                    "name": "Caraga State University Cabadbaran Campus",
+                    "website": "http://carsu.edu.ph/"
+                }
+            ],
+            "越南 VIETNAM": [
+                {
+                    "name": "胡志明教育大學",
+                    "website": "http://www.hcmup.edu.vn/"
+                },
+                {
+                    "name": "International Business & Law Academy-IBLA",
+                    "website": "https://ibla-group.com/en/"
+                },
+                {
+                    "name": "河內國立師範大學",
+                    "website": "http://www.hnue.edu.vn/"
+                },
+                {
+                    "name": "Hanoi University of Business & Technology-HUBT",
+                    "website": "http://en.hubt.edu.vn/"
+                }
+            ],
+            "印度 INDIA": [
+                {
+                    "name": "Entrepreneurship & Management Processes International Institutions-EMPI",
+                    "website": "http://empi.ac.in/"
+                }
+            ],
+            "印尼  INDONESIA": [
+                {
+                    "name": "Fajar University",
+                    "website": "http://www.4icu.org/reviews/universities-english/14235.html"
+                },
+                {
+                    "name": "Uneversitas Pelta Harpan Medan",
+                    "website": "https://medan.uph.edu/id"
+                },
+                {
+                    "name": "Universitas Islam Makasser(UMI)",
+                    "website": "https://www.umi.ac.id/id/"
+                },
+                {
+                    "name": "Universitas Islam Malang (UNISMA)",
+                    "website": "http://unisma.ac.id/"
+                },
+                {
+                    "name": "Universitas Nahdlatul Ulama(UNU)Blitar",
+                    "website": "http://unublitar.ac.id/"
+                },
+                {
+                    "name": "Universitas Nahdlatul Ulama(UNU)Cirebon",
+                    "website": "http://unucirebon.ac.id/cgi-sys/suspendedpage.cgi"
+                },
+                {
+                    "name": "Universitas Nahdlatul Ulama(UNU)Purwokerto",
+                    "website": "http://unupurwokerto.ac.id/"
+                },
+                {
+                    "name": "W R Supratman University",
+                    "website": "http://unipra.ac.id/"
+                },
+                {
+                    "name": "Faculty of Social and Political Sciences, Universitas Airlangga",
+                    "website": "https://experts.profile.unair.ac.id/category/faculty-of-social-and-political-sciences/"
+                },
+                {
+                    "name": "School of Economics Indonesia Surabaya(STIESIA)",
+                    "website": "http://www.stiesiaedu.com/"
+                },
+                {
+                    "name": "Universitas Ciputra Surabaya",
+                    "website": "https://www.uc.ac.id/"
+                },
+                {
+                    "name": "馬杜拉大學",
+                    "website": "https://unira.ac.id/"
+                },
+                {
+                    "name": "威迪亞·卡蒂卡大學",
+                    "website": "https://www.widyakartika.ac.id/site/index.php"
+                },
+                {
+                    "name": "加賈亞納瑪瑯大學",
+                    "website": "http://www.unigamalang.ac.id/"
+                },
+                {
+                    "name": "蘇托莫醫生大學",
+                    "website": "https://www.unitomo.ac.id/"
+                },
+                {
+                    "name": "伊斯蘭馬哈帕希特大學",
+                    "website": "http://www.unim.ac.id/"
+                },
+                {
+                    "name": "Adhi Tama技術學院",
+                    "website": "https://itats.ac.id/"
+                },
+                {
+                    "name": "巴厘塔爾伊斯蘭大學",
+                    "website": "http://unisbablitar.ac.id/"
+                },
+                {
+                    "name": "瑪瑯國家理工學院",
+                    "website": "https://www.itn.ac.id/"
+                },
+                {
+                    "name": "Universitas 17 Agustus 1945 Surabaya (Untag Surabaya)",
+                    "website": "https://untag-sby.ac.id/"
+                },
+                {
+                    "name": "University of Hayam Wuruk Perbanas (原STIE)",
+                    "website": "https://www.perbanas.ac.id/index.php/en"
+                },
+                {
+                    "name": "Cahaya Surya Foreign Languages College",
+                    "website": "https://www.manyuniversities.com/cahaya-surya-foreign-language-college-229981-vs-catholic-university-of-central-africa-186192/comparison"
+                },
+                {
+                    "name": "Cahaya Surya Polytechnic, Indonesia Cahaya Surya Technology College, Kediri Indonesia",
+                    "website": "https://cahayasurya.ac.id/"
+                },
+                {
+                    "name": "University Al Azhar of Indonesia (UAI)",
+                    "website": "https://uai.ac.id/en/home/"
+                },
+                {
+                    "name": "穆罕默迪亞大學",
+                    "website": "https://www.umy.ac.id/"
+                },
+                {
+                    "name": "Universitias Negeri Jakarta (UNJ)",
+                    "website": "https://unj.ac.id/"
+                },
+                {
+                    "name": "Universitias Gadjah Mada (UGM)",
+                    "website": "https://ugm.ac.id/id/"
+                }
+            ],
+            "俄羅斯 RUSSIA": [
+                {
+                    "name": "Moscow City University",
+                    "website": "http://www.mgpu.ru/pages/pk_obmen_eng"
+                }
+            ],
+            "緬甸 MYANMAR": [
+                {
+                    "name": "Myanmar Noble College",
+                    "website": "https://myanmarnoblecollege.com.mm/"
+                }
+            ]
+        },
+        "歐洲 (EUROPE)": {
+            "奧地利 AUSTRIA": [
+                {
+                    "name": "Upper Austria University of Applied Sciences",
+                    "website": "https://www.fh-ooe.at/"
+                },
+                {
+                    "name": "University of Applied Sciences Technikum Wien",
+                    "website": "https://www.technikum-wien.at/en/"
+                }
+            ],
+            "芬蘭 FINLAND": [
+                {
+                    "name": "South-Eastern Finland University of Applied Sciences",
+                    "website": "http://www.xamk.fi/koulutukset/metsatalousinsinoori-amk/"
+                }
+            ],
+            "法國 FRANCE": [
+                {
+                    "name": "Ecole Superieure D’ Ingenieurs En Electrotechique et Electronique-ESIEE",
+                    "website": "http://www.esiee.fr/"
+                },
+                {
+                    "name": "Angers Graduate School of Business-ESSCA",
+                    "website": "https://www.essca.fr/en/"
+                },
+                {
+                    "name": "Engineering Institutes Networks",
+                    "website": "http://www.nplusi.com/"
+                },
+                {
+                    "name": "Universite de Technologie de Compiegne",
+                    "website": "https://www.utc.fr/"
+                }
+            ],
+            "德國 GERMANY": [
+                {
+                    "name": "Technische Hochschule Nü rnberg Georg Simon Ohm",
+                    "website": "https://www.th-nuernberg.de/"
+                },
+                {
+                    "name": "Deggendorf University of Applied Sciences",
+                    "website": "https://www.th-deg.de/de/"
+                },
+                {
+                    "name": "Stuttgart University of Applied Sciences",
+                    "website": "http://www.hft-stuttgart.de/"
+                },
+                {
+                    "name": "Duale Hochschule Baden-W",
+                    "website": "http://www.heidenheim.dhbw.de/startseite.html"
+                },
+                {
+                    "name": "ü rttemberg Heidenheim-(DHBW)",
+                    "website": "http://www.heidenheim.dhbw.de/english/home/study-programmes.html"
+                }
+            ],
+            "荷蘭 NETHERLANDS": [
+                {
+                    "name": "Fontys University of Applied Sciences",
+                    "website": "https://fontys.nl/"
+                }
+            ],
+            "冰島 ICELAND": [
+                {
+                    "name": "School for Renewable Energy Science-RES",
+                    "website": "http://www.res.is/"
+                }
+            ],
+            "波蘭 POLAND": [
+                {
+                    "name": "Lublin University of Technology",
+                    "website": "http://www.pollub.pl/"
+                },
+                {
+                    "name": "Maria Curie-Sklodowska University-UMCS",
+                    "website": "http://www.umcs.pl/pl/"
+                },
+                {
+                    "name": "The University College of Enterprise and Administration",
+                    "website": "http://www.wspa.pl/"
+                },
+                {
+                    "name": "University of Warsaw",
+                    "website": "http://www.uw.edu.pl/"
+                }
+            ],
+            "英國 ENGLAND": [
+                {
+                    "name": "University of Nottingham",
+                    "website": "http://www.nottingham.ac.uk/"
+                },
+                {
+                    "name": "University of Glasgow",
+                    "website": "https://www.gla.ac.uk/"
+                },
+                {
+                    "name": "密德薩斯大學",
+                    "website": "https://www.mdx.ac.uk/"
+                }
+            ],
+            "西班牙 SPAIN": [
+                {
+                    "name": "Universidad Pontificia Comillas",
+                    "website": "http://www.comillas.edu/en/"
+                },
+                {
+                    "name": "University of Malaga",
+                    "website": "http://www.uma.es/"
+                }
+            ]
+        },
+        "美洲 (AMERICAS)": {
+            "美國 UNITED STATES": [
+                {
+                    "name": "California State University, Fullerton",
+                    "website": "http://www.fullerton.edu/"
+                },
+                {
+                    "name": "California State University, San Bernardino",
+                    "website": "https://www.csusb.edu/"
+                },
+                {
+                    "name": "California State University, San Jose",
+                    "website": "http://www.sjsu.edu/"
+                },
+                {
+                    "name": "East Carolina University",
+                    "website": "http://www.ecu.edu/"
+                },
+                {
+                    "name": "Florida Institute of Technology",
+                    "website": "http://www.fit.edu/"
+                },
+                {
+                    "name": "Iowa State University",
+                    "website": "http://www.iastate.edu/"
+                },
+                {
+                    "name": "Murray State University",
+                    "website": "https://www.murraystate.edu/"
+                },
+                {
+                    "name": "Pepperdine University",
+                    "website": "https://www.pepperdine.edu/"
+                },
+                {
+                    "name": "Purdue University Calumet",
+                    "website": "https://www.pnw.edu/"
+                },
+                {
+                    "name": "University of Detroit Mercy",
+                    "website": "http://www.udmercy.edu/"
+                },
+                {
+                    "name": "University of Mississipp",
+                    "website": "http://www.olemiss.edu/"
+                },
+                {
+                    "name": "University of Southern California-USC",
+                    "website": "http://www.usc.edu/"
+                },
+                {
+                    "name": "University of Washington Washington University",
+                    "website": "http://www.washington.edu/"
+                },
+                {
+                    "name": "Worcester Polytechnic Institute-WPI",
+                    "website": "https://www.wpi.edu/"
+                },
+                {
+                    "name": "University of Nevada, Las Vegas",
+                    "website": "https://www.unlv.edu/"
+                },
+                {
+                    "name": "Humphreys University",
+                    "website": "https://www.humphreys.edu/"
+                },
+                {
+                    "name": "California State Polytechnic University, Pomona (Cal Poly Pomona)",
+                    "website": "https://www.cpp.edu/"
+                },
+                {
+                    "name": "Wayne State University",
+                    "website": "https://wayne.edu/"
+                },
+                {
+                    "name": "Washington State University",
+                    "website": "https://wsu.edu/"
+                },
+                {
+                    "name": "Lamar University",
+                    "website": "https://www.lamar.edu/"
+                }
+            ]
+        },
+        "大洋洲 (OCEANIA)": {
+            "澳洲 AUSTRALIA": [
+                {
+                    "name": "University of Newcastle",
+                    "website": "http://www.newcastle.edu.au/"
+                },
+                {
+                    "name": "Queensland University of Technology",
+                    "website": "https://www.qut.edu.au/study/international/chinese-traditional"
+                }
+            ]
+        }
+    }
+}
