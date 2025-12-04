@@ -119,11 +119,519 @@ def detect_schema(obj: Any) -> str:
     if {"title", "url", "section1", "section2", "section3", "section4"} <= keys:
         return "exchange_program_call"
 
+    # 🔹 規章 / 辦法 / 獎學金要點（舊格式：url + title + articles[{article_no,text}]）
+    if {"url", "title", "articles"} <= keys:
+        return "school_rule_articles"
+
+    # 🔹 規章 / 辦法（新版：source_page + file_url + file_name + articles[{heading, body}]）
+    if {"source_page", "title", "file_name", "file_url", "articles"} <= keys:
+        return "school_rule_file_articles"
+    
+    # 🔹 單頁規則（例如 大同大學學生請假規則）
+    if {"title", "page_title", "source_page", "pdf_url", "prefix", "items"} <= keys:
+        return "single_page_rule"
+
         # 行事曆 / 校務日程
     # 特色鍵：有「年/月/日/活動事項」（通常還有 星期、資料來源）
     if {"年", "月", "日", "活動事項"} <= keys:
         return "calendar"
     return "unknown"
+
+# =========================
+# ttu_single_page_rules.json adapter
+# =========================
+
+def single_page_rule_to_documents(
+    obj: Dict[str, Any],
+    source_path: str | Path,
+) -> List[Document]:
+    """
+    將 ttu_single_page_rules.json 這種「單頁說明 + 多個條款項目」的規則，
+    轉成多筆 Document：
+
+    結構示意：
+    {
+      "title": "大同大學學生請假規則",
+      "page_title": "大同大學 生活輔導組",
+      "source_page": "...",
+      "pdf_url": "...",
+      "pdf_link_text": "...",
+      "prefix": "長段文字，含修正紀錄 + 一、二、三…",
+      "items": [
+        { "item": "一", "text": "公假：..." },
+        { "item": "二", "text": "病假：..." },
+        ...
+      ]
+    }
+
+    輸出：
+    1) 一筆「規則總覽」 school_rule_overview
+    2) 多筆「條款摘要」 school_rule_article（每個 items[*] 一筆）
+    """
+    docs: List[Document] = []
+
+    source_path_str = str(source_path)
+    title = str(obj.get("title") or "").strip()
+    page_title = str(obj.get("page_title") or "").strip()
+    source_page = str(obj.get("source_page") or "").strip()
+    pdf_url = str(obj.get("pdf_url") or "").strip()
+    pdf_link_text = str(obj.get("pdf_link_text") or "").strip()
+    prefix = str(obj.get("prefix") or "").strip()
+
+    items = obj.get("items") or []
+    if not isinstance(items, list):
+        items = []
+
+    # 對外使用的主網址（有 source_page 就優先用它）
+    main_url = source_page or pdf_url
+
+    # 規則類型（這份是請假規則，就當成 leave_rule）
+    rule_kind = "leave_rule"
+
+    idx = 0
+
+    # === (1) 規則總覽 Doc ===
+
+    # 從 items 抓幾條當「條款摘要」
+    summary_items: List[Dict[str, str]] = []
+    for it in items[:6]:  # 最多拿前 6 個項目做成概要
+        if not isinstance(it, dict):
+            continue
+        item_label = str(it.get("item") or "").strip()
+        text = str(it.get("text") or "").strip()
+        if not text:
+            continue
+        summary_items.append(
+            {
+                "項目代號": item_label,
+                "內容開頭": text[:80],
+            }
+        )
+
+    overview_record: Dict[str, Any] = {
+        "規章標題": title,
+        "頁面標題": page_title,
+        "規章網址": main_url,
+        "規章類型": rule_kind,  # leave_rule
+        "PDF檔名": pdf_link_text,
+        "PDF網址": pdf_url,
+        "前言摘要": prefix[:400],  # 前 400 字當摘要，避免太長
+        "條款項目摘要列表": summary_items,
+        "資料來源": main_url,
+    }
+
+    try:
+        overview_text = rewrite_json_record(
+            record=overview_record,
+            schema_hint="school_rule_overview",
+            max_chars=900,
+        )
+    except Exception as e:
+        print(
+            "[single_page_rule_to_documents] "
+            f"rewrite_json_record (overview) 發生錯誤（程式終止）：{e}"
+        )
+        sys.exit(1)
+
+    overview_meta = {
+        "source": source_path_str,
+        "file_type": "json",
+        "content_type": "school_rule_overview",
+
+        "title": title,
+        "url": main_url,
+        "rule_kind": rule_kind,
+        "item_count": len(items),
+
+        "page_title": page_title,
+        "pdf_url": pdf_url,
+        "pdf_link_text": pdf_link_text,
+
+        "idx": idx,
+        "needs_split": False,
+    }
+    docs.append(Document(page_content=overview_text.strip(), metadata=overview_meta))
+    idx += 1
+
+    # === (2) 每一個 items[*] 產生一筆條款 Doc ===
+
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+
+        item_label = str(it.get("item") or "").strip()
+        text = str(it.get("text") or "").strip()
+        if not text:
+            continue
+
+        record_item: Dict[str, Any] = {
+            "規章標題": title,
+            "規章網址": main_url,
+            "規章類型": rule_kind,
+            "項目代號": item_label,
+            "條款內容": text,
+            "資料來源": main_url,
+        }
+
+        try:
+            item_text = rewrite_json_record(
+                record=record_item,
+                schema_hint="school_rule_article",
+                max_chars=500,
+            )
+        except Exception as e:
+            print(
+                "[single_page_rule_to_documents] "
+                f"rewrite_json_record (item {item_label}) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        item_meta = {
+            "source": source_path_str,
+            "file_type": "json",
+            "content_type": "school_rule_article",
+
+            "title": title,
+            "url": main_url,
+            "rule_kind": rule_kind,
+            "item_label": item_label,
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(Document(page_content=item_text.strip(), metadata=item_meta))
+        idx += 1
+
+    return docs
+
+# =========================
+# cse_shishi_banfa.json adapter
+# =========================
+
+def school_rule_file_articles_to_documents(
+    obj: Dict[str, Any],
+    source_path: str | Path,
+) -> List[Document]:
+    """
+    將 cse_shishi_banfa.json 這種「有附檔的系規 / 辦法」轉成多筆 Document。
+
+    結構：
+    {
+      "source_page": "...",
+      "title": "大同大學資訊工程系(所)學生修讀學、碩士 五年一貫學程辦法",
+      "file_name": "545079179.docx",
+      "file_url": "https://cse.ttu.edu.tw/var/file/58/1058/img/104/545079179.docx",
+      "articles": [
+        { "heading": "第一條", "body": "..." },
+        { "heading": "第二條", "body": "..." },
+        ...
+      ]
+    }
+
+    輸出：
+    1) 一筆「辦法總覽」 school_rule_overview
+    2) 多筆「條文摘要」 school_rule_article
+    """
+    docs: List[Document] = []
+
+    source_path_str = str(source_path)
+    source_page = str(obj.get("source_page") or "").strip()
+    title = str(obj.get("title") or "").strip()
+    file_name = str(obj.get("file_name") or "").strip()
+    file_url = str(obj.get("file_url") or "").strip()
+    articles = obj.get("articles") or []
+    if not isinstance(articles, list):
+        articles = []
+
+    # 🔹 判斷是「獎學金類」還是一般學則 / 系規
+    if "獎學金" in title or "勵學" in title:
+        rule_kind = "scholarship_rule"
+    else:
+        rule_kind = "academic_rule"
+
+    # 對外統一用這個網址欄位
+    main_url = source_page or file_url
+
+    idx = 0
+
+    # === (1) 辦法總覽 Doc ===
+    summary_items: List[Dict[str, str]] = []
+    for art in articles[:6]:  # 最多拿前 6 條來當概要
+        if not isinstance(art, dict):
+            continue
+        heading = str(art.get("heading") or "").strip()
+        body = str(art.get("body") or "").strip()
+        if not body:
+            continue
+        summary_items.append(
+            {
+                "條號": heading,
+                "條文開頭": body[:80],  # 只截前面一小段，讓重寫器掌握重點
+            }
+        )
+
+    overview_record: Dict[str, Any] = {
+        "規章標題": title,
+        "規章網址": main_url,
+        "規章類型": rule_kind,  # scholarship_rule / academic_rule
+        "附件檔名": file_name,
+        "附件網址": file_url,
+        "條文總數": len(articles),
+        "條文摘要列表": summary_items,
+        "資料來源": main_url,
+    }
+
+    try:
+        overview_text = rewrite_json_record(
+            record=overview_record,
+            schema_hint="school_rule_overview",
+            max_chars=900,
+        )
+    except Exception as e:
+        print(
+            "[school_rule_file_articles_to_documents] "
+            f"rewrite_json_record (overview) 發生錯誤（程式終止）：{e}"
+        )
+        sys.exit(1)
+
+    overview_meta = {
+        "source": source_path_str,
+        "file_type": "json",
+        "content_type": "school_rule_overview",
+
+        "title": title,
+        "url": main_url,
+        "rule_kind": rule_kind,
+        "article_count": len(articles),
+
+        "source_page": source_page,
+        "file_name": file_name,
+        "file_url": file_url,
+
+        "idx": idx,
+        "needs_split": False,
+    }
+    docs.append(Document(page_content=overview_text.strip(), metadata=overview_meta))
+    idx += 1
+
+    # === (2) 每條條文各一個 Doc ===
+    for art in articles:
+        if not isinstance(art, dict):
+            continue
+
+        heading = str(art.get("heading") or "").strip()
+        body = str(art.get("body") or "").strip()
+        if not body:
+            continue
+
+        record_article: Dict[str, Any] = {
+            "規章標題": title,
+            "規章網址": main_url,
+            "規章類型": rule_kind,
+            "條號": heading,
+            "條文內容": body,
+            "附件檔名": file_name,
+            "附件網址": file_url,
+            "資料來源": main_url,
+        }
+
+        try:
+            article_text = rewrite_json_record(
+                record=record_article,
+                schema_hint="school_rule_article",
+                max_chars=500,
+            )
+        except Exception as e:
+            print(
+                "[school_rule_file_articles_to_documents] "
+                f"rewrite_json_record (article {heading}) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        article_meta = {
+            "source": source_path_str,
+            "file_type": "json",
+            "content_type": "school_rule_article",
+
+            "title": title,
+            "url": main_url,
+            "rule_kind": rule_kind,
+            "article_no": heading,
+
+            "source_page": source_page,
+            "file_name": file_name,
+            "file_url": file_url,
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(
+            Document(page_content=article_text.strip(), metadata=article_meta)
+        )
+        idx += 1
+
+    return docs
+
+# =========================
+# activity.ttu.edu.tw_405-1036-4940_php.json
+# cse.ttu.edu.tw_404-1058-2974_php.json
+# cse.ttu.edu.tw_404-1058-35967_php.json
+# rule_33.json
+# rule_329.json
+# =========================
+
+def school_rule_articles_to_documents(
+    obj: Dict[str, Any],
+    source_path: str | Path,
+) -> List[Document]:
+    """
+    將「規章 / 辦法 / 獎學金實施要點」這類 JSON 轉成多筆 Document。
+
+    結構假設為：
+    {
+      "url": "...",
+      "title": "...",
+      "articles": [
+        { "article_no": "第一條", "text": "..." },
+        { "article_no": "第二條", "text": "..." },
+        ...
+      ]
+    }
+
+    輸出：
+    1) 一筆「規章總覽」：整份辦法在做什麼，大致涵蓋主要條文方向。
+    2) 多筆「條文摘要」：每一條各一筆，方便精準查詢。
+    """
+    docs: List[Document] = []
+
+    source_path_str = str(source_path)
+    url = str(obj.get("url") or "").strip()
+    title = str(obj.get("title") or "").strip()
+    articles = obj.get("articles") or []
+    if not isinstance(articles, list):
+        articles = []
+
+    # 🔹 判斷是「獎學金類」還是「一般學則/規章」
+    # 用標題粗略判斷就好：有「獎學金」或「勵學」字眼就當成 scholarship
+    if "獎學金" in title or "勵學" in title:
+        rule_kind = "scholarship_rule"
+    else:
+        rule_kind = "academic_rule"
+
+    idx = 0
+
+    # === (1) 規章總覽 Doc ===
+    #   - 用少量條文摘要（前幾條、每條截個頭）來幫 LLM 掌握整體內容。
+    summary_items: List[Dict[str, str]] = []
+    for a in articles[:6]:  # 最多拿前 6 條來當概要（防爆字數）
+        if not isinstance(a, dict):
+            continue
+        ano = str(a.get("article_no") or "").strip()
+        txt = str(a.get("text") or "").strip()
+        if not txt:
+            continue
+        summary_items.append(
+            {
+                "條號": ano,
+                "條文開頭": txt[:80],  # 只截前面一小段讓 rewriter 有感覺就好
+            }
+        )
+
+    overview_record: Dict[str, Any] = {
+        "規章標題": title,
+        "規章網址": url,
+        "規章類型": rule_kind,  # 例如 scholarship_rule / academic_rule
+        "條文總數": len(articles),
+        "條文摘要列表": summary_items,
+        "資料來源": url,
+    }
+
+    try:
+        overview_text = rewrite_json_record(
+            record=overview_record,
+            schema_hint="school_rule_overview",
+            max_chars=900,  # 總覽可以稍微長一點
+        )
+    except Exception as e:
+        print(
+            "[school_rule_articles_to_documents] "
+            f"rewrite_json_record (overview) 發生錯誤（程式終止）：{e}"
+        )
+        sys.exit(1)
+
+    overview_meta = {
+        "source": source_path_str,
+        "file_type": "json",
+        "content_type": "school_rule_overview",
+
+        "title": title,
+        "url": url,
+        "rule_kind": rule_kind,          # scholarship_rule or academic_rule
+        "article_count": len(articles),
+
+        "idx": idx,
+        "needs_split": False,
+    }
+    docs.append(Document(page_content=overview_text.strip(), metadata=overview_meta))
+    idx += 1
+
+    # === (2) 每條條文各一個 Doc ===
+    for art in articles:
+        if not isinstance(art, dict):
+            continue
+
+        article_no = str(art.get("article_no") or "").strip()
+        article_text = str(art.get("text") or "").strip()
+        if not article_text:
+            continue
+
+        record_article: Dict[str, Any] = {
+            "規章標題": title,
+            "規章網址": url,
+            "規章類型": rule_kind,
+            "條號": article_no,
+            "條文內容": article_text,
+            "資料來源": url,
+        }
+
+        try:
+            article_rewritten = rewrite_json_record(
+                record=record_article,
+                schema_hint="school_rule_article",
+                max_chars=500,  # 每一條目標控制在 500 字以內
+            )
+        except Exception as e:
+            print(
+                "[school_rule_articles_to_documents] "
+                f"rewrite_json_record (article {article_no}) 發生錯誤（程式終止）：{e}"
+            )
+            sys.exit(1)
+
+        # 有時條文本身就很短，rewriter 也會輸出很短，OK。
+        # 這裡不再做 [:500] 的硬切，避免把句子 / 數字截斷。
+
+        article_meta = {
+            "source": source_path_str,
+            "file_type": "json",
+            "content_type": "school_rule_article",
+
+            "title": title,
+            "url": url,
+            "rule_kind": rule_kind,    # scholarship_rule / academic_rule
+            "article_no": article_no,
+
+            "idx": idx,
+            "needs_split": False,
+        }
+
+        docs.append(
+            Document(page_content=article_rewritten.strip(), metadata=article_meta)
+        )
+        idx += 1
+
+    return docs
 
 
 # =========================
@@ -2676,6 +3184,14 @@ def load_json_as_documents(path: Path) -> List[Document]:
         return docs
     elif schema == "required_by_semester":
         return required_by_semester_to_documents(obj, str(path))
+    elif schema == "school_rule_articles":
+        return school_rule_articles_to_documents(obj, str(path))
+     # 🔹 新增：有附檔的系規 / 辦法 JSON
+    elif schema == "school_rule_file_articles":
+        return school_rule_file_articles_to_documents(obj, str(path))
+    elif schema == "single_page_rule":
+        return single_page_rule_to_documents(obj, str(path))
+    
 
 
         # 其他已知 schema 都在上面處理完
