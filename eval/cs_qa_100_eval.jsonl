@@ -1,0 +1,100 @@
+{"id": "q_001", "question": "我要怎麼知道資工系學士班畢業總共要修滿多少學分？", "expected_answer": "根據規定，本系學士班學生畢業前須修得**128學分以上**。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_002", "question": "資工系專業選修學分至少要修多少才符合畢業門檻？", "expected_answer": "畢業所修學分中，須包含系訂專業選修科目**至少 26 學分以上**。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_003", "question": "資工系畢業的英文能力檢定標準是什麼？如果多益沒考到 450 分有替代方案嗎？", "expected_answer": "學生須通過本校認可之英文能力檢定，標準為**多益 450 分**、全民英檢中級初試或其他等同程度之英檢。若未通過，可選擇報名參加並完成**外語教育中心自學方案課程**，並報考且通過校內辦理之**「英語能力檢定會考」**；或者選修並通過**校內開設之英語補強課程**（零學分，60分及格）。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_004", "question": "資工系畢業的 CPE 檢定要求是單次要答對幾題才算通過？有沒有累積答對的標準？", "expected_answer": "畢業前須參加 CPE 檢定考試並符合以下任一標準：**單次答對 2 題以上**，或**多次累計答對 3 題以上**。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_005", "question": "我程式能力夠強，想用修課來抵掉 CPE 門檻，請問有這個選項嗎？", "expected_answer": "如果參加過 **4 次以上**的 CPE 檢定考試，可以修過本系一門 **3 學分之程式設計精實演練相關課程**且成績及格，以符合畢業規定。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_006", "question": "114學年度入學的資工系新生，大一上學期有哪些專業必修課？加起來是多少學分？", "expected_answer": "114學年度入學的學生，大一上學期的系訂專業必修科目有微積分 I (3學分)、計算機概論 (3學分)、程式設計 I (3學分)、程式設計實驗 I (1學分)，專業必修學分小計為 **10 學分**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_007", "question": "程式設計（一）的先修限制門檻是多少？如果低於這個分數會怎樣？", "expected_answer": "程式設計 I **必須達 60 分以上**，方可修讀程式設計 II。", "category": "其他", "difficulty": "medium"}
+{"id": "q_008", "question": "資訊工程學系大學部學生要申請修讀輔系，有什麼申請資格限制？", "expected_answer": "申請資格要求前一學年成績名次須在**該班人數前百分之五十以內**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_009", "question": "專題一沒過的話，專題二還可以繼續修嗎？", "expected_answer": "專題課程分為兩學期實施，**專題一修讀及格者才可修讀專題二**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_010", "question": "專題口試最晚的申請期限是什麼時候？", "expected_answer": "專題口試的申請期限為：**上學期 12 月 31 日前**，或**下學期 5 月 31 日前**。", "category": "學習與生涯", "difficulty": "easy"}
+{"id": "q_011", "question": "專題口試一定要找三位委員嗎？委員的組成要求是什麼？", "expected_answer": "學生必須在指導教授外，**另找兩位口試委員**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_012", "question": "專題口試當天，除了報告和詢答，學生還需要幫委員準備什麼？", "expected_answer": "學生需要準備**投影片稿**給每一位口試委員，準備**成績表及簽名頁各一份**，準備**茶水**即可，**不要準備其他餐點**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_013", "question": "專題報告的電子檔命名有沒有格式範例？格式不符合規定會被退件嗎？", "expected_answer": "PDF 檔案命名範例為：**I4A77_戚淒欺_I4B88_巴叭峇_114年專題報告.pdf** (學號_姓名_學號_姓名_114年專題報告)。**未按範例命名視為不符規定，將直接退件**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_014", "question": "專題二如果被指導教授推薦參加系展，系展成績佔專題二學期成績的比重是？", "expected_answer": "專題二的學期成績是**系展成績加入平均**後計算。如果**未參加系展者**，專題二的學期成績將是**期末口試成績的 85%**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_015", "question": "資工系有提供哪些與 AI/IoT/資安相關的學分學程可以修讀？", "expected_answer": "資工系設有**人工智慧 (AI) 學程**、**物聯網 (IoT) 學程**、**資通安全學程** 和**資安鑑識學程**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_016", "question": "113學年下學期「物件導向程式設計」有哪幾位老師開課？", "expected_answer": "113學年下學期的「物件導向程式設計 (I2360)」有 **徐家銘助理教授** (I2360A) 和 **謝禎冏教授** (I2360B) 開課。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_017", "question": "卓世明教授的研究領域是什麼？他是資工系的哪個職位？", "expected_answer": "卓世明教授是資工系的**系主任**，其教學與研究領域包括**物聯網應用、嵌入式系統設計、無線通信**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_018", "question": "113學年上學期大四有開哪些資訊安全相關的選修課？", "expected_answer": "113學年上學期大四的選修課中，資訊安全相關的有**資訊安全導論** (I3160，林宜隆授課)、**數位鑑識方法與應用** (I4220，周憲政授課)、**資通訊安全實務** (I4230，徐家銘授課)，以及**無線網路安全** (I5280A，黃國軒授課)。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_019", "question": "謝禎冏教授在資工系內擔任什麼職務？他的專業領域是什麼？", "expected_answer": "謝禎冏教授同時擔任**工程學院院長**，其教學與研究領域為**多媒體處理、影像處理、卷積神經網路、資料探勘**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_020", "question": "學校的「數位教學課程」實施要點規定，單一科目在學期內進行數位教學的週數限制是幾週？", "expected_answer": "本校數位教學課程指單一科目授課以實體教學為主，輔以**四至六週**（含彈性教學週）於本校網路大學（TronClass）進行數位教學之課程。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_021", "question": "如果我想申請學期型全職全時校外實習 (G009*)，最多能拿到多少專業選修學分？", "expected_answer": "進行學期型全職全時校外實習，實習期間達 18 週為原則，**可獲得專業選修學分 9 學分**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_022", "question": "如果我申請的學期型全職全時實習 (G009*) 最後成績評定為不通過，還可以改修 G008* 課程嗎？", "expected_answer": "若當學期該科成績評定為不通過，**當學期不得改選 G008* 校外實習課程**。但所做的實習時數可於次學期起改選 G008* 校外實習課程。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_023", "question": "課外實習中的「專題研究」如果認定為國科會或建教合作案，實習時數是怎麼計算的？", "expected_answer": "專題研究類的計畫案時數是以 **316 小時計算**，外加 4 小時系上服務工作。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_024", "question": "申請 2025 年春季交換學生的第一波校內截止日是哪一天？", "expected_answer": "2025 年春季姊妹校交換計畫與雙聯學位申請的**第一波截止日是 2024 年 9 月 11 日 (三) 16:00 以前**上傳完畢。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_025", "question": "申請出國交換學生的最低 GPA 要求是多少？", "expected_answer": "歷年學業成績須達 **GPA 3.0 以上**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_026", "question": "如果我想申請去美國內華達大學拉斯維加斯分校 (UNLV) 的電資學院交換，TOEFL 或 TOEIC 的語言要求是什麼？", "expected_answer": "UNLV (電資、工程學院) 的語言能力要求擇一即可：**TOEFL IBT 61 分以上**、TOEFL ITP/PBT 500 分以上，或 **TOEIC 650 分以上**。", "category": "學習與生涯", "difficulty": "hard"}
+{"id": "q_027", "question": "114學年度第一學期（秋季學期）的開學日是哪一天？", "expected_answer": "114學年度第一學期的開學日（上課開始）是 **9 月 8 日 (一)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_028", "question": "114學年度的全校運動會換休日是哪一天？", "expected_answer": "本校 114 學年度校慶活動日/全校運動會為 114 年 11 月 8 日，其換休日修改為 **115 年 1 月 2 日**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_029", "question": "115 年的農曆春節假期從什麼時候開始放到結束？", "expected_answer": "115 年的農曆春節假期為 **115 年 2 月 14 日到 2 月 22 日**，共放假 9 天。", "category": "其他", "difficulty": "medium"}
+{"id": "q_030", "question": "114學年度第二學期（春季學期）的轉系申請期間是哪幾天？", "expected_answer": "轉系申請時間因勞動節為國定假日而修改為 **5 月 4 日 (一) 至 5 月 11 日 (一)**。", "category": "轉系/學籍", "difficulty": "medium"}
+{"id": "q_031", "question": "我微積分(一)考了 55 分，下一學期可以衝微積分(二)嗎？門檻是多少？", "expected_answer": "**微積分 I 必須達 50 分以上**，方可修讀微積分 II。", "category": "其他", "difficulty": "medium"}
+{"id": "q_032", "question": "如果我程式設計 II 剛好 60 分低空飛過，可以直接修資料結構嗎？有沒有分數門檻？", "expected_answer": "程式設計 II **必須達 60 分以上**，方可修讀資料結構。", "category": "其他", "difficulty": "hard"}
+{"id": "q_033", "question": "資工系畢業的修業年限最長可以延長多久？", "expected_answer": "修業年限為四年，**得延長兩年**，休學期間不列入修業年限計算。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_034", "question": "資工系學士班學生如果選擇 EMI 課程來滿足英文畢業門檻，需要修滿多少學分？", "expected_answer": "須選修並通過本校開設之 EMI 課程且取得 E1 等級證書，總共需要 **EMI 課程 16 學分**。", "category": "畢業門檻", "difficulty": "medium"}
+{"id": "q_035", "question": "如果我的母語是英語，可以用 SAT 或 ACT 成績來抵免英文畢業規定嗎？標準是多少？", "expected_answer": "可以。母語為英語的學生可檢具 **SAT 或 ACT 成績 (達前 60%)** 辦理視同通過英文畢業規定之登錄。", "category": "畢業門檻", "difficulty": "hard"}
+{"id": "q_036", "question": "114 學年入學的大一新生，大一上下學期的基礎共同必修學分小計各是多少？", "expected_answer": "大一上學期基礎共同必修學分小計為 **7 學分**，大一下學期為 **7 學分**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_037", "question": "114學年度入學的學生，大三上學期的系訂專業必修學分總共有幾學分？", "expected_answer": "大三上學期的系訂專業必修學分小計為 **10 學分**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_038", "question": "114學年度入學的學生，大四上學期唯一一門系訂專業必修科目名稱是什麼？佔幾學分？", "expected_answer": "是**專題實驗**，佔 **1 學分**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_039", "question": "113學年下學期「資訊講座」 (I2000) 是哪位老師開課？", "expected_answer": "資訊講座 (I2000) 於 113 學年下學期由**鄭穎懋**副教授開課。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_040", "question": "113學年上學期，大四生可選修哪些關於區塊鏈 (Blockchain) 或進階網路的課程？", "expected_answer": "有**區塊鏈技術與應用** (I6060) (周憲政授課) 和**高等數據通信** (I4570) (馬金溝授課)。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_041", "question": "113學年下學期，哪些教授開了「專題實驗」必修課？", "expected_answer": "專題實驗 (G3020) 在 113 學年下學期由**卓世明** 與**謝禎冏** 教授開課。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_042", "question": "113學年上學期，大三生必修的「資料結構」 (I2400) 是由哪兩位老師開課？", "expected_answer": "資料結構 (I2400) 在 113 學年上學期由**謝尚琳** 和**高一統** 教授開課。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_043", "question": "如果我想在大二時申請修讀輔系，我的前一學年成績名次要在全班多少範圍內？", "expected_answer": "前一學年成績名次須在**該班人數前百分之五十以內**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_044", "question": "輔系修讀規定要求至少修滿多少學分，以及必修/選修的門數限制？", "expected_answer": "至少修滿**二十一學分**本系專業必選修科目，且須包含本系二年級以上專業必修科目**至少 3 門** 及專業選修科目**至少 3 門**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_045", "question": "114學年度新生在學期間必須要通過資工系自己訂定的哪些學分學程嗎？", "expected_answer": "資料來源中提到資工系設有 **人工智慧 (AI) 學程**、**物聯網 (IoT) 學程**、**資通安全學程** 和**資安鑑識學程**，但並未指明學士班畢業**必須**通過任一學程。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_046", "question": "專題口試最晚要在學校行事曆規定的「成績繳交期限」之前幾天完成？", "expected_answer": "專題口試的期限是：學校行事曆所訂成績繳交期限**前五天完成**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_047", "question": "專題口試當天，我需要幫三位口試委員準備什麼東西？有沒有規定不能準備的？", "expected_answer": "需準備**投影片稿**給每一位口試委員、**成績表及簽名頁各一份**，以及**茶水**即可，**不要準備其他餐點**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_048", "question": "專題二沒有參加系展的話，我的學期總成績會怎麼計算？", "expected_answer": "未參加系展者，專題二之學期成績為**期末口試成績之 85%**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_049", "question": "如果我專題二被當了，下次重修時可以換指導教授嗎？", "expected_answer": "除非**原指導教授同意繼續指導者**，否則須由特定教授給予集中輔導。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_050", "question": "專題報告的電子檔 PDF 命名有沒有規定的格式範例？", "expected_answer": "PDF 檔案命名範例為：**I4A77_戚淒欺_I4B88_巴叭峇_114年專題報告.pdf** (學號_姓名_學號_姓名_114年專題報告)。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_051", "question": "專題報告的 PDF 電子檔必須包含哪四個主要部分？", "expected_answer": "內容須包含：**完整封面**、**口試委員完整簽名頁**、**專案管理**，以及**專題報告內文**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_052", "question": "專題報告最終本要繳交給系辦公室幾份？除了報告本身還需要什麼？", "expected_answer": "需依規定繳交**一份完整的專題報告**以及**一份簡式報告**到系辦公室。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_053", "question": "如果口試委員對專題成員給了不同的分數比例，系辦公室會如何計算個別學生成績？", "expected_answer": "系辦公室會依口試委員提供之**成績分配比例**，計算個別學生的成績，使平均成績等於成績表上的平均成績。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_054", "question": "負責智慧物聯網研究中心的主任是哪位教授？他的專業領域是什麼？", "expected_answer": "主任是**鄭福炯**副教授，他的教學與研究領域包括**物聯網技術**、**機器學習**、**手機應用系統開發**、**晶片系統設計**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_055", "question": "哪位資工系教授同時也是工程學院院長？他主要研究什麼？", "expected_answer": "**謝禎冏**教授同時擔任工程學院院長，他的研究領域包括**多媒體處理**、**影像處理**、**卷積神經網路**、**資料探勘**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_056", "question": "擔任學生事務長的是哪位教授？他對哪個領域的研究有興趣？", "expected_answer": "學生事務長是**謝尚琳**副教授，他的教學與研究領域包括**動作姿態辨識**、**醫學影像辨識**、**跌倒偵測**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_057", "question": "資工系哪位教授的專長是密碼學和資訊安全，並且在 113 下學期有開「密碼學」這門選修課？", "expected_answer": "**黃國軒**助理教授 的教學與研究領域包括**密碼學**、資訊安全、網路安全、物聯網技術，並且在 113 下學期開了**密碼學** (I5320) 選修課。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_058", "question": "哪位老師在 113學年下學期開了「機器學習與辨識技術」這門選修課？他的職稱是什麼？", "expected_answer": "**卓世明副教授**在 113 學年下學期開了這門課 (I6090)，他同時也是**系主任**。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_059", "question": "哪位兼任教授的專長是 AI 與資通安全、資通安全鑑識？", "expected_answer": "**林宜隆**兼任教授，他的專長是 AI 與資通安全、資通安全鑑識。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_060", "question": "哪位教授的研究領域是「圖論」和「資訊隱藏」？他在 113 學年下學期負責開哪門重要的必修課？", "expected_answer": "**張薰文**副教授 的研究領域包括圖論、資訊隱藏。她在 113 學年下學期開了**離散數學** (I2600B)。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_061", "question": "短期/累積型實習課程 (G008*) 的實習時數與學分數換算方式是依據哪個規定辦理？", "expected_answer": "實習時數與學分數換算方式是依據**本校校外實習課程實施辦法第六條之規定**辦理。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_062", "question": "如果我學期型全職實習 (G009*) 的成績被評定為不通過，我的實習時數還能拿來抵用 G008* 課程嗎？", "expected_answer": "若 G009* 該科成績評定為不通過，**當學期不得改選 G008* 校外實習課程**。但所做之實習時數**得於次學期起改選 G008* 校外實習課程**。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_063", "question": "實習結束後，系辦公室會留存哪些學生的實習相關資料備查？", "expected_answer": "實習相關資料由系辦公室留存備查，包含**「大同大學校外實習週記」** 及**「大同大學學生校外實習成果報告」** 等。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_064", "question": "校外實習機構的單位主管，除了在週記上填寫評語，實習結束後還要填寫哪份考核文件？", "expected_answer": "實習機構單位主管須填寫**「大同大學學生校外實習考核表」**，該考核表內含實習單位簽認之「實習期滿證明」。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_065", "question": "如果我的課外實習 (非學分實習) 是做專題研究，該計畫案的時數是如何計算？", "expected_answer": "專題研究計畫案時數是以 **316 小時計算**，外加 **4 小時系上服務工作**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_066", "question": "課外實習的實習類型有哪三種？", "expected_answer": "實習方式可為**社區服務**、**專題研究**或**工廠實習**。", "category": "學習與生涯", "difficulty": "easy"}
+{"id": "q_067", "question": "我想做課外實習的社區服務，校內和校外各有哪些範例？", "expected_answer": "校內服務項目範例有：**公共區域打掃**、**量體溫**或**校園外圍打掃**。校外服務是指到**政府立案之各公私立機構**從事非學員身分之工作或志工。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_068", "question": "申請 2025 年春季交換學生的第一波校內截止日是哪一天？", "expected_answer": "2025 年春季姊妹校交換計畫與雙聯學位申請的**第一波截止日是 2024 年 9 月 11 日 (三) 16:00 以前**上傳完畢。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_069", "question": "如果我在第一波申請中獲得校內推薦資格，但我對該志願不滿意想放棄，可以改申請第二波嗎？", "expected_answer": "**不得放棄改申請第二波**，放棄者需提出棄權聲明書，並於**兩年內不得提出申請**。", "category": "其他", "difficulty": "hard"}
+{"id": "q_070", "question": "申請交換所需繳交的「歷年成績單乙份【英文版】」需要包含哪一學期的成績？", "expected_answer": "須包含 **112 學年第二學期成績**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_071", "question": "德國 DHBW Heidenheim 交換計畫的語言能力要求，CEFR B2 程度約等於 TOEIC 幾分？", "expected_answer": "參考「歐洲語言能力指標 CEFR」的 B2 程度，相當於 **TOEIC 780 分以上** 或雅思 6.0 以上。", "category": "學習與生涯", "difficulty": "hard"}
+{"id": "q_072", "question": "我想申請美國愛荷華州立大學 (ISU) 的電資/工程學院交換，他們要求哪種等級的英語能力證明？", "expected_answer": "要求提供 **CEFR B2 等級**之英語能力證明。", "category": "學習與生涯", "difficulty": "hard"}
+{"id": "q_073", "question": "2025 年春季交換計畫中，法國昂傑高等商學院 (ESSCA) 對非英語為母語的學生有什麼語言要求？", "expected_answer": "要求 **TOEFL 550 分**或同等程度證明。", "category": "學習與生涯", "difficulty": "hard"}
+{"id": "q_074", "question": "我可以向國際處申請哪種獎學金的候補？", "expected_answer": "可以申請 **113 學海飛颺獎學金**的候補名額。", "category": "學生生活/行政", "difficulty": "easy"}
+{"id": "q_075", "question": "申請交換學生時，若我獲得錄取，是否可以免繳本校學雜費？", "expected_answer": "部分學校免除該校學費，但**仍必須繳交本校學雜費** 以及該校雜費、住宿費、書籍費等其他費用。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_076", "question": "114 學年度全校運動會的換休日為什麼會從原本的 114 年 11 月 8 日，改到 115 年 1 月 2 日？", "expected_answer": "**114 年 11 月 8 日**是校慶活動日/全校運動會，換休日擬修改成 **115 年 1 月 2 日**。", "category": "其他", "difficulty": "hard"}
+{"id": "q_077", "question": "114 學年度第一學期開始和結束的日期分別是什麼時候？", "expected_answer": "第一學期開始日是 **8 月 1 日 (五)**，結束日是 **115 年 1 月 31 日 (六)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_078", "question": "114學年度的國慶日連假或補假安排是？", "expected_answer": "國慶日當天 **10 月 10 日 (五)** 放假。", "category": "其他", "difficulty": "medium"}
+{"id": "q_079", "question": "114學年度的寒假是什麼時候開始？", "expected_answer": "寒假開始日期是 **115 年 1 月 12 日 (一)**。", "category": "其他", "difficulty": "easy"}
+{"id": "q_080", "question": "115 學年度的碩士班入學考試是在哪一天舉行？", "expected_answer": "115 學年度碩士班入學考試在 **3 月 6 日 (五)** 舉行。", "category": "其他", "difficulty": "medium"}
+{"id": "q_081", "question": "114學年度第二學期**轉系申請**的實際期間是哪幾天？為什麼會修改？", "expected_answer": "轉系申請時間修改為 **5 月 4 日 (一) 至 5 月 11 日 (一)**，因為 **5 月 1 日勞動節為國定假日**而修改。", "category": "轉系/學籍", "difficulty": "medium"}
+{"id": "q_082", "question": "114學年度第一學期的「期中退選」申請期間是哪幾天？", "expected_answer": "期中退選申請期間為 **11 月 3 日 (一) 至 11 月 14 日 (五)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_083", "question": "114 學年度第一學期的「期中預警名單」會在哪段期間上網登錄？", "expected_answer": "登錄期間為 **10 月 20 日 (一) 至 11 月 14 日 (五)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_084", "question": "115 年春季學期有哪些天數是國定假日導致的連假？", "expected_answer": "有 **2 月 28 日**和平紀念日放假，逢例假日 **2 月 27 日補假一日**；以及 **4 月 4 日**婦幼節放假，**4 月 5 日**清明節放假，皆逢例假日故 **4 月 3 日及 4 月 6 日各補假一日**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_085", "question": "114 學年度第一學期的彈性教學週是哪兩週？", "expected_answer": "彈性教學週是 **12 月 29 日 (一) 至 115 年 1 月 11 日 (日)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_086", "question": "114 學年度的**行憲紀念日**是哪一天放假？", "expected_answer": "行憲紀念日放假日期是 **12 月 25 日 (四)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_087", "question": "114 學年度第二學期 (春季學期) 的開學日是什麼時候？", "expected_answer": "第二學期開學日 (上課開始) 是 **115 年 2 月 23 日 (一)**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_088", "question": "數位教學課程的教學成果 (如教材、評量、上課紀錄) 至少需要保存幾年？", "expected_answer": "應至少**保存 5 年**，供日後成績查詢、教學評鑑或接受訪視時之依據。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_089", "question": "老師一學期限開設的數位教學課程數量有限制嗎？如果課程是實作課會優先開實體還是數位？", "expected_answer": "教師**每學期限開設二門**數位教學課程，且**實作課程應優先考量開設實體課程**。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_090", "question": "如果老師要在網路大學 (TronClass) 上開數位課程，需要在哪一個會議前提出「數位教學計畫大綱」？", "expected_answer": "授課教師應於**前一學期**提出「數位教學計畫大綱」，並需經遠距教學課程推動委員會、**校課程委員會**及**教務會議**通過後始得開授。", "category": "課程/修課", "difficulty": "hard"}
+{"id": "q_091", "question": "學生如果需要申請「學分抵免」，應該聯繫教務處的哪個組別？", "expected_answer": "應聯繫**註冊課務組**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_092", "question": "如果學生有兵役緩徵的問題，應該找哪個單位處理？", "expected_answer": "應聯繫**軍訓室**。", "category": "其他", "difficulty": "medium"}
+{"id": "q_093", "question": "資訊工程學系的系辦公室是在哪棟大樓哪一室？主要負責人是誰？", "expected_answer": "系辦公室在**電機大樓 406 室 (A3-406)**，主要負責人是**邱麗娟系務助理**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_094", "question": "我想要申請寒假轉學考，需要聯繫註冊課務組的哪一位承辦人？分機是多少？", "expected_answer": "應聯繫**黃斯薇小姐**，分機號碼是 **6057**。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_095", "question": "如果我對資工系的 IEET 工程教育認證細節有興趣，可以在系網頁的哪個大項下找到相關資訊？", "expected_answer": "可以在系網頁的「**IEET 工程認證**」大項下找到。", "category": "其他", "difficulty": "hard"}
+{"id": "q_096", "question": "專任師資中，哪位教授目前擔任國際處境外生輔導組主任？", "expected_answer": "**鄭穎懋副教授** 擔任國際處境外生輔導組主任。", "category": "課程/師資", "difficulty": "medium"}
+{"id": "q_097", "question": "彈性教學週的課程活動，如果安排在第 17-18 週進行，有什麼限制？", "expected_answer": "若於第 17-18 週進行，則**不能實體上課**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_098", "question": "114 學年度第一學期的選課初選是從什麼時候開始和結束？", "expected_answer": "初選從 **8 月 7 日 (四) 開始**，**9 月 5 日 (五) 結束**。", "category": "課程/修課", "difficulty": "medium"}
+{"id": "q_099", "question": "申請碩士雙聯學位時，如果我申請的是碩士雙聯學位，需要上傳大學歷年成績單嗎？", "expected_answer": "是的，如申請碩士雙聯學位，須將**大學歷年成績單 (英文版) 合併上傳**。", "category": "學習與生涯", "difficulty": "medium"}
+{"id": "q_100", "question": "請問本校的 24 小時緊急聯絡電話（校安專線）是多少？", "expected_answer": "校安專線是 **(02) 2585-0164**，但此號碼**無總機功能**。", "category": "學生生活/行政", "difficulty": "medium"}
