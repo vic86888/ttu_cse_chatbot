@@ -1,7 +1,43 @@
+# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import ssl
+from requests.adapters import HTTPAdapter
+from urllib3 import PoolManager
+
+# ==============================
+#  SSL：寬鬆驗證（保留 CA/hostname，比預設鬆）
+# ==============================
+
+class NonStrictTLSAdapter(HTTPAdapter):
+    """
+    使用較寬鬆的 X.509 驗證：
+    - 保留一般 CA 驗證與主機名稱比對
+    - 關閉 VERIFY_X509_STRICT（對某些舊憑證比較友善）
+    """
+
+    def init_poolmanager(self, connections, maxsize, block=False, **kwargs):
+        ctx = ssl.create_default_context()
+        # 在較新版本 Python/OpenSSL 下才有 verify_flags / VERIFY_X509_STRICT
+        if hasattr(ctx, "verify_flags") and hasattr(ssl, "VERIFY_X509_STRICT"):
+            ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT
+        kwargs["ssl_context"] = ctx
+        self.poolmanager = PoolManager(
+            num_pools=connections,
+            maxsize=maxsize,
+            block=block,
+            **kwargs,
+        )
+
+# 全域共用 session（所有 HTTPS 都套用上面的 adapter）
+session = requests.Session()
+session.headers.update({
+    "User-Agent": "Mozilla/5.0 (compatible; ttu-contact-crawler/1.0)"
+})
+session.mount("https://", NonStrictTLSAdapter())
+
 
 def main():
     # 定義 JSON 檔案位置(專案根目錄的 data 資料夾)
@@ -17,7 +53,10 @@ def main():
     source_url = "https://recruit.ttu.edu.tw/p/412-1068-2684.php?Lang=zh-tw#start-C"
     speech_announcement_url = source_url
 
-    res = requests.get(speech_announcement_url)
+    # ★ 用寬鬆驗證的 session 來抓
+    res = session.get(speech_announcement_url, timeout=10)
+    res.raise_for_status()
+
     soup = BeautifulSoup(res.text, 'html.parser')
     all_text1 = []
     all_text2 = []
@@ -25,7 +64,7 @@ def main():
     
     for table in soup.find_all("table"):
         # 爬取「項目」相關表格
-        data = table.find_all('th',string = '項目') 
+        data = table.find_all('th', string='項目') 
         if data:
             td = table.find_all('td')
             if td:
@@ -33,7 +72,7 @@ def main():
                     all_text1.append(text.get_text(strip=True))
 
         # 爬取「業務項目」相關表格
-        data = table.find_all('th',string = '業務項目')
+        data = table.find_all('th', string='業務項目')
         if data:
             td = table.find_all('td')
             if td:
@@ -55,14 +94,16 @@ def main():
                         cell_texts = [text for text in cell_texts if text]
                         department_contacts.extend(cell_texts)
 
+    # === 招生組內部聯絡資訊（項目 / 承辦人 / 分機） ===
     for i in range(0, len(all_text1), 3):  # 步進3
+        if i + 2 >= len(all_text1):
+            break
         item = all_text1[i]            # 事項
         people = all_text1[i + 1]      # 負責人
-        num = all_text1[i + 2]         # 電話
+        num = all_text1[i + 2]         # 電話分機
         full_phone = f"(02)2182-2928 分機 {num}"
         print(f"事項: {item}, 負責人: {people},  聯絡電話: {full_phone}")
         
-        # 建立聯絡資訊字典
         contact_info = {
             "辦理項目": item,
             "承辦人": people,
@@ -77,14 +118,16 @@ def main():
         else:
             contact_list.append(contact_info)
 
+    # === 業務項目表格（業務項目 / 承辦人 / 分機） ===
     for i in range(0, len(all_text2), 3):  # 步進3
-        people = all_text2[i]            
-        item = all_text2[i + 1]      
+        if i + 2 >= len(all_text2):
+            break
+        people = all_text2[i]
+        item = all_text2[i + 1]
         num = all_text2[i + 2]         # 電話
         full_phone = f"(02)2182-2928 分機 {num}"
         print(f"事項: {item}, 負責人: {people},  聯絡電話: {full_phone}")
         
-        # 建立聯絡資訊字典
         contact_info = {
             "辦理項目": item,
             "承辦人": people,
@@ -92,14 +135,13 @@ def main():
             "資料來源": source_url
         }
         
-        # 檢查是否已存在相同項目,若存在則更新,否則新增
         existing = next((c for c in contact_list if c.get("辦理項目") == item), None)
         if existing:
             existing.update(contact_info)
         else:
             contact_list.append(contact_info)
 
-    # 處理學系聯絡資訊
+    # === 學系聯絡資訊 ===
     print("\n" + "="*50)
     print("處理學系聯絡資訊")
     print("="*50)
@@ -128,7 +170,6 @@ def main():
                     full_phone = f"(02)2182-2928 分機 {extension}"
                     print(f"學系: {current_department}, 聯絡人員: {person}, 分機: {full_phone}")
                     
-                    # 建立學系聯絡資訊字典
                     dept_info = {
                         "學系": current_department,
                         "聯絡人員": person,
@@ -136,14 +177,13 @@ def main():
                         "資料來源": source_url
                     }
                     
-                    # 加入聯絡資訊列表
                     contact_list.append(dept_info)
                     i += 2  # 跳過聯絡人員和分機
                     continue
         
         i += 1
 
-    # 將資料寫入 JSON 檔案
+    # === 寫入 JSON ===
     try:
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(contact_list, f, ensure_ascii=False, indent=2)
@@ -153,5 +193,6 @@ def main():
     except Exception as e:
         print(f"寫入 JSON 檔案失敗: {e}")
         
+
 if __name__ == "__main__":
     main()
