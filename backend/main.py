@@ -131,21 +131,25 @@ def build_chain():
         "tags": ["chain", "rewrite"],
     })
 
-    # 2) RAG 用的 prompt
+    # 2) 提示詞
     prompt = ChatPromptTemplate.from_messages([
-        (
-            "system",
-            "現在時間：{now}\n\n"
-            "目前學期：{acad_term}\n\n"
-            "你是大同大學資工系問答機器人。請根據系統提供的資訊（如現在時間、目前學期）以及與問題相關的文件內容回答問題。"
-            "回答結尾需附上回答時參考資料的來源網址，若沒有則附上來源文件。"
-            "若無法從系統提供的資訊（如現在時間、目前學期）以及文件中找到答案，請清楚說明。請以繁體中文作答。\n\n"
-            "{context}"
-        ),
-        ("human", "{input}"),
-    ]).with_config({
-        "tags": ["chain", "stuff"],
-    })
+        ("system",
+        "現在時間：{now}\n\n"
+        "目前學期：{acad_term}\n\n"
+        "學年等於民國紀年,114學年就是2025年。"
+        "你是大同大學資工系問答機器人。\n"
+        "你會得到跟問題相關的文件以及系統提供的資訊（如現在時間、目前學期）,你只依據提供的文件內容回答問題,"
+        "回答結尾需附上回答時參考資料的來源網址，若沒有則附上來源文件。"
+        "若無法從文件中找到答案,請清楚說明。\n\n"
+        "請以繁體中文作答，並使用 Markdown 格式來組織答案：\n"
+        "- 使用 ## 二級標題來分隔不同主題\n"
+        "- 使用列表 (- 或 1.) 來呈現多個項目\n"
+        "- 使用 **粗體** 來強調重要資訊\n"
+        "- 使用程式碼區塊 ```語言 來展示程式碼\n"
+        "- 使用表格來呈現結構化資料\n\n"
+        "{context}"),
+        ("human", "{input}")
+    ])
 
     # 3) combine documents chain
     doc_chain = create_stuff_documents_chain(
@@ -205,6 +209,15 @@ def extract_clean_query(text: str) -> str:
     return lines[-1]
 
 
+def remove_thinking_tags(text: str) -> str:
+    """從回應文本中移除模型的思考過程（<think>...</think> 標籤）"""
+    if not text:
+        return ""
+    # 移除所有 <think>...</think> 標籤及其內容
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+    return text
+
+
 @traceable(name="API-Ask", run_type="chain", metadata={"app": "campus_rag_api"})
 def ask(chain_dict: dict, q: str):
     """執行查詢：先用 LLM 做時間改寫，再丟給 RAG"""
@@ -245,13 +258,20 @@ def ask(chain_dict: dict, q: str):
     print(f"[DEBUG] rewritten query: {rewritten_q!r}")
 
     # 再把改寫後的 query 丟進 RAG
-    return rag_chain.invoke({
+    result = rag_chain.invoke({
         "input": rewritten_q,
         "now": now_str,
         "acad_term": acad_term,
         "original_query": q,
         "rewritten_query": rewritten_q,
     })
+
+    # ⭐⭐ 在這裡把 <think>...</think> 移掉，只留下真正要顯示的回答
+    raw_answer = result.get("answer", "")
+    clean_answer = remove_thinking_tags(raw_answer)
+    result["answer"] = clean_answer
+
+    return result
 
 
 # ========= FastAPI App & Lifespan =========
