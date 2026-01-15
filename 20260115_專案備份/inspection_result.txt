@@ -1,0 +1,1396 @@
+=== 所有 collections ===
+[Collection(name=campus_rag)]
+
+=== 連線到目標 collection ===
+Collection(name=campus_rag)
+
+=== 筆數（count） ===
+771
+
+=== 指定你想看的來源檔名（不直接取全文） ===
+符合來源「data_qwen/ttu_cse_news.sorted.json」的切塊數：125
+content_type 分布： {'news': 125}
+
+=== 前 125 筆預覽（每段前 500 字）===
+
+#01
+ID        : fa3edfcaab747fbaa06b3d4b93907943fa7996aa
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【中華資訊與科技教育學會】VEX 教育型機器人AIM × IQ工作坊
+Date      : 2026-01-07
+Idx       : 1
+Chars     : 442
+Preview   : 【中華資訊與科技教育學會】VEX 教育型機器人AIM × IQ工作坊於2026年1月7日發布，活動於2026年2月10日（二）上午9:00-12:00在臺灣大學綜合體育館247視聽教室舉行，適合高中生、大專院校生、教師、教育工作者、家長及初學者參與。活動以VEX教育型機器人為主軸，結合AIM教具系統與VEX IQ平台，透過模組化組裝、基礎控制與任務式體驗，培養STEM素養、運算思維與問題解決能力。VEX AIM為4–12年級設計的編碼機器人，具備全向驅動底盤與AI視覺感測器，支援Blocks/Python程式設計；VEX IQ為小學至國中生設計的模組化平台，採用快扣式結構與智慧元件，可進行Block/Python/C++編程並參與STEM競賽。活動需自備筆電或平板，報名連結為https://docs.google.com/forms/d/e/1FAIpQLSeHJQh5nifuv_fmKKKSQ7GG4IDCERA197zPRmJhn6I2fgjHAQ/viewform。
+--------------------------------------------------------------------------------
+#02
+ID        : 97953229abe58938b00b2a1589e21e9fe5cbffda
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 國立陽明交通大學「生成式AI的合法應用」及「半導體」系列線上課程，開放免費報名
+Date      : 2025-12-26
+Idx       : 2
+Chars     : 652
+Preview   : 國立陽明交通大學推出「生成式AI的合法應用」及「半導體」系列線上課程，開放免費報名。課程涵蓋生成式AI與著作權法律風險、科技倫理，以及半導體產業供應鏈管理、創新領導策略等主題。修課方式需先至ewant育網註冊帳號，免費修習「生成式AI的合法應用」課程（報名網址：https://reurl.cc/pKrEme），並於FutureLearn平台修習半導體系列課程，包含「Introduction to the Semiconductor Ecosystem」（https://reurl.cc/Vm0GD5）、「Mastering Semiconductor Supply Chains」（https://reurl.cc/jmQX1Z）、「Strategic Innovation and Leadership in the Semiconductor Industry」（https://reurl.cc/Vm0G15）、「Using Creative Problem Solving for Innovation Management in High-Tech Industry」（https:/…
+--------------------------------------------------------------------------------
+#03
+ID        : 80303e6a8bfac56dab85f4b1388d491e344b1acc
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度資工系專題作品競賽暨成果展--得獎名單
+Date      : 2025-12-18
+Idx       : 3
+Chars     : 217
+Preview   : 114學年度資工系專題作品競賽暨成果展--得獎名單為最新消息/活動，發布時間為2025-12-18，相關資訊請參閱https://cse.ttu.edu.tw/p/406-1058-41029,r61.php?Lang=zh-tw。文章提及本功能需使用支援JavaScript之瀏覽器才能正常操作，並提供得獎名單內容。資料來源：data_qwen/ttu_cse_news.sorted.json，文章ID為41012912e663。
+--------------------------------------------------------------------------------
+#04
+ID        : d129a26003193a3365c79506993b23cae34d6848
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114 學年度資工系-專題作品競賽暨成果展流程及攤位位置圖
+Date      : 2025-12-09
+Idx       : 4
+Chars     : 199
+Preview   : 114學年度資工系專題作品競賽暨成果展流程及攤位位置圖為最新消息/活動，發布於2025-12-09，詳見附件，相關資訊請參閱https://cse.ttu.edu.tw/p/406-1058-40908,r61.php?Lang=zh-tw。資料來源檔案為data_qwen/ttu_cse_news.sorted.json，文章ID為fce09991d8e1，發布時間戳記為1765238400。
+--------------------------------------------------------------------------------
+#05
+ID        : f972208ed5fb856465605d0f82af91b5f4faf42a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【Google 官方】學生專屬福利：價值 NT$ 7800 的 AI Pro + 2TB 空間一年免費 (12/9 截止)
+Date      : 2025-11-26
+Idx       : 5
+Chars     : 393
+Preview   : 【Google 官方】學生專屬福利：價值 NT$ 7800 的 AI Pro + 2TB 空間一年免費 (12/9 截止)。最新消息/活動於 2025-11-26 發布，申請連結（12/9 截止）：goo.gle/students-promo-tw。免費方案包含最先進的 Gemini 3 Pro 模型（上傳圖片無上限、分析講義圖片、Deep Research 統整網路資訊生成報告）、Gemini 版 Google 應用程式（支援 Gmail、文件、試算表、簡報及 Meet 的 AI 功能）、NotebookLM 學習工具（影片/語音摘要、筆記本來源數量增至 5 倍），以及 2TB 儲存空間（存放報告、專案、作品集）。務必把握 12/9 截止不展延！（資料來源：https://cse.ttu.edu.tw/p/406-1058-40750,r61.php?Lang=zh-tw）
+--------------------------------------------------------------------------------
+#06
+ID        : 3ba0db8ab511828c209bf92ff7fda44a934f681a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 法律百科網站
+Date      : 2025-11-24
+Idx       : 6
+Chars     : 237
+Preview   : 法律百科網站於2025年11月24日發布最新消息/活動，由馬維麟博士發起的公益計畫推出性別暴力專題《讓花在逆風中盛開：面對性別暴力，我們不再沉默》，並同步推出線上解謎遊戲《最後3分鐘：揭開合成性影像的證據拼圖》，透過互動形式提升法律知識普及。活動配合法律百科網站上線7週年，提供活動海報電子檔及活動網址https://www.legis-pedia.com/events/bloom-in-headwinds，無廣告分潤或營利行為，累計233位專業作者完成千篇法律普及文章。
+--------------------------------------------------------------------------------
+#07
+ID        : e7395b97424482bb66eb1aa7f6678adca1ba1387
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度資工系專題作品競賽暨成果展～12/3(三)中午收件截止
+Date      : 2025-11-22
+Idx       : 7
+Chars     : 449
+Preview   : 114學年度資訊工程學系專題作品競賽暨成果展，活動時間為114年12月10日（三）13:00~17:00，競賽地點為404電腦教室，收件截止日為12月3日（三）12:00前。繳交文件包含專題系展申請單（需指導教授手寫簽名，下載連結：https://cse.ttu.edu.tw/var/file/58/1058/img/104/308305095.doc）、專題作品海報（A1尺寸，左上角需放置大同大學校徽，頂端標註「114學年度資訊工程學系專題作品暨海報競賽」，字體至少48且粗體，需列明全體成員及指導教授姓名）及專題影片（YouTube私人影片，約5分鐘）。交件資料連結：https://forms.gle/osaZeBHpv5ioyjYx6，大同大學校徽連結：https://ttu.edu.tw/p/404-1000-8075.php?Lang=zh-tw。更多資訊請參訪https://cse.ttu.edu.tw/p/406-1058-40679,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#08
+ID        : bc39f36fe0c060835a28cbd99651444b1d1a79d8
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2026年寒假資訊課程
+Date      : 2025-11-21
+Idx       : 9
+Chars     : 321
+Preview   : 2026年寒假資訊課程由臺灣大學資訊工程學系舉辦，分為週一至週五上午班、下午班及兩日全天班，第1梯次為115年1月5日至9日，第2梯次1月12日至23日，第3梯次1月26日至2月6日，上課地點為臺灣大學資訊工程學系系館教室。報名時間為即日起至開課前一週，採網路報名，填寫並繳款後需回傳繳費證明至臺灣大學課程官網信箱。費用方面，30小時課程原價每生新臺幣6,500元，兩日全天班原價4,500元，早鳥價期限前報名可折抵1,000元，符合其他優惠者可享雙重折扣。課程資訊及報名可GOOGLE搜尋「臺大資訊系統訓練班」，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-40683,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#09
+ID        : 4ba43c3de46ea4c11864638d19e6f9102fea28ef
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 Cyberspace 聯合研討會 數位革新時代：AI創新經濟與數位信任生態系
+Date      : 2025-11-21
+Idx       : 8
+Chars     : 472
+Preview   : 2025 Cyberspace 聯合研討會「數位革新時代：AI創新經濟與數位信任生態系」於2025年11月22日（星期六）舉行，地點為大同大學尚志教育研究館B205會議室（報到地點：尚志教育研究館2樓），研討會網址為https://sites.google.com/view/cyberspace2025/home。主題包含打詐數位偵查、數位信任與創新經濟、資通安全與網路安全、物聯網資安與智慧應用資安、數位發展的前瞻性與價值性、數位政府與資料治理、數位產業與資通安全、人工智慧應用與安全、數位鑑識與數位調查、數位轉型與資通安全治理、永續發展目標（SDG）與資通安全等11項議題，截止報名日期為2025年11月21日（星期五）。主辦單位為大同大學（TTU）、國立臺北科技大學（NTUT）、台灣數位鑑識發展協會（ACFD）及全球網際空間管理暨產業發展協會（AGCMID），歡迎學者、專家、政府與企業實務工作者參與。更多資訊請參訪https://cse.ttu.edu.tw/p/406-1058-40678,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#10
+ID        : 63a3b9388dde6f72d2c3100866b7241d727c1182
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 工程學院舉辦「產業脈動與個人資源資本建立-就業講座」
+Date      : 2025-11-20
+Idx       : 10
+Chars     : 328
+Preview   : 工程學院舉辦「產業脈動與個人資源資本建立-就業講座」，分類為最新消息/活動，發布時間為2025-11-20。活動包含四場講座：11/24李根國博士（啟碁科技前副總）談科技產業趨勢與人才養成；12/1戴正吳博士（夏普前社長）解析全球製造競爭力與產業領導視野；12/8張致恩教授（南佛羅里達大學）探討國際研究趨勢與全球職涯策略；12/15大同公司與英業達公司分享產碩專班說明與企業人才需求。活動地點為電機大樓105，時間為12:30～14:00，報名連結：https://forms.gle/CQApS6CkLX7h6Bmp9。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-40668,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#11
+ID        : 51fefee4f78bcd1b2b33951a3a5697217eb72e08
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「土木科技展暨國際研討會」場次7至10系列活動
+Date      : 2025-11-18
+Idx       : 11
+Chars     : 471
+Preview   : 「土木科技展暨國際研討會」場次7至10系列活動於2025年11月18日發布，由淡江大學工學院工程資訊模擬與管理研究中心主辦。活動邀請Mirosław Skibniewski（美國馬里蘭大學）、Mark Jolly（英國克蘭菲爾德大學）、服部崇（日本京都大學）、Dr. G. Anusha（印度KPR工程與科技學院）等4位國際大師進行專題演講，論壇全程以英語進行。實體席次僅30名，另開放線上參與，多人於同一地點出席可共享註冊費，適合全班或研究室共同參與，並支持四場次由不同班級或人員輪流線上參加。5人以上團體可洽詢優惠事宜，報名網址為https://www.constructionlaw.tku.edu.tw/regi/，個別場次需選填「其他參與者」勾選。線上或實體參與者若欲與國際大師後續交流，可於報名欄備註說明，主辦單位將另安排。活動旨在拓展學生國際視野，並協助有意海外升學者了解國際工程學術與實務趨勢。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-40598,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#12
+ID        : a5e42f44fa384d0824f1195ea27c58ff628ff35a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第26屆旺宏金矽獎報名至2026/1/12下午三點
+Date      : 2025-11-18
+Idx       : 13
+Chars     : 265
+Preview   : 第26屆旺宏金矽獎報名至2026年1月12日下午3點，由旺宏電子及旺宏教育基金會舉辦的半導體設計與應用大賽即日起開放報名。該競賽自創辦以來累計吸引近6,000支隊伍、逾2萬名師生參與，歷屆共頒發9,000萬元獎學金。本屆提供376萬元總獎金，鼓勵科技創新與實踐，活動詳情請參閱官方網站https://www.mxeduc.org.tw/SiliconAwards。相關訊息發布於2025年11月18日，活動網址：https://cse.ttu.edu.tw/p/406-1058-40584,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#13
+ID        : 4d41501f77ec7a889c12858ecb4a9dd6489cd043
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 中國信託招募企業實習生--履歷收件延長至11/26(三)前，聯合面談將於12/6(六) 舉辦
+Date      : 2025-11-18
+Idx       : 12
+Chars     : 339
+Preview   : 中國信託招募企業實習生--履歷收件延長至11/26(三)前，聯合面談將於12/6(六)舉辦，目前正招募資訊科技企業實習生，誠摯歡迎貴系優秀同學應徵！請同學們在11/14(五)前踴躍投遞履歷(附件)+在校成績單至中信人資信箱ba.hrbank36@ctbcbank.com。備註：面談名額有限，公司收到履歷將直接進行書審，可提醒學生請提早投遞履歷。履歷範本與詳細說明文件同步放置於雲端，可自行下載使用：https://drive.google.com/drive/folders/1ZUpwwKM9wc57V0IFQ6EZ14kpXdqQ7dUz。更多資訊請參閱https://cse.ttu.edu.tw/p/406-1058-40409,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#14
+ID        : ba0d0b33ac350e68d521e7a14286ff03622a4548
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 數位訊號處理創思設計競賽
+Date      : 2025-11-17
+Idx       : 14
+Chars     : 312
+Preview   : 「數位訊號處理創思設計競賽」為最新消息/活動，於2025年11月17日發布，競賽於115年3月13日（星期五）於南臺科技大學辦理。活動分為一般大學與技職校院組別，包含Microchip數位訊號處理器應用組、國際組、軟體與嵌入式平台應用組、綠能與控制應用組、健康照護應用組等5組。各組第一名獎金新臺幣4萬元，第二名2萬元，第三名1萬元，佳作若干名；前三名頒發獎牌及教育部名義獎狀，佳作頒發大會名義獎狀。詳細辦法與報名方式請參見網站（https://dspcdc.ee.stust.edu.tw/）。資料來源：https://cse.ttu.edu.tw/p/406-1058-40581,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#15
+ID        : 49660b9bfeecb2649aea2481af3f71bb3bd4937f
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025華仁講座Agentic LLMs及智慧計算研討會
+Date      : 2025-11-13
+Idx       : 15
+Chars     : 383
+Preview   : 2025華仁講座Agentic LLMs及智慧計算研討會為最新消息/活動，發布時間為2025-11-13，活動日期及地點為：114年11月18日（二）8:55-17:00於國立陽明交通大學光復校區電子資訊研究大樓一樓國際會議廳；114年11月19日（三）9:10-12:00於國立陽明交通大學光復校區工程三館329室。參加對象為全國公私立大專院校資工、通訊網路、人工智慧相關科系師生、法人研究單位及新竹科學園區等相關領域或研發人員。活動報名方式為線上註冊免費報名，網址為https://reurl.cc/aM9Da3。聯絡方式為資訊工程學系邱小姐，電話（03）5712121分機55735，或電子郵件hsunyc@nycu.edu.tw。詳情請參見https://cse.ttu.edu.tw/p/406-1058-40544,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#16
+ID        : 1c79fe0c2a8c431d3736b2312c2e5cba9ba2a064
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 經濟部AI新秀_AIOT與大數據產業應用專班報名持續招生中★招生條件已開放為畢業生即可報名
+Date      : 2025-11-12
+Idx       : 17
+Chars     : 162
+Preview   : 經濟部AI新秀_AIOT與大數據產業應用專班報名持續招生中★招生條件已開放為畢業生即可報名，屬最新消息/活動類別，發布於2025-11-12，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-40520,r61.php?Lang=zh-tw。本專班招生條件已調整為畢業生即可報名，持續開放報名中。
+--------------------------------------------------------------------------------
+#17
+ID        : 54f440535f91f4b7d9565b576e89d349dc80b060
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2026年工程科技應用研討會徵求論文
+Date      : 2025-11-12
+Idx       : 16
+Chars     : 362
+Preview   : 2026年工程科技应用研讨会征求论文，分类为最新消息/活动，发布时间为2025-11-12。重要日程包括：2026年02月11日（星期三）论文全文截稿，2026年03月09日（星期一）论文接受通知，2026年03月27日（星期五）研讨会。投稿方式需以电子档（Word/PDF）提交，4至6页为限，格式规定及下载链接为http：//eng.tpcu.edu.tw，投稿邮件需注明「投稿—2026年工程科技应用研讨会」，电子档命名格式为「第一作者姓名—论文名称」。投稿联系人：杨秀丰老师，电话（02）2892-7154分机8001，地址台北市北投区学园路2号，邮箱q8000@tpcu.edu.tw。资料来源：https://cse.ttu.edu.tw/p/406-1058-40519,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#18
+ID        : 98e402fddb34e6d239ce1e42e177e6a34debfe1a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2026年第二十二屆全國電子設計創意競賽
+Date      : 2025-11-11
+Idx       : 18
+Chars     : 240
+Preview   : 2026年第二十二屆全國電子設計創意競賽資訊公告於國立高雄科技大學電子工程系（建工校區）網站（網址：ec.nkust.edu.tw），報名資格限在學大專校院生及高中職生，每隊至多8人。報名期間自即日起至115年3月2日下午16時止，逾期不接受補件且視為不符資格。報名資料需填寫確實，成功後不接受變更或重複報名。入圍複賽名單以本校電子系網站公告為準。活動詳情請參閱https://cse.ttu.edu.tw/p/406-1058-40502,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#19
+ID        : 7209776f313dd76db54f4345712842bc29f4ae2b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 資訊工程學系115學年度碩士班甄試口試時間表
+Date      : 2025-11-10
+Idx       : 19
+Chars     : 137
+Preview   : 資訊工程學系115學年度碩士班甄試口試時間表為最新消息/活動，發布時間為2025-11-10，請攜帶學生證或身分證以供查驗，報到細節詳如附件。相關資訊請參閱：https://cse.ttu.edu.tw/p/406-1058-40418,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#20
+ID        : 95ec87214a9924eca5e5bb9dac64f03464b65441
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 工程學院優秀研究生獎學金即日起開始申請，申請至11/14止
+Date      : 2025-11-05
+Idx       : 20
+Chars     : 174
+Preview   : 工程學院優秀研究生獎學金即日起開始申請，申請至11/14止，申請資訊已公告於工程學院網頁，公告連結：https://coe.ttu.edu.tw/p/412-1028-2816.php。該消息發布於2025-11-05，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-40364,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#21
+ID        : de27c67ca4bee0a5d710557fe41bf2871bca9ef4
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 高等教育國際論壇暨成果展
+Date      : 2025-10-29
+Idx       : 22
+Chars     : 647
+Preview   : 「高等教育國際論壇暨成果展」為最新消息/活動，於2025年10月29日發布。活動時間為114年11月8日（星期六）上午10時至下午5時，地點於臺灣大學校總區綜合教學館臺大講堂、R201、R202、R202、R301、R302。合辦單位包括精準健康產業跨領域人才培育計畫、共同教育中心、教務處數位學習中心、國家重點領域國際合作聯盟創新課程與人才培育計畫辦公室。論壇包含5場演講及1場成果展，主題含「The Most Disrupted Industry: Practical Strategies for AI-Enabled Higher Education」、「AI in Higher Education」、「跨域人才培育」等。成果展為本校未來大學計畫及XR跨域成果展。活動說明含主題演講由Digital Education Council(DEC)主席Daniel A. Bielik主講，下午分為2場平行場次：AI in Higher Education含2場座談，分別由新加坡南洋理工大學Seng Chee Tan副院長、中央大學蔡宗翰教授及本校統計教學中心陳彥賓副主任等分享；跨域人才培育…
+--------------------------------------------------------------------------------
+#22
+ID        : 216a801b681bc1e378e352773757fe5d27a2fe58
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年土木科技展及國際研討會
+Date      : 2025-10-29
+Idx       : 21
+Chars     : 541
+Preview   : 2025年土木科技展及國際研討會由BIM中心主辦，邀請美國、英國、西班牙、波蘭、日本、馬來西亞及印度等國家頂尖大學教授及學者共同籌備，聚焦「土木科技 × 永續 × 多元、平等與包容」、「促進民間參與公共建設及國際夥伴關係」、「AI、AR/VR、IoT、數位雙生在職業安全與風險管理之應用」、「工程法律 × 工程技術鑑定」等主題，並開放投稿與報名。活動請轉知土木、建築、水環、機械、電機、資工等科系，中文資訊網址：https://www.constructionlaw.tku.edu.tw/civiltech-tamkong，英文資訊網址：https://www.constructionlaw.tku.edu.tw/en/2025-civiltech-expo/，報名網址：https://www.constructionlaw.tku.edu.tw/en/civiltechexporegistration/，投稿網址：https://www.constructionlaw.tku.edu.tw/paper-submission-2025/。更多資訊請參閱：https://cse.ttu.ed…
+--------------------------------------------------------------------------------
+#23
+ID        : c1c24e2e740cdb5bf2eafeba456e89b31a751c35
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「2025年全民e化資訊運動會」秋季賽競賽活動
+Date      : 2025-10-21
+Idx       : 23
+Chars     : 246
+Preview   : 「2025年全民e化資訊運動會」秋季賽競賽活動由中華民國電腦教育發展協會主辦，宏國德霖科技大學協助承辦，於114年11月15日（週六）在宏國德霖科技大學舉行現場賽，11月16日（週日）進行線上賽。活動提供青少年及社會大眾資訊技能即測即評交流機會，相關訊息請至活動網站查詢（http://www.testcenter.org.tw）。發布時間為2025-10-21，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-40123,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#24
+ID        : 61a5c9b4f059d889e625d2746ee4fbc520ee01cf
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「AI-RAN與O-RAN開放式基地台實作工作坊」
+Date      : 2025-10-21
+Idx       : 24
+Chars     : 290
+Preview   : 「AI-RAN與O-RAN開放式基地台實作工作坊」為最新消息/活動，發布時間為2025-10-21，活動日期為114年10月28日（星期二）09:00~16:30，地點於國立陽明交通大學交大校區工程四館8樓816室（新竹市東區大學路1001號）。參加對象為全國公私立大專院校資工、通訊網路及電機相關科系師生、法人研究單位及新竹科學園區研發人員，報名方式為線上免費報名，詳請參見https://forms.gle/5S3MtGXrZhipCrHJ7。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-40124,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#25
+ID        : 52082fdc4f9204d4b60f84247abbbcdd9a97a517
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 Cyberspace 聯合研討會-數位革新時代：AI創新經濟與數位信任生態系
+Date      : 2025-10-20
+Idx       : 25
+Chars     : 319
+Preview   : 2025 Cyberspace 聯合研討會-數位革新時代：AI創新經濟與數位信任生態系，分類為最新消息/活動，發布時間為2025年10月20日，活動包含第二十七屆「網際空間：資安、犯罪與法律社會」學術暨實務研討會暨第十六屆「智慧生活與數位環境」產學聯合研討會，研討會網址為https://sites.google.com/view/cyberspace2025/home，報名表單連結為https://forms.gle/d6L5yh9NK6R68Na78，報名截止日期為2025年11月15日（星期六）。更多資訊請參訪https://cse.ttu.edu.tw/p/406-1058-40100,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#26
+ID        : 0b968b2086b57de845b85e0dcf5f33d7e2349341
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「2025 Vibe Coding青年放輕松」活動
+Date      : 2025-10-15
+Idx       : 26
+Chars     : 603
+Preview   : 「2025 Vibe Coding青年放輕松」活動以「青年超潮又Chill服務！」為主題，採用Vibe Coding形式，鼓勵參賽者利用AI協作工具快速生成程式，重視創意發揮。活動於114年12月5日14時至16時30分舉行，地點為本校推廣教育部大新館圓型演講廳。參加資格不限程式開發程度，凡對AI程式開發有興趣者可組1至5人團隊報名，費用全免，完成提交作品即獲數位參賽證明。主題分為交通觀光（「未來交通旅行，由你定義！」）及環境保育（「用你的酷行動，讓環境保育變得更Chill！」）二擇一方向。參賽辦法需線上報名，作品連結及Demo影片上傳至指定雲端，經篩選後12隊進行現場發表，每隊限提交1件作品。作品須使用Vibe Coding工具開發，具原創性，並附3分鐘Demo影片。報名截止114年11月10日，作品繳件截止11月21日。競賽獎勵：第一名3,000元、第二名2,000元、第三名1,000元及佳作三名。線上工作坊於11月11日14時至16時舉辦，講師為Denny Huang，報名費用350元，連結https://scedux.com/rdM4。競賽官網https://scedux.co…
+--------------------------------------------------------------------------------
+#27
+ID        : b836a1808ec527e107f2630d855b9a4d143f65d9
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 群益資訊部】大四～碩二實習生招募中
+Date      : 2025-10-15
+Idx       : 27
+Chars     : 201
+Preview   : 「群益資訊部】大四～碩二實習生招募中」為最新消息/活動，發布於2025年10月15日。群益金鼎證券資訊部現正招募資訊／金融相關科系大四至碩二同學（日夜不限），參與系統開發、系統維運或數據分析等領域的金融核心系統建置與維護實戰經驗。報名資格與相關資訊詳如附件，歡迎有興趣者踐履。資料來源：https://cse.ttu.edu.tw/p/406-1058-40031,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#28
+ID        : 9ff5eb4ceddc69c08533e710bf366ea1f3407b75
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 工程學院-研究生/學士生獎(助)學金 --延期至10/23截止
+Date      : 2025-10-13
+Idx       : 28
+Chars     : 183
+Preview   : 工程學院-研究生/學士生獎(助)學金 --延期至10/23截止，分類為最新消息/活動，發布時間為2025-10-13，申請至10/15截止，公告連結：https://coe.ttu.edu.tw/p/404-1028-39849.php，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-39982,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#29
+ID        : 80f69f526fca9c61e8fca8e933657f88f182ed28
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【IEEE Xplore 有獎徵答】即日起至 11/15，答題抽 iPad mini 7、AirPods 4、電子禮券
+Date      : 2025-10-12
+Idx       : 29
+Chars     : 593
+Preview   : 【IEEE Xplore 有獎徵答】即日起至 2025 年 11 月 15 日，IEEE 舉辦「IEEE Xplore 有獎徵答：AI芯挑戰」活動，邀請全台大專校院訂閱 IEEE 電子資源之教職員工生參與，活動結合 AI 與半導體十大主題，透過 IEEE Xplore 平台搜尋文獻作答，可抽 iPad mini 7、AirPods 4 及電子禮券（100–500 元）。活動對象為全台訂閱 IEEE 電子資源之大專校院教職員工生，參與方式為於活動期間進入答題網頁，依提示搜尋文獻並作答。獎項分為知識探索獎（答題即抽 AirPods 4）、菁英知識王（答對全部題目抽 iPad mini 7）、LINE 好友終極獎（成爲 Hinton Info Line 好友並回傳答題 Email 抽電子禮券）。活動連結：https://docs.google.com/forms/d/e/1FAIpQLSf6xYnpZHYZVf-ArUOKIkQfqKEDXzEMeD6_XK9V8uEVkbBrEA/viewform，活動說明頁面：https://hintoninfo.my.canva.site/2025-i…
+--------------------------------------------------------------------------------
+#30
+ID        : 647f79665b52a2974f642cdf99d7a382778e74db
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「稅務Tempo趴 創意你來拍」租稅短影音創作競賽
+Date      : 2025-10-09
+Idx       : 30
+Chars     : 379
+Preview   : 「稅務Tempo趴 創意你來拍」租稅短影音創作競賽為新竹縣政府稅務局114年度租稅教育活動，活動期間為114年9月10日至114年11月14日（下午5時止）。參加對象為中華民國國民，個人或組隊（每隊最多5人）投稿，每隊限1件作品。作品需為30秒至90秒直式短影音，含人聲及節奏配樂（如嘻哈、饒舌、數來寶等）。參賽者需至活動網站（https://tax-tempo.hearwoo.com/）登錄報名，提供作品連結及附件。獎項包含作品評選獎（第一名18,000元福利即享券、第二名15,000元、第三名10,000元、佳作5名各5,000元）及早鳥獎（114年10月13日前繳交符合規定作品，可獲200元福利即享券，限20名）。活動詳情請參見https://cse.ttu.edu.tw/p/406-1058-39938,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#31
+ID        : 11d5b7b489f9eccd207fa79d14e22c80ccbc2d6b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 工作坊－第3屆「Medical AI Workshop: Making AI Safe and Healthy (MASH)」
+Date      : 2025-10-07
+Idx       : 32
+Chars     : 411
+Preview   : 工作坊－第3屆「Medical AI Workshop: Making AI Safe and Healthy (MASH)」為最新消息/活動，發布時間為2025-10-07，由長庚大學智慧運算學院與人工智慧研究中心共同主辦，邀請醫學與人工智慧領域學者分享研究經驗，並同步公開徵求稿件及海報。活動於114年12月12日（週五）在華南銀行國際會議中心（台北市信義區松仁路123號）舉行，工作坊網頁含報名及投稿連結（https://sites.google.com/view/acml-2025-medical-ai-forum/home）。報名截止日期為114年11月30日，海報徵件需以英文PDF檔上傳，截稿日期為114年10月12日，審查結果於10月20日通知。聯絡窗口為長庚大學人工智慧研究中心劉素韻秘書，電話（03）211-8800分機3001，電子郵件aic@gap.cgu.edu.tw。更多資訊請參見活動網頁。
+--------------------------------------------------------------------------------
+#32
+ID        : f30c58935a8b4f343dd6a1ca490f9b5d646405ea
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「2025第37屆AERC亞洲機器人運動競技大賽－無人機項目專場」競賽
+Date      : 2025-10-07
+Idx       : 31
+Chars     : 325
+Preview   : 「2025第37屆AERC亞洲機器人運動競技大賽－無人機項目專場」競賽為最新消息/活動，發布時間為2025-10-07，參加對象為國內外社會人士、大專院校、高中職及國中小學之師生，歡迎踴躍參與。競賽規則、作品組別及錄取隊數等詳細資訊請參閱網站（http://www.aerc1988.com.tw），競賽辦法及比賽規則請逕上網查詢，報名截止日期為114年10月13日（週一）。聯絡方式為本校資訊工程系林世偉教師，電話：(02)2273-3567分機356，電子信箱: shihwei@mail.hdut.edu.tw。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-39892,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#33
+ID        : 6ed666c85cb77e41c87cb50b3de597b63a35a61d
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 Cyberspace 聯合研討會
+Date      : 2025-10-01
+Idx       : 33
+Chars     : 278
+Preview   : 2025 Cyberspace 聯合研討會於2025年10月1日發布，屬最新消息/活動類別，詳情請見https://cse.ttu.edu.tw/p/406-1058-39801,r61.php?Lang=zh-tw。活動邀請投稿文章，call for papers連結為https://sites.google.com/view/cyberspace2025/home，論文全文截稿日期原訂2025年9月26日（星期五），已延至2025年10月15日（星期三）。研討會報名表單請參閱https://forms.gle/d6L5yh9NK6R68Na78。
+--------------------------------------------------------------------------------
+#34
+ID        : 088914624c80520c300ad8e948cc7e7ff119ff53
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025第37屆 AERC 亞洲機器人運動競技大賽
+Date      : 2025-09-30
+Idx       : 34
+Chars     : 332
+Preview   : 2025第37屆 AERC 亞洲機器人運動競技大賽為促進各級學校重視創客創新精神及技能教學，提升理念知識與技能之教學水準，培養創造思考之能力，促進各級學校師生電機、電子、電腦、控制、資訊等相關技術應用於機器人之整合能力，特舉辦本次比賽。本校賽場謹訂於114年11月22日(六)舉行，共有十二項競賽項目。參加對象為國小、國中、高中高職、大專院校及社會組。相關資訊請上競賽網站：http://www.aerc1988.com.tw，或洽台灣創新自造者學會(02)2391-7058。活動分類為最新消息/活動，發布時間為2025-09-30，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-39791,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#35
+ID        : b6e6659b2a7359fa3aa7697f7ee2f1b2bbeddb1b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 中華軟協工讀生招募-文件審驗作業
+Date      : 2025-09-24
+Idx       : 35
+Chars     : 350
+Preview   : 中華軟協工讀生招募-文件審驗作業，分類為最新消息/活動，發布時間為2025-09-24，網址為https://cse.ttu.edu.tw/p/406-1058-39702,r61.php?Lang=zh-tw。文章內容包含招募單位為中華民國資訊軟體協會，工作地點為台北市中山北路三段22-1號新設工大樓5樓C區，工作內容需協助操作電腦系統、檢查申請者基本資格、人工審閱申請文件及簡易彙整作業。薪資時薪為新臺幣230元，依法投保勞保、健保及勞退（符合資格者）。工作時段需每週出勤至少3個時段，建議固定班表如週一至週三下午＋週四上午。資格條件未詳述，應徵方式為填寫申請表寄至林小姐email：alice@cisanet.org.tw，其他備註提及為短期行政協助性質，錄取後需參加系統操作與審查規範培訓。
+--------------------------------------------------------------------------------
+#36
+ID        : b9061c2ee57dd09831bf979287d34532167fac33
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第二屆復盛盃流體機械永續創意大賽
+Date      : 2025-09-19
+Idx       : 36
+Chars     : 281
+Preview   : 第二屆復盛盃流體機械永續創意大賽於2025年9月19日發布，屬最新消息/活動類別，由台灣智慧自動化與機器人協會承辦，旨在鼓勵大專院校學生參與流體機械及永續創新應用設計與實作，深化產學合作。競賽延續企業推動建教與產學計畫，培養學生研發與創意實務能力，促進技術創新與價值提升。敬邀系所師生組隊報名，詳情可下載競賽辦法，競賽海報隨函檢附。聯絡人廖小姐，電話04-23581866#33，電子郵件competition@tairoa.org。活動網址：https://cse.ttu.edu.tw/p/406-1058-39613,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#37
+ID        : 20940ba54eaab5a99df2121ca623dee99c523e3e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025全國AI創意競賽
+Date      : 2025-09-18
+Idx       : 38
+Chars     : 383
+Preview   : 2025全國AI創意競賽為促進人工智慧技術普及與創新應用，激發參賽者創意思維及深化AI技術實力，透過結合AI科技與創意解決現實問題，促進跨域交流與合作。活動開放全國公私立大專校院在學學生（學士班、碩士班、博士班）參與，分為資電領域組（隊員皆為資訊電機相關科系學生）、跨領域組（每組僅1名資訊電機科系學生）、AI職能培力組（隊員需於114年度參加勞動部含「AI」字樣職業訓練且提供結訓證書）、Quantum AI體驗應用組（對AI有興趣學生）。各組成員2至6人，可跨校組隊，每人限報一組。報名期間自114年9月8日至114年11月26日，詳情請參見活動網站https://wooo.tw/DGs3dQ5。活動資訊發布於2025年9月18日，來源網址：https://cse.ttu.edu.tw/p/406-1058-39600,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#38
+ID        : 47e8b996f0b95378caea9b3d01b625aa7041db35
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 大同大學 | 東京威力科創校園企業說明會
+Date      : 2025-09-18
+Idx       : 37
+Chars     : 335
+Preview   : 大同大學舉辦「東京威力科創校園企業說明會」，於11月4日（星期二）12:00~13:00在尚志教育研究館B204舉行，主要對象為工學院相關科系學生，不限年級及大學部/研究所。活動邀請TEL優秀學長分享外商工作經驗與半導體產業入職方向，並提供職涯諮詢。報名連結為https://104ad.pse.is/844jqh，前30名報到可獲500元禮券，參與者可獲得限量精美小禮物及抽PS5、Marshall音響等好禮。TEL作為日本NO.1半導體製造設備商，技術應用於全球80%電子設備，具備強大產業前景，活動旨在為學生提供職涯啟發與就業機會。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-39593,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#39
+ID        : 1b8130c8aaccc601c21845804cbd5fb02f32f8c1
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025第37屆AERC亞洲機器人運動競技大賽
+Date      : 2025-09-18
+Idx       : 39
+Chars     : 203
+Preview   : 2025第37屆AERC亞洲機器人運動競技大賽為最新消息/活動，發布於2025年9月18日。參加對象為國內外各級學校推薦師生組隊參賽，報名截止日期為114年11月24日（星期一）。各項目競賽規則請至官方網站（http://www.aerc1988.com.tw）下載最新版本。相關資訊詳見https://cse.ttu.edu.tw/p/406-1058-39601,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#40
+ID        : c14bbeddd52837337d7b53e90532413e575b386a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第20屆資安技能金盾獎競賽
+Date      : 2025-09-16
+Idx       : 41
+Chars     : 338
+Preview   : 第20屆資安技能金盾獎競賽於2025年9月16日發布，屬最新消息/活動類別。活動旨在提升學生資通安全認知與技術能力，透過技能競賽邀集各校好手切磋，競賽總獎額43萬元。適逢20週年，特別規劃系列活動以吸引學子投入資安領域，凝聚青年力量，共創資安新里程。競賽官網為https://csc.nics.nat.gov.tw/，社群粉專為https://www.facebook.com/csc.nics/。競賽諮詢可電洽(02)2528-8278分機23謝先生、24曾小姐，或郵件聯繫cscservice@nics.nat.gov.tw。更多資訊請參訪主辦單位網頁：https://cse.ttu.edu.tw/p/406-1058-39560,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#41
+ID        : 65d2e7b83dc2227763f810be4a65e01c568792c2
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 ITA 智慧旅遊程式創意提案競賽
+Date      : 2025-09-16
+Idx       : 40
+Chars     : 620
+Preview   : 2025 ITA 智慧旅遊程式創意提案競賽為最新消息/活動，發布時間為2025-09-16，競賽主軸為新世代旅遊與科技結合應用，導入AI可加分。報名收件時間為9/15(一)至11/14(五)，入選決賽於11/21(五)公佈各組10隊名單，11/28(五)12:00最後繳交審查簡報，決賽暨頒獎典禮於11/29(六)舉行，包含桃園市政府青年事務局高中組簡報審查、午餐、大學組簡報審查、頒獎＋觀光科技短講。提案主題包含桃園大龍門觀光廊帶、桃園珍珠海岸旅遊廊帶、桃園新街溪沿途周邊景點、地方創生輕旅行－偏鄉地區數位化、團體旅遊科技應用（旅行社層面/or領隊導遊層面/or旅客層面）。高中組與大學組每隊最多3人參賽，總獎金（含獎品）15萬，高中組第一名$24,000（現金$12,000+3GTAPP$12,000）、第二名$20,000（現金$8,000+3GTAPP$12,000）、第三名$16,000（現金$4,000+3GTAPP$12,000）、優選兩名$3,000（現金$3,000+3GTAPP$12,000）。指導單位為桃園市政府青年事務局、桃園市觀光發展基金會，主辦單位為智遊旅程股份有限…
+--------------------------------------------------------------------------------
+#42
+ID        : 70b262ba4990cc6334f1a794c6750ddaa80713d9
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第14屆 TBSA 全國大專創新企劃競賽
+Date      : 2025-09-15
+Idx       : 42
+Chars     : 267
+Preview   : 第14屆 TBSA 全國大專創新企劃競賽為最新消息/活動，發布時間為2025年9月15日，競賽資訊包含報名期間為2025年8月15日至10月20日，參賽資格為全國公私立大專院校在學學生，每隊3至6人可跨系、跨年級、跨校組隊，競賽流程分初賽、複賽及全國總決賽，優勝隊伍將獲頒獎狀、獎金及檢定優惠資格，活動官網及報名資訊連結為https://www.tbsa.tw/p/412-1141-3099.php，完整資訊請參閱https://cse.ttu.edu.tw/p/406-1058-39536,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#43
+ID        : db899e489e0cbec5105f0b5a9c2ebc5bd1e183e1
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【電資學群】電機系  X  資工系 - TYPL活動(Take Your Professor to Lunch)
+Date      : 2025-09-10
+Idx       : 43
+Chars     : 205
+Preview   : 【電資學群】電機系 X 資工系 - TYPL活動(Take Your Professor to Lunch)為最新消息/活動，於2025年9月10日發布，詳情請見https://cse.ttu.edu.tw/p/406-1058-39445,r61.php?Lang=zh-tw。本活動為電機系與資工系合辦的TYPL活動（Take Your Professor to Lunch），鼓勵學生與教授共進午餐交流。
+--------------------------------------------------------------------------------
+#44
+ID        : 38be4446fbf7bc5c8b9d3b0d6bc4d61e0fa9f6b5
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : PC硬體改裝校園活動&組裝賽事
+Date      : 2025-09-03
+Idx       : 44
+Chars     : 300
+Preview   : 「PC硬體改裝校園活動&組裝賽事」為最新消息/活動，於2025-09-03發布，詳情請見https://cse.ttu.edu.tw/p/406-1058-39301,r61.php?Lang=zh-tw。活動由中華民國電子競技運動協會合作夥伴華碩主辦，透過系列課程、講座與競賽，引導學生學習硬體設備知識與電腦組裝技術。活動分為「菁英工作坊」（https://tw.rog.gg/campus_workshop）與「校園組裝王」（https://tw.rog.gg/campus_PCDIY）兩大主題，內容包含DIY組裝電腦、鍵盤改裝、水冷超頻等技術實作，並附有「華碩ROG校園菁英召集令」海報供參。
+--------------------------------------------------------------------------------
+#45
+ID        : 23f19c766115b4bbd3c0096ee36c3c8cdb83c115
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025創新與永續科技國際研討會
+Date      : 2025-09-01
+Idx       : 45
+Chars     : 279
+Preview   : 2025創新與永續科技國際研討會為最新消息/活動，於2025-09-01發布，網址為https://cse.ttu.edu.tw/p/406-1058-39252,r61.php?Lang=zh-tw。活動於114年10月22日及23日(星期三、四)8時至18時舉行，地點為南臺科技大學E棟13樓國際會議廳，旨在促進機械、電資、化材、光電、能源等領域研究人員與國際學者交流，鼓勵學生參與國際交流，並提供廠商與學術界資訊交流機會。論文徵稿截止至114年9月12日，摘要格式及相關資訊請參閱https://isnst.eng.stust.edu.tw/2025。
+--------------------------------------------------------------------------------
+#46
+ID        : 0ded925fe220bd682ad534b5096f40244d88fa40
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 成淵高中--誠徵國七國八資訊代課教師
+Date      : 2025-08-19
+Idx       : 46
+Chars     : 249
+Preview   : 成淵高中於2025年8月19日發布「誠徵國七國八資訊代課教師」公告，屬最新消息/活動類別，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-39087,r61.php?Lang=zh-tw。該校114學年國中部資訊科擬聘1名兼任或代課教師，聘期為114年9月1日至115年6月30日，任課節數15節，歡迎大學畢業或碩博士生應徵，1人或2人均可接案。甄選簡章及報名表請參閱附件，相關資訊可於來源檔案data_qwen/ttu_cse_news.sorted.json查詢。
+--------------------------------------------------------------------------------
+#47
+ID        : 54fc51b743a40d1daf8414554ece3d145eb7946e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025第30屆大專校院資訊應用服務創新競賽
+Date      : 2025-08-07
+Idx       : 47
+Chars     : 221
+Preview   : 2025第30屆大專校院資訊應用服務創新競賽為最新消息/活動，發布時間為2025-08-07。活動報名日期自114年8月1日（星期五）至114年9月30日（星期二）止，詳情請參閱附件之競賽須知。活動資訊請訪問https://cse.ttu.edu.tw/p/406-1058-38942,r61.php?Lang=zh-tw。來源檔案：data_qwen/ttu_cse_news.sorted.json，文章ID：7fc3977e4bf0。
+--------------------------------------------------------------------------------
+#48
+ID        : 0432f5e6836687e53ff712cff8821e385a7ffa10
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025就業列車校園講座
+Date      : 2025-08-04
+Idx       : 48
+Chars     : 354
+Preview   : 2025就業列車校園講座於2025年8月7日（四）13:30-17:00在台灣大學綜合403教室舉行，由企業高階主管、人資長及AI名師主講，探討AI協作於作業報告與職場規劃應用，邀請應屆畢業生及對AI技能、數位職涯有興趣者參與，報名連結為https://prompt.1111.com.tw/employment2025/event20250717-001/。活動同步強化學生職涯規劃，1111人力銀行設立「職涯發展暨講座專區」，提供百大名師講座影音資源，詳情可至https://prompt.1111.com.tw/employment2025/highlights/查詢。更多資訊請參訪https://cse.ttu.edu.tw/p/406-1058-38892,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#49
+ID        : 8def8f217567a09b61e4c34b290ea67efa9c134d
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年半導體製程技術職能深化課程
+Date      : 2025-07-29
+Idx       : 49
+Chars     : 424
+Preview   : 114年半導體製程技術職能深化課程為最新消息/活動，於2025年7月29日發布，課程內容涵蓋半導體產業鏈解析、全球市場趨勢、AI與ESG對產業發展的影響，並聚焦晶圓製程關鍵設備（曝光機、PVD、ALD、RTA）的實機操作，以及半導體物性與電性分析儀器（SEM、TEM、參數分析儀）的應用實務，協助學員建立製程與測試知識體系。報名資格為全國公私立大專校院在學學生，課程時間為114年8月5日至7日共3天，參與者可獲核發研習時數證明電子檔。課程地點於國立成功大學智慧半導體及永續製造學院（台南市東區大學路1號），人數上限30人，報名網址為https://forms.gle/1P1V1vBBdtK1WBEr7，聯絡人為教育部產學連結執行辦公室-國立臺北科技大學賴專員，電子郵件：lks@mail.ntut.edu.tw。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-38835,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#50
+ID        : 0b7383825114bde3c61bebe6233e11174fea109d
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【永豐銀行營隊活動】FUN豐未來體驗營隊－產品創客之旅，與我們一同探索金融科技未來
+Date      : 2025-07-09
+Idx       : 50
+Chars     : 340
+Preview   : 【永豐銀行營隊活動】FUN豐未來體驗營隊－產品創客之旅，與我們一同探索金融科技未來，為最新消息/活動，發布時間為2025-07-09。活動以「一日產品經理 (PM)」為主題，透過金融產品闖關體驗及創意提案競賽，翻轉銀行業傳統印象，並了解產品經理核心能力與工作內容。對象為大二至大四在校生（科系不限），報名截止7月31日，活動於9月12日於台北市濟南路二段39號舉行。報名方式為點擊IG連結（https://www.instagram.com/p/DLmMOzCSrjc/?igsh=cms5bnkwMW01ZWl3）或掃描QR Code，並有抽獎機會。詳情請參見https://cse.ttu.edu.tw/p/406-1058-38598,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#51
+ID        : 36679190405f61063130f32513a162920867c99e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年TOEIC公益獎學金活動
+Date      : 2025-07-08
+Idx       : 51
+Chars     : 237
+Preview   : 2025年TOEIC公益獎學金活動於2025年7月8日發布，屬最新消息/活動類別，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-38575,r61.php?Lang=zh-tw。該活動旨在鼓勵青年學子以英語專長推動英語教育，響應聯合國永續發展目標（SDG 4：優質教育），透過語言橋梁促進知識普及與教育平等。計畫提供總額新台幣25萬元獎學金，支持10組具潛力與熱情的學生團隊，以創意行動為英語教育注入新可能。申請相關資訊請參考附件辦法與DM。
+--------------------------------------------------------------------------------
+#52
+ID        : 937da895dd56474cab85e4d600b4417668e1123b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年度「職場高手秘笈」手冊電子檔及「打工完全攻略」教材影片網址
+Date      : 2025-07-04
+Idx       : 52
+Chars     : 432
+Preview   : 114年度「職場高手秘笈」手冊電子檔及「打工完全攻略」教材影片網址於2025-07-04發布，分類為最新消息/活動。勞動部為協助學生及應屆畢業生了解勞動權益，編製手冊電子檔並拍攝教材影片。手冊內容涵蓋求職、就業、轉職階段的勞動權益資訊，電子檔置於勞動部網站（https://www.mol.gov.tw/）及「全民勞教e網」非影音教材/青年就業教材/職場高手秘笈（https://labor-elearning.mol.gov.tw/co_topic.php?topic=7&item=7）。影片「打工完全攻略」提供勞動權益概念資訊，置於「全民勞教e網」影音教材/學校勞動教育之實踐，打工完全攻略（https://labor-elearning.mol.gov.tw/co_course_info.php?id=10001086）。更多資訊請參閱https://cse.ttu.edu.tw/p/406-1058-38532,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#53
+ID        : cfbe3a1173cf5c4d4ae3cd87578033961e473d41
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025行動通訊實務競賽
+Date      : 2025-07-02
+Idx       : 53
+Chars     : 256
+Preview   : 2025行動通訊實務競賽為最新消息/活動，於2025-07-02發布，競賽設「智慧節能與物聯網應用組」、「智慧指向性傳輸組」及「智慧數位應用組」三大主題組別，採初賽與決賽二階段辦理。活動資訊及報名辦法請參閱競賽活動網站（https://sites.google.com/comm.yzu.edu.tw/2025-mcpc/首頁），線上報名期限自即日起至2025年9月12日（星期五）止。資料來源：https://cse.ttu.edu.tw/p/406-1058-38494,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#54
+ID        : 427b67dd4eac3242a0ad6659b3996d891becd3bf
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年資工系暑假轉學考入學口試時間表
+Date      : 2025-07-01
+Idx       : 54
+Chars     : 127
+Preview   : 114年資工系暑假轉學考入學口試時間表為最新消息/活動，發布於2025年7月1日，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-38466,r61.php?Lang=zh-tw。應試者需攜帶學生證或身分證，並參考附件資料。
+--------------------------------------------------------------------------------
+#55
+ID        : c1bff39f5313a3868d73ab0d0c9bc424362ac78e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年ITSA全國大專校院程式設計極客挑戰賽
+Date      : 2025-06-17
+Idx       : 55
+Chars     : 258
+Preview   : 2025年ITSA全國大專校院程式設計極客挑戰賽為推廣程式創作風氣、加強學生應用軟體設計能力，以培育跨域數位人才，分為初賽及決賽兩階段進行。線上報名時間自114年6月16日（星期一）至114年9月17日（星期三）止，詳情請至該競賽活動網站查詢（https://e-tutor.itsa.org.tw/ITSAcontest/）。此活動屬最新消息/活動類別，發布於2025-06-17，相關資訊請參閱https://cse.ttu.edu.tw/p/406-1058-38252,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#56
+ID        : d3273891aa64bb2c2b594777ae4ef21678f2524e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「智慧運輸與嵌入式系統」及「智慧運輸與嵌入式系統實務」暑期課程延長報名期限至114年6月19日
+Date      : 2025-06-12
+Idx       : 57
+Chars     : 308
+Preview   : 「智慧運輸與嵌入式系統」及「智慧運輸與嵌入式系統實務」暑期課程延長報名期限至114年6月19日，配合國立臺灣科技大學選課時程，有意報名者請於期限內完成線上報名，財團法人中華顧問工程司將於6月20日公告錄取名單並以電子郵件通知。獲選學員須於114年6月24日至26日依臺科大規定完成選課（需經授課老師、原學籍學校及臺科大同意），並先行繳納學分費。詳細活動辦法及報名資訊請參閱報名網址：https://forms.gle/xtAcuthN5Gc1Bh5Y7。此消息發布於2025年6月12日，來源連結：https://cse.ttu.edu.tw/p/406-1058-38181,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#57
+ID        : 9453773ac172f73a0566ab09550005ea82f2af4c
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年「電腦鼠暨智慧輪型機器人國內及國際競賽」之「電腦鼠走迷宮」、「競速自走車」以及「線迷宮鼠」三項競賽
+Date      : 2025-06-12
+Idx       : 56
+Chars     : 351
+Preview   : 2025年「電腦鼠暨智慧輪型機器人國內及國際競賽」將於8月16日及17日在龍華科技大學學生活動中心舉辦，包含「電腦鼠走迷宮」、「競速自走車」及「線迷宮鼠」三項競賽，8月16日為場地試跑，17日為正式比賽。教育部與龍華科技大學將提供出國比賽機票及旅費補助予成績前二名隊伍，並邀請國際選手參與交流。競賽報名自即日起至114年8月3日，詳情及報名資訊請至https://sites.google.com/gm.lhu.edu.tw/tmirc2025/Registration。7月2日將舉辦「2025電腦鼠暨智慧輪型機器人競賽研習營」，11月將與祥儀企業合辦部分競賽項目，相關資訊持續更新於競賽網頁https://sites.google.com/gm.lhu.edu.tw/tmirc2025/Home。
+--------------------------------------------------------------------------------
+#58
+ID        : 28da26056ba0a1fcc9cad67941c7dda06d7ae99a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 臺中捷運股份有限公司114年度新進人員甄試
+Date      : 2025-06-11
+Idx       : 58
+Chars     : 317
+Preview   : 「臺中捷運股份有限公司114年度新進人員甄試」為最新消息/活動，發布時間為2025-06-11，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-38143,r61.php?Lang=zh-tw。甄試簡章於即日起於甄試網站（https://tmrt114.twrecruit.com.tw）公告，電子檔免費下載。報名期間為114年06月10日(星期二)10:00至114年06月19日(星期四)17:00止，繳費期限為114年06月19日(星期四)24:00止。第一試（筆試）於114年07月19日(星期六)舉行，第二試（面試）於114年08月23日(星期六)進行。甄試類科、錄取人數及各項規定請詳閱簡章。
+--------------------------------------------------------------------------------
+#59
+ID        : 953f9764faca5a129a5eca46d89290a280a13cdd
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025《會演是英雄》前台人員招募
+Date      : 2025-06-06
+Idx       : 60
+Chunk     : 0
+Chars     : 604
+Preview   : 2025《會演是英雄》前台人員招募於2025年6月6日發布，分類為最新消息/活動，網址為https://cse.ttu.edu.tw/p/406-1058-38064,r61.php?Lang=zh-tw。招募內容包含四場工作場次：2025/08/15-17（苗北藝文中心）、2025/09/12-14（台南文化中心）、2025/09/26-28（新竹縣政府文化局演藝廳）、2025/11/14-16（台中中山堂），工作內容為觀眾接待與引導、販售票券、環境整理及主管交辦事項，時薪190元。報名時間自即日起至2025/06/25 23:59，額滿為止，各場次報名表單連結分別為：苗北場（https://docs.google.com/forms/d/e/1FAIpQLScunxjXD0BYDwOofNC9oxRHkQoZ0-1R2H61W-XSiFq9jsz-RQ/viewform）、台南場（https://docs.google.com/forms/d/e/1FAIpQLSfXPhBLQxaBb3BYHhRTqj__8I4EnivboNFYH80TohyLFh5eLg/viewform）、竹…
+--------------------------------------------------------------------------------
+#60
+ID        : 8ff5fc5ee0eb384d5c2f99e0c0fdc5efc36d19b7
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025《會演是英雄》前台人員招募
+Date      : 2025-06-06
+Idx       : 60
+Chunk     : 1
+Chars     : 511
+Preview   : 2025《會演是英雄》前台人員招募於2025年6月6日發布，分為竹北場（2025/09/26-2025/09/28）與台中場（2025/11/14-2025/11/16）兩階段，報名表單連結分別為https://docs.google.com/forms/d/e/1FAIpQLSf55sJYKHhkjh-EIbOsdBszEH6N9v5Jiiac0k7YmC4gbEnPUw/viewform及https://docs.google.com/forms/d/e/1FAIpQLSdMEaH0UBWIKKYnDqcAAYY43WWcdNvvPwnBFyoLTC9AF-qDtw/viewform。招募流程分為五步驟：Step 1填寫報名表單（提交後兩週內通知），Step 2簡歷審核，Step 3公佈結果（以信件或電話通知），Step 4教育訓練（實體進行），Step 5正式上班。聯絡方式為前台經理蕭小姐，信箱rita110212011@gmail.com，電話0910-684-070。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-38064,r61.php?…
+--------------------------------------------------------------------------------
+#61
+ID        : dd9dc5eabb0a27549884a68d161f7262be4cf8a4
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 國立臺灣師範大學理學院雲端運算平台 HPC 管理課程資訊
+Date      : 2025-06-06
+Idx       : 59
+Chars     : 262
+Preview   : 國立臺灣師範大學理學院於2025年6月6日發布「雲端運算平台 HPC 管理課程資訊」，屬最新消息/活動類別。課程於2025年8月11日至22日（不含假日）開課，每日下午1:00-5:00於公館校區物理學系F105教室進行，總計40小時授課及實作，費用為2,800元。課程內容涵蓋HPC雲端平台建置與管理知識，鼓勵學生報名，報名優惠及詳情請至https://hpc.ntnu.edu.tw查詢。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-38063,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#62
+ID        : 9c4aebc2e9e020237a6a9366010367e7b059e78b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「台灣事實查核學苑」網站
+Date      : 2025-06-04
+Idx       : 62
+Chars     : 250
+Preview   : 「台灣事實查核學苑」網站由財團法人新北市台灣事實查核教育基金會建置，於2025年6月4日正式上線，提供免費學習與教案資源，推動媒體識讀與事實查核教育。該網站作為公益共享平台，適用於各年齡層與背景學習者，可依教師、學生、媒體從業人員、研究人員等角色分類，系統推薦適合資源，或依個人需求選擇分級學習內容。網站內容包含查核知識與實用識讀技巧，作為教師教學參考或學生自主學習平台。詳情請參閱https://cse.ttu.edu.tw/p/406-1058-38014,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#63
+ID        : 4f8b4ed59a0aeb74dc2353adf05321facf2a4af2
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「114年ESG碳足跡盤查與溫室氣體查證實務」課程
+Date      : 2025-06-04
+Idx       : 61
+Chars     : 513
+Preview   : 「114年ESG碳足跡盤查與溫室氣體查證實務」課程為因應全球淨零碳排浪潮與企業永續轉型需求，提供溫室氣體與碳足跡管理核心知識與實務應用，內容涵蓋ISO 14064-1、ISO 14067標準解析及盤查管理架構。課後安排「ISO 14064-1 & ISO 14067 標準解讀與應用」證照現場考證，報名資格為全國公私立大專在學生，課程時間為114年8月5日至7日（共3天），地點於國立成功大學化工系館-B1華立廳及Google Meet線上，人數上限實體230人/線上200人，課程免費。報名時間至114年7月28日17時，報名網址https://forms.gle/omi19odZz9Js1B2N6，考證需繳1,500元，報名網址https://myppt.cc/Cn4nhd，通過測驗由TUV台灣德國萊因技術監護顧問股份有限公司核發證書。聯絡人：教育部產學連結執行辦公室-國立臺北科技大學賴專員，電話(02)2771-2171分機6020，電子郵件lks@mail.ntut.edu.tw。課程資訊詳見https://cse.ttu.edu.tw/p/406-1058-38013,r61.ph…
+--------------------------------------------------------------------------------
+#64
+ID        : a72284ce1aaff902b3055386e0ecdee9bdc20ae2
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 智慧交通與AI應用資安高峰論壇
+Date      : 2025-06-02
+Idx       : 66
+Chars     : 211
+Preview   : 「智慧交通與AI應用資安高峰論壇」為最新消息/活動，發布時間為2025-06-02。活動報名網址為https://forms.gle/g9Uipn5r8vR9D5SH8，相關資訊可參考https://cse.ttu.edu.tw/p/406-1058-37947,r61.php?Lang=zh-tw。資料來源檔案為data_qwen/ttu_cse_news.sorted.json，文章ID為10f836918f1e。
+--------------------------------------------------------------------------------
+#65
+ID        : 8a063857ed46224373c02b632b1b5b7c19477212
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 國家科學及技術委員會 補助博士生及博士後赴國外研究案 線上申請開始
+Date      : 2025-06-02
+Idx       : 64
+Chars     : 411
+Preview   : 國家科學及技術委員會115年度補助博士生及博士後赴國外研究案自114年6月1日起至7月31日中午12時受理線上申請，申請機構需於114年8月7日前函送「博士生申請名冊」或「申請書合併檔首頁(需簽章)」，逾期或文件不全者不予受理；同步受理量子科技千里馬計畫，全面實施線上申請，申請人應至NSTC網站下載作業要點及申請表件，並自行確認研習國家或機構之相關規範；聯絡人：博士生及博士後計畫洽王瑛瑛副研究員(Email：yywang@nstc.gov.tw，電話：(02)2737-7105)，量子科技計畫疑義洽劉芳君科研管理師(電話：(02)2737-7022，Email：fcliu@nstc.gov.tw)，系統問題洽資訊系統服務專線(電話：0800-212-058，(02)2737-7590/7591/7592，Email：misservice@nstc.gov.tw)。更多資訊請參見NSTC科教發展及國際合作處網站。
+--------------------------------------------------------------------------------
+#66
+ID        : 13efb7a9d9b421c4c12aa98b89f9c28f30e47dc9
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年全國大專校院智慧創新暨跨域整合創作競賽
+Date      : 2025-06-02
+Idx       : 63
+Chars     : 288
+Preview   : 2025年全國大專校院智慧創新暨跨域整合創作競賽為鼓勵師生從事資通訊軟硬體實務設計，培養跨域整合人才，並鏈結產研資源，拓展創新創業管道。競賽報名日期為即日起至114年7月11日，訓練營分高雄場（7月25日）、臺中場（7月28日）、臺北場（7月30日）舉辦。初賽文件截止收件為114年8月8日，決賽實地測試評審於114年10月19日於國立中央大學舉行。詳情請至活動網站https://niicc.cilab.csie.ncu.edu.tw/查詢。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-37944,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#67
+ID        : 1e5c3350ce4d000f636650bdc6ba8dee2b21219f
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【競賽訊息】「第十八屆（2025）崇越論文大賞：AI應用論文競賽」
+Date      : 2025-06-02
+Idx       : 65
+Chars     : 292
+Preview   : 【競賽訊息】「第十八屆（2025）崇越論文大賞：AI應用論文競賽」現開放報名，6月20日截止。競賽提供總獎金高達185萬元，優等以上得獎組數至多90組，另設佳作獎若干組。得獎者可獲總統晉見機會（總統近年均出席頒獎典禮或接見得獎者）。競賽聚焦AI應用研究論文，不限產業領域，凡學位論文涉及AI應用皆可投稿。報名連結：https://thesis.topco-global.com/TopcoTRC/index.aspx，截止時間為6月20日23:59。更多資訊請參閱：https://cse.ttu.edu.tw/p/406-1058-37946,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#68
+ID        : 01cbd39561c5bfb754ccfaf14bf016beadfa6350
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年度全國大專電腦軟體設計競賽
+Date      : 2025-05-28
+Idx       : 67
+Chars     : 206
+Preview   : 114年度全國大專電腦軟體設計競賽為最新消息/活動，於2025年5月28日發布，競賽目的係為鼓勵學生從事電腦軟體設計，提升我國資訊教育水準，分初賽及決賽兩階段進行，報名日期自114年9月1日起至9月18日止，詳情請至活動網站（https://ncpc.nsysu.edu.tw/）查詢。資料來源：https://cse.ttu.edu.tw/p/406-1058-37844,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#69
+ID        : 3cfb983e43f8accf3509282a752e43544694c86a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【玉山綜合證券】2025年全方位菁英培育課程報名開跑囉!
+Date      : 2025-05-28
+Idx       : 68
+Chars     : 211
+Preview   : 【玉山綜合證券】2025年全方位菁英培育課程報名開跑囉! 位於最新消息/活動欄位，於2025-05-28發布，提供完整課程資訊與報名方式。玉山證券規劃四大證券專業課程，邀請參與者探索證券產業奧秘，培養全方位菁英人才。活動全程免費，並提供午餐及點心，因名額有限，將以Email通知報名成功者。詳細資訊請參閱https://cse.ttu.edu.tw/p/406-1058-37850,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#70
+ID        : 8ad349beefc786260a0cdcc085b07ac6b9e0f9c4
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年大專校院法治教育創新行動方案競賽
+Date      : 2025-05-23
+Idx       : 69
+Chars     : 191
+Preview   : 「114年大專校院法治教育創新行動方案競賽」為最新消息/活動，發布時間為2025-05-23，敬邀各大專校院同學組隊參加。活動報名自即日起至6月16日截止，參賽辦法及報名表請參閱https://forms.gle/iSuLonoHeSzSNYts7。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-37769,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#71
+ID        : 3dc6db0124f02f07ee3d99eba6850fb0ce0438b6
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 敏求智慧運算學院AI與機器人暑期課程暨競賽營隊
+Date      : 2025-05-21
+Idx       : 70
+Chars     : 260
+Preview   : 2025 敏求智慧運算學院AI與機器人暑期課程暨競賽營隊為達成AI人才培育與向下扎根，並深化AI相關學習基礎，活動於114年8月5日至7日舉行，報到日期為8月4日下午3至4點，地點為國立成功大學成功創新中心-旺宏館1樓，活動場地為勝利校區成功創新中心-旺宏館，報名方式為即日起至6月23日於活動網頁https://mochiwebservice.ngrok.app/PTWAcls線上報名，相關資訊詳見https://cse.ttu.edu.tw/p/406-1058-37711,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#72
+ID        : a228970aad1c6d35b9580beb53475fbfed28d8e1
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「CEPT 跨境電商與AI應用人才培育計畫」課程資訊
+Date      : 2025-05-19
+Idx       : 71
+Chars     : 387
+Preview   : 「CEPT 跨境電商與AI應用人才培育計畫」課程資訊於2025年5月19日發布，由北科大執行辦公室與數位經濟與金融科技產業工作圈攜手台北市進出口商業同業公會及Amazon亞馬遜全球開店共同推動，課程涵蓋電商網站模式、數據分析、物流運作與品牌打造等核心知識，提供線上與實體學習機制，總研習時數27小時，需全程參與。課程地點為國立臺北科技大學綜合科館電機工程系511電腦教室，實體人數上限40人、線上100人，課程免費。報名資格為全國公私立技專校院在學學生，報名時間至2025年5月20日17點，報名網址為https://forms.gle/aXyo7CXU59XQFwea9。參與者可取得研習時數證明，另可報名「CEPT-Amazon亞馬遜跨境電商技能認證」考試，費用600元，考取證照由IEAT及亞馬遜全球開店核發，報名網址為https://reurl.cc/o8yv2D。
+--------------------------------------------------------------------------------
+#73
+ID        : ad4447df64966d44cacee0ce5dd7e5a1c4dee42d
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 大同大學&東京都市大學櫻花交換計畫人員甄選開跑囉，報名至5/29(四)截止
+Date      : 2025-05-16
+Idx       : 72
+Chars     : 122
+Preview   : 大同大學與東京都市大學櫻花交換計畫人員甄選啟動，報名截止日期為2025年5月29日（四），活動分類為最新消息/活動，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-37623,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#74
+ID        : c073d04275bc688c7e66ff50f1e231473aa6cfa4
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度大學申請入學面試報到時間表
+Date      : 2025-05-13
+Idx       : 73
+Chars     : 201
+Preview   : 114學年度大學申請入學面試報到時間表為最新消息/活動，發布時間為2025年5月13日，請依附件報到時間至電機大樓1樓穿堂報到，報到時需出示國民身分證核對考生身分，逾報到時間15分鐘未到者視同放棄面試資格，如有問題可聯絡系辦公室02-2182-2928轉6565邱小姐。更多資訊請參閱https://cse.ttu.edu.tw/p/406-1058-37513,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#75
+ID        : 642e29b848870ff8ac1961c94c11f24bf452812f
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 中華航空 2025 年度上半年「資訊助理工程師」招募訊息
+Date      : 2025-05-12
+Idx       : 74
+Chars     : 264
+Preview   : 中華航空 2025 年度上半年「資訊助理工程師」招募訊息為最新消息/活動，發布時間為 2025-05-12，招募職缺包含「應用程式開發類（A）」、「應用程式開發類（B）」、「軟、硬體設備維護類」及「基礎建設類」四類別，報名截止日期為 2025/5/21(三) 23:59，報名連結為 https://calcfec.china-airlines.com/RCW/Info/JobList.aspx，詳情請參閱 https://cse.ttu.edu.tw/p/406-1058-37492,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#76
+ID        : d91524f7a8a541581390cddebb1d361fec85df82
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 113學年度第二學期我的青春創業夢創業競賽
+Date      : 2025-05-09
+Idx       : 75
+Chars     : 448
+Preview   : 113學年度第二學期「我的青春創業夢」創業競賽於2025年5月9日發布，活動旨在提升大專院校創新創業風氣，鼓勵學生實踐創業夢想。參賽資格為本校在學學生，每隊3-5人可跨科系或年級組隊，報名截止日期為114年5月21日，報名連結為https://reurl.cc/xNezk4。活動時程包含5月21日報名截止、5月23日公布初選結果、5月27日舉行決賽暨頒獎典禮，地點為尚志教育研究館B105，時間為15:00~17:00。競賽獎金設置為第一名5,000元、第二名4,000元、第三名3,000元。報名需準備創業競賽報名表、營運計畫書及構想簡報。聯絡方式為梁老師（電話02-21822928#6597，信箱fpliang@gm.ttu.edu.tw）及陳小姐（電話02-21822928#6235，信箱ivy930118@gm.ttu.edu.tw）。更多資訊請參閱競賽簡章及網址https://cse.ttu.edu.tw/p/406-1058-37411,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#77
+ID        : ce8679aaadb6ce4b1f7312fd5dfc353a8ecb7ff0
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 暑期課程「智慧運輸與嵌入式系統」及「智慧運輸與嵌入式系統實務」
+Date      : 2025-05-09
+Idx       : 76
+Chars     : 395
+Preview   : 暑期課程「智慧運輸與嵌入式系統」及「智慧運輸與嵌入式系統實務」由中華顧問工程司與國立臺灣科技大學資訊工程學系合作開設，課程共2學分（各1學分），需同時選修，學分由臺科大頒發，是否認列畢業學分依原學籍學校規定。課程於114年8月5日至29日每週二、五進行，共4週，上午10:20-12:10上「智慧運輸與嵌入式系統」，下午1:20-3:10上「智慧運輸與嵌入式系統實務」，9月27日辦理成果展示。內容涵蓋智慧運輸技術趨勢、嵌入式系統應用、車聯網架構、通訊技術、虛擬化、邊緣運算、機器學習與人工智慧，並透過樹莓派自走車實作強化跨域應用能力。費用由工程司全額補助，報名開放國內大專學生，預計遴選30名具交通運輸或程式能力者，需於114年6月6日前線上報名，6月10日公布錄取名單，並依臺科大流程完成選課及繳費，詳細資訊請參閱https://forms.gle/xtAcuthN5Gc1Bh5Y7。
+--------------------------------------------------------------------------------
+#78
+ID        : ced7c3547e36855aa329ccce0ce7476c73961f48
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年中國工程師學會學生分會工程論文競賽
+Date      : 2025-05-06
+Idx       : 77
+Chars     : 211
+Preview   : 114年中國工程師學會學生分會工程論文競賽為最新消息/活動，發布時間為2025年5月6日，競賽活動自即日起受理報名，截止日期為114年5月31日中午12時，欲瞭解完整競賽資訊與報名辦法請至活動網站：https://sites.google.com/nycu.edu.tw/cia2025。更多資訊請參見：https://cse.ttu.edu.tw/p/406-1058-37281,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#79
+ID        : 4e1cc1771c20cded51fd13b22572a89b4ac5ceb2
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 國家科學及技術委員會辦理「2025 AI 創新獎」（2025 AI Innovation Award）」
+Date      : 2025-05-06
+Idx       : 78
+Chars     : 315
+Preview   : 國家科學及技術委員會辦理「2025 AI 創新獎」（2025 AI Innovation Award），於2025年5月6日發布，鼓勵創新者結合科技與藝術，針對AI在「智慧城市」、「智慧醫療」、「教育娛樂」及「新體驗新生活」等領域提出創新解方。活動結合企業育成計畫，開放新創、非營利法人、學研機構或團隊、中華民國國民報名，獲獎團隊可獲100萬元新台幣獎金、展會展出、頒獎典禮及6個月育成合作。報名截止至5月30日，詳情請參訪活動官網https://ai4all.taiwanarena.tech/。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-37291,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#80
+ID        : 23fffc209abcf31f601f6a8fb00a896b0792e04f
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 大同住重減速機股份有限公司 (TSC) 誠徵工讀生
+Date      : 2025-05-06
+Idx       : 79
+Chars     : 195
+Preview   : 大同住重減速機股份有限公司 (TSC) 誠徵工讀生，分類為最新消息/活動，發布時間為2025年5月6日。文章內容說明工讀生需具備電腦設備，工作地點可選擇在家或學校，計酬方式可依Key in至Excel表的頁數或工作時數計算，報名專線為（02）25957275。相關資訊詳見https://cse.ttu.edu.tw/p/406-1058-37299,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#81
+ID        : 7f51d267f1c6d09c136c200952baf72ae9f89a95
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : QLABS無人車AI挑戰賽
+Date      : 2025-05-02
+Idx       : 80
+Chars     : 246
+Preview   : QLABS無人車AI挑戰賽為最新消息/活動，發布於2025年5月2日，活動網址為https://cse.ttu.edu.tw/p/406-1058-37243,r61.php?Lang=zh-tw。報名與競賽方式為線上報名及線上會議，競賽時程包含報名時間（即日起至114年5月20日17時）、賽前軟體安裝說明與連線測試（114年5月23日12時30分，時程更新以電子郵件及網站公告為主）、競賽日期（114年6月7日9時至13時30分）。競賽獎勵為總積分前三名提供禮券。更多資訊請參閱活動網址。
+--------------------------------------------------------------------------------
+#82
+ID        : 74912af4d8e8e8c7e30529b58b94a02da3228dda
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「第十五屆全國私立大專校院程式競賽2025 Private University Programming Contest, PUPC 」-大專組及高中職組
+Date      : 2025-05-01
+Idx       : 81
+Chars     : 379
+Preview   : 「第十五屆全國私立大專校院程式競賽2025 Private University Programming Contest, PUPC」-大專組及高中職組由靜宜大學辦理，旨在提升私立大專及高中職學生程式設計參與度與能力。競賽分為大專生銀河組（限50隊，各科系學生可參與）及高中職新星組（限15隊，需參加114年7月1-2日專屬工作坊獲推薦資格）。報名時間為114年5月22日至6月20日，競賽日期為7月9日，地點於靜宜大學資訊處（任垣樓）。活動詳情請參閱https://reurl.cc/mxMm31，聯絡方式為靜宜大學資訊學院劉秀惠秘書（電話04-26328001轉18001，電子郵件hhliu@gm.pu.edu.tw）。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-37210,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#83
+ID        : 5728f6f79cf6de901092a887a9cef896aef349bd
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025太陽光電創新應用產品設計競賽
+Date      : 2025-04-28
+Idx       : 82
+Chars     : 296
+Preview   : 2025太陽光電創新應用產品設計競賽由經濟部產業發展署指導，旨在引導太陽光電產業朝系統終端創新發展，號召具創新性與可擴散應用的太陽光電系統產品，協助產業注入創意活水並帶動未來利基型產品佈局。參賽資格為中華民國國民或在臺居住之外籍人士，不限年齡與經歷，個人或團體皆可參加，團體限5人以下且須註明主要代表人。報名採線上免費方式，截止至114年7月15日晚上12點，詳情請至http://eii.nat.gov.tw/Pvaward/。活動資訊來自https://cse.ttu.edu.tw/p/406-1058-37119,r61.php?Lang=zh-tw，發布時間為2025-04-28。
+--------------------------------------------------------------------------------
+#84
+ID        : 8efe4873ddf02e72bbaf6c336fa274b6d924714b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 徵才-系微股份有限公司菁英招募
+Date      : 2025-04-25
+Idx       : 83
+Chars     : 201
+Preview   : 徵才-系微股份有限公司菁英招募，分類為最新消息/活動，發布時間為2025-04-25，詳如附件，網址：https://cse.ttu.edu.tw/p/406-1058-37085,r61.php?Lang=zh-tw，來源檔案：data_qwen/ttu_cse_news.sorted.json，article_id：c429db02bdb0，published_at_ts：1745539200。
+--------------------------------------------------------------------------------
+#85
+ID        : cff5e97722195d1e77d2c07620d4d641cb49e520
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年度青年以戰代訓銜接職場計畫
+Date      : 2025-04-24
+Idx       : 84
+Chars     : 565
+Preview   : 114年度青年以戰代訓銜接職場計畫於2025年4月24日發布，分類為最新消息/活動，網址為https://cse.ttu.edu.tw/p/406-1058-37061,r61.php?Lang=zh-tw。本計畫第一梯次於5-6月開辦13班課程，主題包含生成式AI應用與開發、資訊網路安全、親子陪玩導引技能、食安檢驗與品質管理、CRM客戶管理、ESG等。課程報名網址為https://ievents.iii.org.tw/EventS.aspx?t=0&id=2785，合作單位包含台灣微軟「未來生涯體驗計畫」，其中「建構微軟AI新應用：微軟的生成式AI開發應用」課程於5月30日前完訓可投遞履歷並有面試加分機會。參與三大優點：1. 全程免費，提升專業技能與實戰經驗；2. 就業支持，透過企業媒合會獲取面試與職缺資訊；3. 完訓證明，參與課程滿8成時數且評核通過可獲證明，有助7月與10月企業媒合會面試加分。學生資格無限制，每位學生目前只能報名一門課程（可填選第二門課程志願）。報名後由企業及教師審核，通過後發送上課通知。臺北市政府青年局提供實習津貼及交通補助，設籍台北市青年可申請，相關連結為ht…
+--------------------------------------------------------------------------------
+#86
+ID        : dbeb3a15921d423bcfec71a816dca1f6d29ae0fb
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025英業達優秀人才獎助學金
+Date      : 2025-04-22
+Idx       : 85
+Chars     : 287
+Preview   : 2025英業達優秀人才獎助學金於2025年4月22日發布，申請期間為即日起至5月20日，逾期不受理。申請資格為當年度將升大學三年級（含）以上之在學一般生（不含進修部、在職專班、在職學分班），科系限電子、電機、機械、資工、資管等相關系所，且需符合學業成績平均70分（含）以上、操行成績80分（含）以上，且未受領本公司其他獎助學金。獎助學金分為大學及碩士學制，大學三年級及四年級各12萬/年，碩士一年級及二年級各20萬/年，經錄取後次年無需審查，直接領取2年補助。服務承諾為受補助生須於取得畢業證書或役畢後30日內與英業達聯繫任職，服務至少滿1年。評選方式及相關資訊請參閱連結。
+--------------------------------------------------------------------------------
+#87
+ID        : 21f46e122bdc6503a7ef7d9c2c36ca2e63bc776b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 勞動部勞動力發展署提供之求職（打工）相關宣導素材及申訴管道資訊
+Date      : 2025-04-17
+Idx       : 87
+Chars     : 483
+Preview   : 勞動部勞動力發展署提供求職（打工）相關宣導素材及申訴管道資訊，分類為最新消息/活動，發布時間為2025-04-17。內容包含職場高手秘笈（https://labor-elearning.mol.gov.tw/co_topic.php?topic=7&item=7）、求職防騙教戰守則（https://job.taiwanjobs.gov.tw/Internet/index/DocDetail.aspx?uk=2893&docid=141）、臺灣就業通/青少年打工專區（https://job.taiwanjobs.gov.tw/Internet/special2/student_new/jobQuery.aspx）及申訴管道：免費專線1955、勞動部民意信箱（https://www.mol.gov.tw/1607/28690/28700/28702/lpsimplelist）、各地方主管機關（附錄七直轄市、縣市勞工行政主管機關）。資訊來源：https://cse.ttu.edu.tw/p/406-1058-36810,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#88
+ID        : 0f626632dbf4d5df9a8fb69dcf02c9da7f19d23e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025雙北程式設計節城市儀表板大黑客松競賽
+Date      : 2025-04-17
+Idx       : 86
+Chars     : 249
+Preview   : 2025雙北程式設計節城市儀表板大黑客松競賽為最新消息/活動，發布時間為2025-04-17，報名日期自114年3月31日12時起至114年4月30日23時59分止，競賽期間為114年5月31日至114年6月1日，獎勵包含第一名新臺幣30萬元、第二名15萬元、第三名10萬元及佳作各5萬元，採線上報名方式，報名網址為https://codefest.taipei/。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-36809,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#89
+ID        : c1719bcdf122447544f57b208d2394ce085f4773
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度資工系博士班入學口試時間表
+Date      : 2025-04-16
+Idx       : 88
+Chars     : 133
+Preview   : 114學年度資工系博士班入學口試時間表為最新消息/活動，發布時間為2025-04-16，詳見附件，請攜帶國民身分證或學生證驗證身份。更多資訊請參考：https://cse.ttu.edu.tw/p/406-1058-36784,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#90
+ID        : 91a4c49304669b26d7a686c073d650f310ba0711
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「AI 創新獎」（AI Innovation Award）
+Date      : 2025-04-15
+Idx       : 89
+Chars     : 426
+Preview   : 「AI 創新獎」（AI Innovation Award）由國家科學及技術委員會辦理，為首屆活動，鼓勵創新者結合科技與藝術，針對「智慧城市」、「智慧醫療」、「教育娛樂」及「新體驗新生活」等領域提出AI創新解方，誠摯邀請學校師生報名參加。競賽結合企業育成計畫，歡迎與仁寶及其關係企業合作的新創、非營利法人、學研機構或團隊、中華民國國民參與。獲獎團隊每隊可獲新台幣100萬元獎金、展會展出、頒獎典禮及6個月育成合作。報名至2025年5月30日截止，詳情請至活動官網https://ai4all.taiwanarena.tech/查詢。聯繫窗口為台北市電腦公會周小姐、謝小姐（電話02-2577-4249#245、#204），電子郵件ai.innovation.award@gmail.com。活動資訊發布於2025年4月15日，詳情請參見https://cse.ttu.edu.tw/p/406-1058-36726,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#91
+ID        : 0437a22645ca99f1f62f193b944109bdd6cbdc56
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第36屆AERC 2025亞洲智慧型機器人大賽
+Date      : 2025-04-10
+Idx       : 90
+Chars     : 380
+Preview   : 第36屆AERC 2025亞洲智慧型機器人大賽由龍華科技大學電機工程系及數位內容多媒體技術研發中心與「亞洲教育創新與機器人競賽協會」、「台灣創新自造者學會」共同舉辦，旨在促進各級學校重視創客創新精神及技能教學，提升機電整合知識與技能教學水準；提升社會人士暨師生手腦並用實作水準，培養創造思考能力與習慣；強化AI、電機、電子、電腦、控制、資訊等技術於機器人整合應用能力；促進教學與學習的交流觀摩。競賽分國小、國中、高中職、大專、無限組共12項，比賽日期為2025年5月24日（六）上午8點至下午6點，地點為龍華科技大學學生活動中心（U棟大樓），活動網址：https://eee.lhu.edu.tw/。發布時間為2025-04-10，詳情請參見https://cse.ttu.edu.tw/p/406-1058-36528,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#92
+ID        : 130282cccc7c9c6414d6338af8614e236ca63c30
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 TCGA 電腦對局研討會
+Date      : 2025-04-10
+Idx       : 91
+Chars     : 310
+Preview   : 2025 TCGA 電腦對局研討會為最新消息/活動，於2025-04-10發布，網址為https://cse.ttu.edu.tw/p/406-1058-36529,r61.php?Lang=zh-tw。本研討會邀請國內外電腦對局領域專家與學者投稿最新研究成果，並舉辦競賽作為技術交流平台，促進理論應用與成果實踐。相關時程包括：論文收件截止日期為114年4月9日（星期三），競賽報名截止為114年4月30日（星期三）12:00，大會舉辦日期為114年5月2日至5月3日。詳細資訊請參閱附件或研討會網頁（https://sites.google.com/gm.ntcu.edu.tw/2025tcga/?pli=1）公告。
+--------------------------------------------------------------------------------
+#93
+ID        : dc5848344c120900a8f885576def63395e4bf5fa
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 台積電智能製造講座
+Date      : 2025-04-08
+Idx       : 92
+Chars     : 210
+Preview   : 台積電智能製造講座為最新消息/活動，於2025年4月8日發布，活動日期為114年4月16日（三）13:00-14:30，地點在電機大樓102教室，報名截止至4月15日15:00，歡迎大四及碩二同學參與，報名表單連結為https://forms.gle/k4PBmbazHN6ZMecX6。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-36468,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#94
+ID        : 554963f18bc1e7ba2c8cc1034ef61180f2152cf7
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025雙北程式設計節-城市儀表板大黑客松競賽
+Date      : 2025-04-01
+Idx       : 93
+Chars     : 327
+Preview   : 2025雙北程式設計節-城市儀表板大黑客松競賽舉辦大同大學場說明會，活動分類為最新消息/活動，發布時間為2025-04-01。說明會日期為114年4月16日（三），時間12:00~13:00，採實體會議形式，報名截止為4月10日（四）中午前，地點待4月10日公告。報名連結為https://forms.gle/tEH8mJZVWRvvdvjs9，工程學院公告連結為https://coe.ttu.edu.tw/p/406-1028-36337,r166.php。備註說明會提供午餐，12:00~12:30用餐，12:30~13:00進行說明會。更多資訊請參見https://cse.ttu.edu.tw/p/406-1058-36377,r61.php。
+--------------------------------------------------------------------------------
+#95
+ID        : a8d2522e787b0e0e9ea94da93e43d52e8b44ec4e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「太空產業供應鏈暨網通產業新星飛揚計畫」研發實戰即日起受理申請、大專校院說明會及各工作坊活動開放報名
+Date      : 2025-03-28
+Idx       : 94
+Chunk     : 0
+Chars     : 692
+Preview   : 「太空產業供應鏈暨網通產業新星飛揚計畫」研發實戰即日起受理申請，大專校院說明會及各工作坊活動開放報名。台北市電腦商業同業公會受經濟部產業發展署委託執行本計畫，以「產業出題，人才實戰」方式推動企業提出5G及太空領域專題及職缺，徵集國內大專校院本國生及僑外生（不含在職生）參與產業實戰。學生須於114年4月28日前註冊填報履歷，學校承辦人需於5月2日前提交推薦名單。說明會分南區（國立高雄科技大學，3月31日12:10-13:30，報名連結https://seminars.tca.org.tw/D19e00295.aspx）及北區（國立臺灣科技大學，4月15日12:10-13:10，中文場次IB-202、英文場次IB-201，報名連結分別為https://seminars.tca.org.tw/D19e00303.aspx及https://seminars.tca.org.tw/D19e00221.aspx）。研發實戰期為114年7月至9月，參與學生需投入189小時，學士級實戰津貼新台幣36,000元/人，碩士級以上60,000元/人，企業另議其他福利。計畫提供技術工作坊，邀請產業專家授課。相…
+--------------------------------------------------------------------------------
+#96
+ID        : 50b287317d76c4963dee5146d90fffe33e011513
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【台新金控 – 實習計畫】2025年 Early Win 職場體驗計畫（一年期）開始甄選囉！
+Date      : 2025-03-27
+Idx       : 95
+Chars     : 389
+Preview   : 【台新金控 – 實習計畫】2025年 Early Win 職場體驗計畫（一年期）開始甄選囉！台新金控2025年一年期實習計畫開始招募，提供學生提前進入職場機會，協助增加職場競爭力。實習期間為2025年07月16日至2026年07月31日，週一至週五08:30-17:30，每週至少安排三個整天實習。實習職務分為大學學歷與碩士學歷不同類別，包含存匯作業、後勤營運、電話客服、程式設計、數位金融、法人金融、投資研究、金融市場等職缺。甄選對象為即將升大四、碩二在學學生，報名時間即日起（名額有限），需至【台新人才招募網】註冊帳號、登錄履歷並透過【實習專區】應徵。履歷審核約二至三週，通過初審者將收到實習志願與面試場次調查，未通過者恕不另行通知。詳情請參閱附件，連結：https://cse.ttu.edu.tw/p/406-1058-36286,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#97
+ID        : cdbd4dfea5d3f19d80ecd9e8f91f86622cf5af29
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【Newegg 活動邀請公函】 2025 Newegg PC Builder 挑戰賽
+Date      : 2025-03-27
+Idx       : 96
+Chunk     : 0
+Chars     : 553
+Preview   : 【Newegg 活動邀請公函】 2025 Newegg PC Builder 挑戰賽為大專院校PC組裝高手招募活動，由Newegg台灣新蛋股份有限公司與技嘉科技合辦，TAITRA中華民國對外貿易發展協會協辦，獲12家電腦科技大廠支持。活動於2025年5月23日（五）上午10:00－12:30在南港展覽館一館4樓M區門廳舉行，參賽者需在60分鐘內完成主機板、技嘉50系列顯卡、AMD/Intel新一代CPU等零組件組裝，現場由專業評審選出冠軍隊伍，得獎者可獲「新蛋閃耀之星」稱號及價值近新台幣10萬元的組裝電腦主機。活動開放全台大專院校在學生（含外籍生）報名，個人或團體（最多5人，競賽當天最多2人上場）皆可參加，報名期限為2025年4月10日（四）晚上8點前，免費報名連結為https://www.accupass.com/go/pcbuilderchallenge，需完成電腦知識測驗及提交在學證明文件，主辦方將以電腦抽籤選出3組參賽者，完整資訊可至https://drive.google.com/drive/folders/1s8IkAcWjOr-1WXLjWa-dEtnc_LEtVT8C查…
+--------------------------------------------------------------------------------
+#98
+ID        : 3a71b6c9c9944c778227d00e132626bc01c329c5
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年第36屆AERC亞洲智慧型機器人大賽-敏實盃
+Date      : 2025-03-25
+Idx       : 97
+Chars     : 381
+Preview   : 2025年第36屆AERC亞洲智慧型機器人大賽-敏實盃由大華學校財團法人敏實科技大學人工智慧學程舉辦，活動由敏實科技大學與台灣創新自造者學會聯合主辦，旨在推動智慧型機器人與無人機技術創新，培養科技人才並提升智能競技水平。競賽於2025年6月21日假新竹縣敏實科技大學舉行，參賽對象為國內外各級學校推薦師生及社會人士，可依競賽項目選擇合適級別組隊報名。競賽項目包含S01球型無人機任務賽、S02無人機智能編程挑戰賽、S03無人機遙控競速挑戰賽、S04無人機足球爭霸賽及S05人型機器人格鬥擂台賽（不分級）。報名自即日起至5月19日截止，活動資訊請參閱大賽官網（http://www.aerc1988.com.tw）填寫線上報名表單。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-36209,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#99
+ID        : 10738a3999fd51364a64381d4368253724f8f903
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025程速勁賽
+Date      : 2025-03-17
+Idx       : 98
+Chars     : 228
+Preview   : 2025程速勁賽為財團法人中華民國電腦技能基金會舉辦，旨在培養選手將課堂知識應用於程式競賽並以創新方式應對挑戰，激發學習熱情。活動分為報名階段（114年3月17日至4月10日）及競賽日（4月19日），詳細辦法請至https://www.codejudger.com下載。相關資訊請參閱https://cse.ttu.edu.tw/p/406-1058-36049,r61.php?Lang=zh-tw，發布時間為2025-03-17，歸類於最新消息/活動。
+--------------------------------------------------------------------------------
+#100
+ID        : 71236de537955aedf3cae042383405fe02faf2c6
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : [TAITRA外貿協會] 實習生專案 (113學年度第2學期起)
+Date      : 2025-03-17
+Idx       : 99
+Chars     : 484
+Preview   : [TAITRA外貿協會] 實習生專案 (113學年度第2學期起) 為最新消息/活動，發布時間為2025-03-17，網址：https://cse.ttu.edu.tw/p/406-1058-36065,r61.php?Lang=zh-tw。本專案提供國際行銷、專案程式開發、人才培訓（AI應用）、人資招募等4類工作，實習地點位於台北市信義區（近台北捷運紅線「101／世貿站」，步行2分鐘即可抵達）。開放大三、大四及以上在學生報名，報名截止至114年4月20日，實習日程可依課表與學期時程彈性調整。需附個人資料同意書，報名信箱為jamielin@taitra.org.tw。外貿協會提供實習津貼，並營運世貿一館、台北國際會議中心等展館，擁有60個據點及300+合作機構。詳情請參閱附件，Instagram：https://www.instagram.com/taitra_taiwan，LinkedIn：https://www.linkedin.com/company/taitra，Facebook：https://www.facebook.com/myTAITRA。
+--------------------------------------------------------------------------------
+#101
+ID        : 6080aa2737a0c1efd93561911cf60aaa9d3ae148
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「台灣經貿網跨境電商實戰營」— 與企業合作實戰，培養未來電商人才！
+Date      : 2025-03-17
+Idx       : 100
+Chars     : 593
+Preview   : 「台灣經貿網跨境電商實戰營」— 與企業合作實戰，培養未來電商人才！為最新消息/活動，於2025-03-17發布，詳情請見https://cse.ttu.edu.tw/p/406-1058-36066,r61.php?Lang=zh-tw。活動亮點包含企業X學生協作，由學生負責數位行銷及電商運營，獲得實戰經驗；跨境電商平台操作實際運用B2B台灣經貿網（https://www.taiwantrade.com/）或Amazon平台，學習營運、行銷、數據分析技能；數位行銷實戰訓練掌握SEO、關鍵字廣告、Pinterest行銷或Amazon營運技巧，強化品牌曝光與流量轉換；AI行銷應用學習運用生成式AI優化廣告與文案，提高電商競爭力；專業認證輔導學生取得數位行銷證照（Google Analytics）。活動網址：https://info.taiwantrade.com/memberindex/ttcampus，報名連結：https://forms.office.com/r/e99DJ2fqMF，適合電商、行銷、商管、國際貿易、資訊或語言相關科系學生（不限年級），聯絡人：彭小姐（frey@tait…
+--------------------------------------------------------------------------------
+#102
+ID        : d2567588c5040ea49508218baf23cf3bf221035c
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 研華ATW_EIoT_3月份活動推廣
+Date      : 2025-03-12
+Idx       : 102
+Chars     : 221
+Preview   : 研華ATW_EIoT_3月份活動推廣為最新消息/活動，於2025-03-12發布，詳情請見https://cse.ttu.edu.tw/p/406-1058-35953,r61.php?Lang=zh-tw，文章內容連結工程學院公告：https://coe.ttu.edu.tw/p/404-1028-35920.php，資料來源檔案為data_qwen/ttu_cse_news.sorted.json，文章ID為0bf84e5a2a92。
+--------------------------------------------------------------------------------
+#103
+ID        : 520711523b1e8e1da6e83daf35ade60fe5cfa13a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 經濟部「2025 智慧創新大賞」，企業及國際組最高100萬，學生組最高30萬
+Date      : 2025-03-12
+Idx       : 103
+Chars     : 307
+Preview   : 經濟部「2025 智慧創新大賞」企業及國際組最高100萬、學生組最高30萬，由台北市電腦公會執行產業技術司主辦，為首屆競賽，鼓勵學校與企業推動AI創新應用，培育產業人才。競賽分AI應用及IC設計兩類，開放學生、企業及國際團隊參賽，目標結合技術與創意開發產業應用。舉辦三場說明會（兩場實體、一場線上），時間分別為3月12日（虎尾科技大學）、3月18日（線上Webex）、3月19日（臺科大微型車庫），報名連結詳見各場次。競賽官網、辦法及說明會資訊連結已提供，活動旨在促進產業效益與人才培育。資料來源：https://cse.ttu.edu.tw/p/406-1058-35954,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#104
+ID        : 4d742d308259807fcf7c01037490f456beb5625b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年金腦獎盃創新發明與設計競賽
+Date      : 2025-03-12
+Idx       : 101
+Chars     : 282
+Preview   : 2025年金腦獎盃創新發明與設計競賽由國立聯合大學主辦，旨在鼓勵高中職與大專院校學生結合理論與實務知識，進行創新發明與設計創作。活動於114年5月9日（五）舉行，報名自即日起至3月31日（一）截止，競賽內容包含書面與實作展示，評選學生學習成果、報告撰寫及口頭表達能力。活動資訊詳見2025金腦獎盃競賽專區（https://eecs.nuu.edu.tw/p/426-1016-116.php?Lang=zh-tw）。更多資訊請參閱主辦單位網頁（https://cse.ttu.edu.tw/p/406-1058-35952,r61.php?Lang=zh-tw）。
+--------------------------------------------------------------------------------
+#105
+ID        : 35ada4106e28e26001202eb9b8bfeaa2fa989a9a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【工程學群】2025大同大學&大阪工業大學交換計畫人員甄選開跑囉
+Date      : 2025-03-11
+Idx       : 104
+Chars     : 186
+Preview   : 【工程學群】2025大同大學&大阪工業大學交換計畫人員甄選開跑囉~報名4/7(一)中午前截止，公告連結：https://coe.ttu.edu.tw/p/406-1028-35826,r166.php。最新消息/活動於2025-03-11發布，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-35915,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#106
+ID        : 6701fcfe0653b4954dec9eb89763122c0bd51fe5
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 113學年度第2學期研究生獎助學金申請開跑囉
+Date      : 2025-03-11
+Idx       : 105
+Chars     : 179
+Preview   : 113學年度第2學期研究生獎助學金申請開跑囉，請於114年4月18日前提出申請，公告連結：https://coe.ttu.edu.tw/p/412-1028-2816.php。發布時間為2025年3月11日，分類為最新消息/活動，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-35916,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#107
+ID        : 702c1d3e0843e4ba3cce33485eb23124de3962fa
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「2025年資訊科技應用國際學術研討會」
+Date      : 2025-03-08
+Idx       : 106
+Chars     : 334
+Preview   : 「2025年資訊科技應用國際學術研討會」為最新消息/活動，於2025年3月8日發布，網址：https://cse.ttu.edu.tw/p/406-1058-35806,r61.php?Lang=zh-tw。研討會訂於114年4月23日（星期三）假中國科技大學臺北校區格致樓101會議室（臺北市文山區興隆路三段56號）舉辦。接受中英文摘要或全文投稿，需具原創性且未發表，投稿方式為上傳，須於114年4月4日前完成，檔名格式為領域代號+題目（如A-題目.doc），並提供Word格式。線上投稿截止日為4月4日，審查結果隨到隨審，網頁更新狀態；研討會報名截止日為4月20日。投稿者可至研討會網址https://itac2025.gm.cute.edu.tw/下載相關資料。
+--------------------------------------------------------------------------------
+#108
+ID        : 4ce9f9d14d51af7ed83d00055bdd94e381b5b87c
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度資工系碩士在職班入學口試時間表
+Date      : 2025-03-05
+Idx       : 108
+Chars     : 143
+Preview   : 114學年度資工系碩士在職班入學口試時間表為最新消息/活動，發布時間為2025-03-05。詳見附件，口試分為二場，每場時間為8分鐘，請攜帶國民身分證驗證身份。資料來源：https://cse.ttu.edu.tw/p/406-1058-35712,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#109
+ID        : 7248ad2dec3dcfd8c6f592aec023680b0dafe98c
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114學年度資工系碩士班入學口試時間表
+Date      : 2025-03-05
+Idx       : 107
+Chars     : 127
+Preview   : 114學年度資工系碩士班入學口試時間表為最新消息/活動，發布於2025年3月5日，詳情請參閱https://cse.ttu.edu.tw/p/406-1058-35709,r61.php?Lang=zh-tw，文章提醒應攜帶國民身分證或學生證以驗證身份。
+--------------------------------------------------------------------------------
+#110
+ID        : 1598e511582b589547d6e03e1095c875ad74bee8
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「青年百億海外圓夢基金計畫」海外翱翔組
+Date      : 2025-03-04
+Idx       : 109
+Chars     : 284
+Preview   : 「青年百億海外圓夢基金計畫」海外翱翔組為最新消息/活動，發布於2025年3月4日，網址為https://cse.ttu.edu.tw/p/406-1058-35695,r61.php?Lang=zh-tw。計畫旨在拓展國際鏈結交流，提升臺灣青年國際競爭力，提供15至30歲青年赴國外見習及培訓機會，分築夢工場組與海外翱翔組，第1梯次報名至2025年3月14日，相關資訊可至計畫平台（https://twpathfinder.org/）查詢，並提供「未來的AI挑戰」、「技術創新我最行」兩案圓夢機會，下載簡章及計畫書連結為https://reurl.cc/xp5a0N。
+--------------------------------------------------------------------------------
+#111
+ID        : bb996ce852eecdebd9f8f0ff33891b3691d948b8
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025全國大專智慧型機器人與感測實務應用競賽
+Date      : 2025-03-03
+Idx       : 110
+Chars     : 222
+Preview   : 2025全國大專智慧型機器人與感測實務應用競賽為最新消息/活動，於2025年3月3日發布。活動由修平科技大學資訊管理系於114年3月29日舉辦，報名時間自即日起至114年3月15日止，報名網址為https://signup.hust.edu.tw/content.asp?actno=3532。相關資訊詳見附件，活動詳情請參閱https://cse.ttu.edu.tw/p/406-1058-35638,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#112
+ID        : cfd153edcdea05a913906474deddf8a949ac3f0e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025年鴻海科技獎將於 3/17 開放申請
+Date      : 2025-02-27
+Idx       : 111
+Chars     : 303
+Preview   : 2025年鴻海科技獎將於3月17日開放申請，由鴻海教育基金會舉辦，鼓勵科技領域青年投入研究，接受碩士、博士及114年碩博班應屆畢業生申請，研究主題需與電動車、機器人、數位健康醫療相關，聚焦電池、電機、電控、AI、半導體、新世代通訊、低軌衛星、資安、量子計算理論與硬體技術等領域。申請期間為2025年3月17日至4月27日，需於2023年1月1日至2024年4月27日期間被學術期刊接受論文，每名得主可獲25萬新台幣獎金及鴻海實習機會。申請資格為中華民國國民，投件需附印出或接受函的論文，詳情請至https://www.foxconnfoundation.org/plan/technology_award。
+--------------------------------------------------------------------------------
+#113
+ID        : f179d2d6d95fa9fbaef356df54de05545e442051
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025 陽獅集團 LION CAMPUS 獅塾計畫
+Date      : 2025-02-27
+Idx       : 112
+Chars     : 269
+Preview   : 2025 陽獅集團 LION CAMPUS 獅塾計畫為行銷傳播領域新生代提供學習與實踐舞台，旨在透過專業資源與文化激盪，為集團注入青春活力。實習生將於陽獅集團多元學習職涯可能，累積經驗與專業技能。計畫開放2026年6月畢業之大學/碩士生申請，亦歡迎2025年畢業學生參與，不限科系。說明會於2025/03/22在陽獅集團台灣舉行，申請時間為即日起至03/30，詳情請參閱LION CAMPUS獅塾計畫網站。更多資訊請訪問https://cse.ttu.edu.tw/p/406-1058-35624,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#114
+ID        : 655104dd76fb7523e6ebca50a05f39160211cbda
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 「2025 年國際超大型積體電路技術、系統暨應用研討會 (VLSI TSA)」
+Date      : 2025-02-26
+Idx       : 114
+Chars     : 329
+Preview   : 「2025 年國際超大型積體電路技術、系統暨應用研討會 (VLSI TSA)」為最新消息/活動，發布時間為2025-02-26。研討會將於4 月 21 日(一)至 4 月 24 日(四)在新竹國賓大飯店舉辦，並於4 月 22 日(二)上午09:00 ~ 10:10舉行Opening ＆ Award Ceremony（全球同步直播）。線上研討會則於4 月 28 日(一)至5 月 27 日(二)開放觀看。報名截止至2025 年3 月 31 日(一)，早鳥及學生三人以上團體報名享優惠，詳情見註冊官網https://reg.itri.org.tw/2025VLSI。活動詳情請見大會官網https://expo.itri.org.tw/2025VLSITSA。
+--------------------------------------------------------------------------------
+#115
+ID        : e0adfeaa845ebc9b956ace47ea77a3ee326b8ec8
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 青年百億海外圓夢基金計畫
+Date      : 2025-02-26
+Idx       : 115
+Chars     : 314
+Preview   : 「青年百億海外圓夢基金計畫」為教育部推動之國際交流計畫，旨在拓展臺灣青年國際鏈結，提升其國際競爭力。計畫對象為15至30歲本國青年，分為築夢工場組與海外翱翔組（含年度旗艦計畫），第1梯次報名至114年3月14日。築夢工場組鼓勵青年自主提案，提供專業孵化資源；海外翱翔組包含國際組織見習、青年議會交流、創業培訓等多元主題，年度旗艦計畫114年以「環境永續」為主題。相關資訊及宣傳影片連結於https://twpathfinder.org/及https://youtu.be/2ntlKO46LsM。更多詳情請參見https://cse.ttu.edu.tw/p/406-1058-35581,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#116
+ID        : bd36f76de5a89aadd06b788885adb74af3c2fa81
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 中鋼公司徵才-資訊工程師
+Date      : 2025-02-26
+Idx       : 117
+Chars     : 528
+Preview   : 中鋼公司徵才-資訊工程師，分類為最新消息/活動，發布時間為2025-02-26，網址：https://cse.ttu.edu.tw/p/406-1058-35589,r61.php?Lang=zh-tw。說明一、資格條件：(一)貴校大學(含)以上相關科系畢業，「相關科系」採認標準為大學以上修業期間所修習課程與資工專業科目至少有3科名稱相同或相近，且取得該課程學分證明。(二)專業科目包含程式設計、資料庫系統、網路資訊、計算機概論、線性代數、人工智慧、控制理論、資安概論等8科，碩士報考者須另提供畢業論文摘要。(三)英文多益成績550分以上（至遲應於面試前提供）。二、報名事宜與工作內容：(一)114年3月18日前於Google表單填寫資料（網址：https://forms.gle/guawArFfiJs6p2h39），並郵件寄送至230722@mail.csc.com.tw（聯絡人鍾小姐，電話07-8021111#2085），需附畢業證書掃描檔、全份學業成績單掃描檔、多益成績證明、個人資料表（格式如附件），碩士學位者另附畢業論文摘要。(二)工作內容：製程資訊系統程式設計；AI智能專案設計開發…
+--------------------------------------------------------------------------------
+#117
+ID        : 0a1d92436237e0339df9c9e3e22464e74d043cb8
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 【競賽報名訊息通知】2025 全國大學校院積體電路設計競賽延至3/7(五)23:59PM截止報名
+Date      : 2025-02-26
+Idx       : 116
+Chars     : 281
+Preview   : 【競賽報名訊息通知】2025 全國大學校院積體電路設計競賽延至3/7(五)23:59PM截止報名。最新消息/活動於2025-02-26發布，競賽報名延長至3月7日23:59PM，總獎金高達70萬元，包含特優、優等、佳作獎項。報名時間為2月3日10:00AM至3月7日23:59PM，初賽於3月26日舉行，決賽為5月7日至9日。競賽資訊詳見https://www.iccontest2025.com/，國立中興大學 IC設計競賽小組公告。資料來源：https://cse.ttu.edu.tw/p/406-1058-35582,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#118
+ID        : e2747f856c382feac06e7f81ffade67878de2c0b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 第七屆計算機、消費者和控制國際研討會（IS3C2025）
+Date      : 2025-02-26
+Idx       : 113
+Chars     : 283
+Preview   : 第七屆計算機、消費者和控制國際研討會（IS3C2025）於2025年2月26日發布，屬最新消息/活動類別。研討會由國立勤益科技大學主辦，旨在促進學術界與產業界技術交流，提升電腦、消費電子與控制領域競爭力，訂於114年6月27日至6月30日舉行。重要時程包含論文摘要截稿（114年3月15日）、接受通知（4月10日）、最終論文提交（4月30日），採線上投稿，詳情請參訪研討會網址https://is3c2025.ncut.edu.tw/。相關資訊請見https://cse.ttu.edu.tw/p/406-1058-35578,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#119
+ID        : 7fe172cd744c4461e66345e9040eb6eb9e8d3711
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年5月23~25日舉辦「第二十三屆離島資訊技術與應用研討會」
+Date      : 2025-02-21
+Idx       : 118
+Chars     : 249
+Preview   : 「第二十三屆離島資訊技術與應用研討會」於114年5月23日至25日舉辦，為最新消息/活動，發布時間為2025-02-21。活動由國立澎湖科技大學主辦，詳細資訊可至研討會網站查詢（https://itaoi2025.gms.npu.edu.tw/）。更多內容請參閱：https://cse.ttu.edu.tw/p/406-1058-35511,r61.php?Lang=zh-tw。來源檔案：data_qwen/ttu_cse_news.sorted.json，文章ID：c82893c0cd76。
+--------------------------------------------------------------------------------
+#120
+ID        : b43372a6c22cc8a01546ee1582db519e4f20715e
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 114年寒暑期營隊 師資招募活動(提供寒暑期實習)
+Date      : 2025-02-17
+Idx       : 119
+Chars     : 166
+Preview   : 114年寒暑期營隊 師資招募活動(提供寒暑期實習)為最新消息/活動，發布於2025年2月17日，相關資訊請參閱https://cse.ttu.edu.tw/p/406-1058-35622,r61.php?Lang=zh-tw。文章內容提及本功能需使用支援JavaScript之瀏覽器才能正常操作，並說明招募活動提供寒暑期實習機會。
+--------------------------------------------------------------------------------
+#121
+ID        : 812f717b1b09d4f1c3c2cbcf572e57543aabe48c
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 113學年度資工系寒假轉學考入學口試時間表
+Date      : 2025-01-21
+Idx       : 120
+Chars     : 136
+Preview   : 113學年度資工系寒假轉學考入學口試時間表為最新消息/活動，發布時間為2025-01-21。請攜帶學生證或身分證以供查驗，報到細節詳如附件。相關資訊請參閱：https://cse.ttu.edu.tw/p/406-1058-35152,r61.php?Lang=zh-tw
+--------------------------------------------------------------------------------
+#122
+ID        : a66e05fb0a70f9b188c385605ced5fb6044bb78b
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 系微股份有限公司菁英招募-您的生涯舞台，從加入系微開始
+Date      : 2025-01-18
+Idx       : 122
+Chars     : 407
+Preview   : 系微股份有限公司於2025年1月18日發布「菁英招募」訊息，歡迎實習生及應屆畢業生投遞履歷，無BIOS/BMC經驗者亦可參加，提供新人3個月專業訓練課程。系微為1998年成立的全球系統韌體研發廠商，股票代號6231，總部位於台北，分部遍及台中、美國波士頓、波特蘭、日本、中國及韓國，現有員工650+人，80%為研發工程師。招募資訊包含：(一) 修畢資訊工程、電機電子工程、資訊管理相關系所；(二) 工作地點為台北市中山區建國北路二段120號或台中市南區忠明南路760號；(三) 工作時間為週一至週五09:00-18:00；(四) 应徵方式為104職缺或郵件至recruit@insyde.com；(五) 專業訓練為BIOS/BMC Engineer。更多資訊請連結系微官網及104職缺，文章連結：https://cse.ttu.edu.tw/p/406-1058-35110,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#123
+ID        : 3308e7b2112a6af6c167e93e0cd4a430258e13dc
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : msi(微星科技)實習職缺需求
+Date      : 2025-01-18
+Idx       : 121
+Chars     : 193
+Preview   : msi(微星科技)實習職缺需求於2025-01-18發布，分類為最新消息/活動，提供實習職缺，有意申請者需備妥個人簡歷及歷年成績單，聯繫人為王羽涵（Joyce Wang），於人力資源處（人資服務部）洽詢，Email: joyceyhwang@msi.com，詳情請參見https://cse.ttu.edu.tw/p/406-1058-35109,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+#124
+ID        : f91bcf17352cc3f788100af9a4c115a2c5615190
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 2025秋季出國交換雙聯申請及114年度學海獎學金申請資訊
+Date      : 2025-01-17
+Idx       : 123
+Chars     : 342
+Preview   : 2025秋季出國交換雙聯申請及114年度學海獎學金申請資訊於2025年1月17日發布，網址為https://cse.ttu.edu.tw/p/406-1058-35093,r61.php?Lang=zh-tw。2025秋季出國申請分兩波，第一波截止至2025年2月18日（星期二），第二波截止至2025年3月11日（星期二）；114年度學海獎學金申請截止至2025年3月4日（星期二），適用於規劃114學年度第一學期與第二學期出國交換或雙聯的學生，相關公告連結分別為https://oia.ttu.edu.tw/p/406-1076-34879,r11.php（出國申請）及https://oia.ttu.edu.tw/p/406-1076-34877,r11.php（學海獎學金）。
+--------------------------------------------------------------------------------
+#125
+ID        : 419ab1fa8196998f1258e769d567362902875a2a
+Type      : news|json
+Source    : data_qwen/ttu_cse_news.sorted.json
+SourceURL : —
+Title     : 綠能電力AI管理系統基礎實務學生研習：從構想到實作
+Date      : 2025-01-07
+Idx       : 124
+Chars     : 409
+Preview   : 「綠能電力AI管理系統基礎實務學生研習：從構想到實作」為最新消息/活動，發布於2025-01-07。課程於114年2月5日至7日9:00~17:00舉行，地點為龍華科技大學F棟大樓210電腦教室（桃園市龜山區萬壽路一段300號），限30人參與，報名至114年1月17日截止。對象為全國技術型高中3年級、專科3~5年級、大學大一~大二學生（機械群、動力機械群、電機與電子群優先），課程為實體授課，全程免費（含午餐），參與者獲頒研習證書。報名網址：https://forms.gle/k8GG5Mca7B9nym156，聯絡人：教育部促進產學連結合作育才平臺-國立高雄科技大學執行辦公室蕭于凱副理，電話07-6011000轉31492，電子郵件karlhsiao@nkust.edu.tw。活動詳情請參見https://cse.ttu.edu.tw/p/406-1058-34952,r61.php?Lang=zh-tw。
+--------------------------------------------------------------------------------
+
+★ 檢查完畢，結果已存入: inspection_result.txt

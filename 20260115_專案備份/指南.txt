@@ -1,0 +1,19 @@
+frontend
+cd frontend
+npm run dev
+-------------
+backend
+cd backend
+python main.py
+----------------
+qwen3
+nvidia-smi
+ollama serve
+
+ollama list
+----------------
+eval_rag.py
+export OPENAI_API_KEY=""
+(若須 api-key 請至 api key.txt 查找)
+echo "$OPENAI_API_KEY"
+(確認是否已導入 api-key 以開始評測)

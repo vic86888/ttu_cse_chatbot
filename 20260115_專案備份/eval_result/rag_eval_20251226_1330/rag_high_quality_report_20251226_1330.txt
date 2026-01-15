@@ -1,0 +1,5 @@
+=== RAG 優良案例報告 (20251226_1330) ===
+篩選標準: Faithfulness, Relevancy, Recall, Correctness 皆 >= 0.6
+
+
+無題目同時滿足四項指標 >= 0.6。

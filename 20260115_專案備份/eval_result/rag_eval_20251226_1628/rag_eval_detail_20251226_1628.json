@@ -1,0 +1,34 @@
+[
+  {
+    "question": "114學年度的全校運動會補假（換休日）安排在哪一天？",
+    "answer": "根據現有文件記載，**114學年度的全校運動會補假（換休日）安排**並未在提供的參考資料中明確說明。  \n依據規則8，若文件未提及資工系或全校性活動的補假日期，應誠實回應「文件中未提及相關資訊」，且不可自行推測或引用外部常識。\n\n---\n\n### 參考來源  \n- [點擊查看來源](https://www.ttu.edu.tw/rule.pdf)  \n  （說明：此為示例連結，實際文件需依校方公告確認）",
+    "thinking_process": "",
+    "contexts": [],
+    "ground_truth": "115 年 1 月 2 日。",
+    "original_question": "114學年度的全校運動會補假（換休日）安排在哪一天？",
+    "rewritten_question": "114學年度的全校運動會補假（換休日）安排在哪一天？",
+    "raw_answer": "根據現有文件記載，**114學年度的全校運動會補假（換休日）安排**並未在提供的參考資料中明確說明。  \n依據規則8，若文件未提及資工系或全校性活動的補假日期，應誠實回應「文件中未提及相關資訊」，且不可自行推測或引用外部常識。\n\n---\n\n### 參考來源  \n- [點擊查看來源](https://www.ttu.edu.tw/rule.pdf)  \n  （說明：此為示例連結，實際文件需依校方公告確認）",
+    "category": "其他",
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.0,
+    "context_recall": 0.0,
+    "context_precision": 0.0,
+    "answer_correctness": 0.08446054684827384
+  },
+  {
+    "question": "114 學年度全校運動會的補假（換休日）改為哪一天？",
+    "answer": "文件中未提及「114學年度全校運動會」的補假（換休日）具體日期或變更資訊。根據現有參考文件內容，無法提供該特定活動的補假安排。\n\n## 參考來源\n- [原始文件](https://www.ttu.edu.tw/rule.pdf)",
+    "thinking_process": "",
+    "contexts": [],
+    "ground_truth": "115 年 1 月 2 日。",
+    "original_question": "114 學年度全校運動會的補假（換休日）改為哪一天？",
+    "rewritten_question": "114 學年度全校運動會的補假（換休日）改為哪一天？",
+    "raw_answer": "文件中未提及「114學年度全校運動會」的補假（換休日）具體日期或變更資訊。根據現有參考文件內容，無法提供該特定活動的補假安排。\n\n## 參考來源\n- [原始文件](https://www.ttu.edu.tw/rule.pdf)",
+    "category": "其他",
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.0,
+    "context_recall": 0.0,
+    "context_precision": 0.0,
+    "answer_correctness": 0.09045467451899616
+  }
+]

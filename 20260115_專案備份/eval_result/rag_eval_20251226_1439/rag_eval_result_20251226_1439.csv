@@ -1,0 +1,83 @@
+﻿question,answer,thinking_process,contexts,ground_truth,original_question,rewritten_question,raw_answer,category,faithfulness,answer_relevancy,context_recall,context_precision,answer_correctness
+114學年度的全校運動會補假（換休日）安排在哪一天？,文件中沒有相關資訊。,"Okay, let's tackle this question. The user is asking about the make-up day (換休日) for the全校運動會 (school-wide sports day) during the 114 academic year.
+
+First, I need to recall the relevant information from the provided reference files. Let me scan through the entries again. 
+
+Looking at the entries, there's one that mentions the 114年11月8日 (November 8, 114) as the校慶活動日及全校運動會 (school anniversary activities and sports day). However, the user is specifically asking about the補假 or換休日 for this event. 
+
+Wait, another entry mentions that on 114年10月25日 (October 25, 114), there's a放假 for the Taiwan Restoration and Kinmen Guningtou Victory Memorial Day, and since it's a Saturday, October 24 is a compensatory holiday. But that's for a different event.
+
+Another entry talks about the 115年2月27日至28日 (February 27-28, 115) being a holiday for the Peace Memorial Day, with February 27 being a compensatory day. But this is in the 115 academic year, which might not be relevant here.
+
+Wait, there's an entry about the 114年11月8日 (November 8, 114) being the school anniversary and sports day. However, the reference files don't explicitly mention a compensatory day for this event. But there's another entry that says the 115年2月27日 (February 27, 115) is a compensatory day for the Peace Memorial Day. 
+
+Wait, maybe the user is referring to the 114年11月8日 event. But the reference files don't mention a compensatory day for that. However, there's an entry about the 114年12月25日 (December 25, 114) being a holiday for the Constitution Day, but that's not related to the sports day.
+
+Wait, looking back, the entry for 114年11月8日 (November 8, 114) states it's the school anniversary and sports day. However, the reference files don't mention a compensatory day for this event. The only compensatory days mentioned are for other holidays like the Peace Memorial Day in February 115 and the Kinmen Guningtou Victory in October 114. 
+
+Wait, maybe the user is referring to the 114年11月8日 event, but the reference files don't specify a compensatory day for it. Therefore, according to the files, there's no information about a compensatory day for the 114 academic year's sports day. However, there's an entry about the 115年2月27日 (February 27, 115) being a compensatory day for the Peace Memorial Day. But that's in the 115 academic year. 
+
+Wait, the user is asking about the 114 academic year. The only mention of a sports day is on 114年11月8日, but no compensatory day is listed for that. Therefore, the answer should be that the files don't mention a compensatory day for the 114 academic year's sports day. However, there's an entry about the 115年2月27日 being a compensatory day for the Peace Memorial Day, but that's in the 115 academic year. 
+
+Wait, maybe the user is confused between the 114 and 115 academic years. The 114 academic year runs from August 114 to July 115. The sports day in November 114 would fall within the 114 academic year. However, the reference files don't mention a compensatory day for that event. Therefore, the answer is that the files don't specify a compensatory day for the 114 academic year's sports day. 
+
+But wait, there's an entry about the 114年11月8日 being the sports day, and another entry about the 115年2月27日 being a compensatory day for the Peace Memorial Day. However, the user is asking about the sports day's compensatory day. Since the reference files don't mention a compensatory day for the sports day, the answer should be that the files don't have that information. 
+
+Alternatively, maybe the user is referring to the 114年11月8日 event, and the compensatory day is in the same academic year. But the reference files don't mention it. Therefore, the correct answer is that the files don't specify the compensatory day for the 114 academic year's sports day.","['行事曆顯示民國114年10月24日（星期五）至10月25日（星期六）為活動期間，114年10月25日臺灣光復暨金門古寧頭大捷紀念日放假，因適逢星期六於10月24日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國114年9月28日（西元2025年9月28日，星期日）至29日（星期一）為活動期間，包含114年9月28日孔子誕辰紀念日及教師節放假，因9月28日為星期日，故於9月29日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國115年1月1日（西元2026年1月1日，星期四）至1月2日（西元2026年1月2日，星期五）為活動期間，1/1為元旦放假，1/2為校慶活動日及全校運動會換休日，放假一天。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年11月8日（西元2025年11月8日，星期六）為校慶活動日及全校運動會（校慶運動日），相關資訊請參閱https://reg.ttu.edu.tw/p/405-1032-23682,c910.php。', '行事曆顯示民國115年2月27日至28日（西元2026年2月27日至28日）為五~六，活動事項為2月28日和平紀念日放假，2月27日逢例假日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '115年2月行事曆（民國115年，西元2026年2月）共8項活動，包含：1日為114學年度第二學期開始；2月23日至3月2日為期初加退選；2月14日至22日為春節年假（含例假日共放9天）；20日為寒假結束、第二學期選課初選結束及註冊繳費截止日；23日為第二學期開學日；27至28日因和平紀念日放假，2月27日補假。更多資訊請參考：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國115年4月3日至4月6日（西元2026年4月3日至4月6日）為五至一，活動事項包含4月4日婦幼節放假、4月5日清明節放假，因逢例假日故4月3日及4月6日各補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年10月10日（西元2025年10月10日，星期五）國慶日放假，資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '114年11月行事曆（2025年11月）包含4項活動：3日至14日（一至五）期中退選申請；8日（六）校慶活動日及全校運動會；17日（一）115學年度碩士班推薦甄試考試；30日（日）碩博士班申請學位考試截止。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年12月25日（西元2025年12月25日，星期四）為行憲紀念日放假。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php']",115 年 1 月 2 日。,114學年度的全校運動會補假（換休日）安排在哪一天？,114學年度的全校運動會補假（換休日）安排在哪一天？,"<think>
+Okay, let's tackle this question. The user is asking about the make-up day (換休日) for the全校運動會 (school-wide sports day) during the 114 academic year.
+
+First, I need to recall the relevant information from the provided reference files. Let me scan through the entries again. 
+
+Looking at the entries, there's one that mentions the 114年11月8日 (November 8, 114) as the校慶活動日及全校運動會 (school anniversary activities and sports day). However, the user is specifically asking about the補假 or換休日 for this event. 
+
+Wait, another entry mentions that on 114年10月25日 (October 25, 114), there's a放假 for the Taiwan Restoration and Kinmen Guningtou Victory Memorial Day, and since it's a Saturday, October 24 is a compensatory holiday. But that's for a different event.
+
+Another entry talks about the 115年2月27日至28日 (February 27-28, 115) being a holiday for the Peace Memorial Day, with February 27 being a compensatory day. But this is in the 115 academic year, which might not be relevant here.
+
+Wait, there's an entry about the 114年11月8日 (November 8, 114) being the school anniversary and sports day. However, the reference files don't explicitly mention a compensatory day for this event. But there's another entry that says the 115年2月27日 (February 27, 115) is a compensatory day for the Peace Memorial Day. 
+
+Wait, maybe the user is referring to the 114年11月8日 event. But the reference files don't mention a compensatory day for that. However, there's an entry about the 114年12月25日 (December 25, 114) being a holiday for the Constitution Day, but that's not related to the sports day.
+
+Wait, looking back, the entry for 114年11月8日 (November 8, 114) states it's the school anniversary and sports day. However, the reference files don't mention a compensatory day for this event. The only compensatory days mentioned are for other holidays like the Peace Memorial Day in February 115 and the Kinmen Guningtou Victory in October 114. 
+
+Wait, maybe the user is referring to the 114年11月8日 event, but the reference files don't specify a compensatory day for it. Therefore, according to the files, there's no information about a compensatory day for the 114 academic year's sports day. However, there's an entry about the 115年2月27日 (February 27, 115) being a compensatory day for the Peace Memorial Day. But that's in the 115 academic year. 
+
+Wait, the user is asking about the 114 academic year. The only mention of a sports day is on 114年11月8日, but no compensatory day is listed for that. Therefore, the answer should be that the files don't mention a compensatory day for the 114 academic year's sports day. However, there's an entry about the 115年2月27日 being a compensatory day for the Peace Memorial Day, but that's in the 115 academic year. 
+
+Wait, maybe the user is confused between the 114 and 115 academic years. The 114 academic year runs from August 114 to July 115. The sports day in November 114 would fall within the 114 academic year. However, the reference files don't mention a compensatory day for that event. Therefore, the answer is that the files don't specify a compensatory day for the 114 academic year's sports day. 
+
+But wait, there's an entry about the 114年11月8日 being the sports day, and another entry about the 115年2月27日 being a compensatory day for the Peace Memorial Day. However, the user is asking about the sports day's compensatory day. Since the reference files don't mention a compensatory day for the sports day, the answer should be that the files don't have that information. 
+
+Alternatively, maybe the user is referring to the 114年11月8日 event, and the compensatory day is in the same academic year. But the reference files don't mention it. Therefore, the correct answer is that the files don't specify the compensatory day for the 114 academic year's sports day.
+</think>
+
+文件中沒有相關資訊。",其他,0.0,0.0,0.0,0.3333333333,0.10384665526186296
+114 學年度全校運動會的補假（換休日）改為哪一天？,文件中沒有相關資訊。,"Okay, let's tackle this question. The user is asking about the make-up day (換休日) for the 114 academic year's school sports meeting. First, I need to recall the relevant information from the provided reference files.
+
+Looking through the reference files, there's a mention of the 114 academic year's school sports meeting. Specifically, in the entry dated 114年11月8日 (November 8, 2025), it states that this day is the school anniversary activity day and the school sports meeting (校慶運動日). However, the reference files don't explicitly mention a make-up day for this event. 
+
+Wait, there's another entry about the 115年2月27日至28日 (February 27-28, 2026) being a holiday for the Peace Memorial Day, with February 27th being a compensatory holiday. But that's for a different event. 
+
+Another entry mentions that the 114年12月25日 (December 25, 2025) is the Constitution Day holiday. However, none of these directly link to the sports meeting's make-up day. 
+
+Wait, maybe the user is referring to a different event. Let me check again. The entry for 114年10月24日至25日 (October 24-25, 2025) mentions that October 25th is a public holiday for the Taiwan Retrocession Day and Kinmen Guningtou Victory, with October 24th as a compensatory holiday. But that's for a different holiday. 
+
+Hmm, the user is specifically asking about the school sports meeting's make-up day. The only mention of the school sports meeting is on November 8, 2025, but there's no information about a compensatory day for that event. The reference files might not have the specific information about the make-up day for the sports meeting. 
+
+Therefore, based on the provided data, there's no explicit mention of the make-up day for the 114 academic year's school sports meeting. The answer should state that the information isn't available in the files.","['行事曆顯示民國114年10月24日（星期五）至10月25日（星期六）為活動期間，114年10月25日臺灣光復暨金門古寧頭大捷紀念日放假，因適逢星期六於10月24日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國114年9月28日（西元2025年9月28日，星期日）至29日（星期一）為活動期間，包含114年9月28日孔子誕辰紀念日及教師節放假，因9月28日為星期日，故於9月29日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國115年1月1日（西元2026年1月1日，星期四）至1月2日（西元2026年1月2日，星期五）為活動期間，1/1為元旦放假，1/2為校慶活動日及全校運動會換休日，放假一天。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年11月8日（西元2025年11月8日，星期六）為校慶活動日及全校運動會（校慶運動日），相關資訊請參閱https://reg.ttu.edu.tw/p/405-1032-23682,c910.php。', '行事曆顯示民國115年2月27日至28日（西元2026年2月27日至28日）為五~六，活動事項為2月28日和平紀念日放假，2月27日逢例假日補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '115年2月行事曆（民國115年，西元2026年2月）共8項活動，包含：1日為114學年度第二學期開始；2月23日至3月2日為期初加退選；2月14日至22日為春節年假（含例假日共放9天）；20日為寒假結束、第二學期選課初選結束及註冊繳費截止日；23日為第二學期開學日；27至28日因和平紀念日放假，2月27日補假。更多資訊請參考：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國115年4月3日至4月6日（西元2026年4月3日至4月6日）為五至一，活動事項包含4月4日婦幼節放假、4月5日清明節放假，因逢例假日故4月3日及4月6日各補假一日。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年12月25日（西元2025年12月25日，星期四）為行憲紀念日放假。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '行事曆顯示民國114年12月29日（西元2025年12月29日）至民國114年1月11日（西元2025年1月11日）為一~日，活動為彈性教學週。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php', '民國114年9月5日（西元2025年9月5日）為行事曆日期，星期五，活動事項為第一學期選課初選結束。資料來源：https://reg.ttu.edu.tw/p/405-1032-23682,c910.php']",115 年 1 月 2 日。,114 學年度全校運動會的補假（換休日）改為哪一天？,114 學年度全校運動會的補假（換休日）改為哪一天？,"<think>
+Okay, let's tackle this question. The user is asking about the make-up day (換休日) for the 114 academic year's school sports meeting. First, I need to recall the relevant information from the provided reference files.
+
+Looking through the reference files, there's a mention of the 114 academic year's school sports meeting. Specifically, in the entry dated 114年11月8日 (November 8, 2025), it states that this day is the school anniversary activity day and the school sports meeting (校慶運動日). However, the reference files don't explicitly mention a make-up day for this event. 
+
+Wait, there's another entry about the 115年2月27日至28日 (February 27-28, 2026) being a holiday for the Peace Memorial Day, with February 27th being a compensatory holiday. But that's for a different event. 
+
+Another entry mentions that the 114年12月25日 (December 25, 2025) is the Constitution Day holiday. However, none of these directly link to the sports meeting's make-up day. 
+
+Wait, maybe the user is referring to a different event. Let me check again. The entry for 114年10月24日至25日 (October 24-25, 2025) mentions that October 25th is a public holiday for the Taiwan Retrocession Day and Kinmen Guningtou Victory, with October 24th as a compensatory holiday. But that's for a different holiday. 
+
+Hmm, the user is specifically asking about the school sports meeting's make-up day. The only mention of the school sports meeting is on November 8, 2025, but there's no information about a compensatory day for that event. The reference files might not have the specific information about the make-up day for the sports meeting. 
+
+Therefore, based on the provided data, there's no explicit mention of the make-up day for the 114 academic year's school sports meeting. The answer should state that the information isn't available in the files.
+</think>
+
+文件中沒有相關資訊。",其他,0.0,0.0,0.0,0.3333333333,0.10384665526186296

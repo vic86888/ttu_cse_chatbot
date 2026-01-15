@@ -1,0 +1,12 @@
+=== RAG 評測檢討報告 (20251225_1731) ===
+
+=== 平均分數 ===
+faithfulness: 1.000
+answer_relevancy: 0.874
+context_recall: 1.000
+context_precision: 1.000
+answer_correctness: 0.882
+
+==================================================
+
+恭喜！沒有發現分數過低的異常案例。
